@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall --pedantic -O2
 VPATH = src:lib
 
-EXEC = osm.exe
+EXEC = osmaps
 
 HEADERS = $(wildcard *.h)
 OBJECTS = $(patsubst src/%.c, src/%.o, $(wildcard src/*.c)) \
@@ -15,15 +15,6 @@ all : lib exe clean
 exe : $(EXEC)
 
 lib : $(LIB)
-
-bin/% : obj/%.o
-	$(CC) -o $@ $< -Lbin $(LIBLINK)
-
-obj/lib%.o : %.c $(HEADERS)
-	$(CC) $(CFLAGS) -fpic -c -Ilib -o $@ $<	
-
-obj/%.o : src/%.c $(HEADERS)
-	$(CC) $(CFLAGS) -c -Ilib -o $@ $<
 
 clean :
 	rm -f $(OBJECTS)
