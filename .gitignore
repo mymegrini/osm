@@ -2,5 +2,6 @@
 *~
 .*
 \#*
+osmaps
 # Except this file
 !.gitignore
