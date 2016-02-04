@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <libxml/parser.h>
+#include "parse.h"
 
 void
 parseStory (xmlDocPtr doc, xmlNodePtr cur) {
@@ -18,7 +20,7 @@ parseStory (xmlDocPtr doc, xmlNodePtr cur) {
     return;
 }
 
-static void
+void
 parseDoc(char *docname) {
 
 	xmlDocPtr doc;
@@ -39,8 +41,8 @@ parseDoc(char *docname) {
 		return;
 	}
 	
-	if (xmlStrcmp(cur->name, (const xmlChar *) "story")) {
-		fprintf(stderr,"document of the wrong type, root node != story");
+	if (xmlStrcmp(cur->name, (const xmlChar *) "osm")) {
+		fprintf(stderr,"document of the wrong type, root node != story\n");
 		xmlFreeDoc(doc);
 		return;
 	}

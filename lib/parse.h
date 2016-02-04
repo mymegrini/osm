@@ -1,8 +1,7 @@
 #include <libxml/xmlmemory.h>
-#include <libxml/parser.h>
 
 void
-parseStory (xmlDocPtr doc, xmlNodePtr cur);
+parseStory(xmlDocPtr doc, xmlNodePtr cur);
 
-static void
+void
 parseDoc(char *docname);
