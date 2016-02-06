@@ -12,7 +12,7 @@ LIB 	= $(patsubst lib/%.c, lib/%.o, $(wildcard lib/*.c))
 HEADERS	= $(wildcard *.h)
 OBJECTS	= $(patsubst src/%.c, src/%.o, $(wildcard src/*.c)) $(LIB)
 
-all : lib exe clean
+all : lib exe
 
 exe : $(EXEC)
 
