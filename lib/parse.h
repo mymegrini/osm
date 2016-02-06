@@ -1,9 +1,16 @@
 #include <libxml/xmlmemory.h>
 
 typedef struct {
+  xmlChar* k;
+  xmlChar* v;
+} osmTag;
+
+typedef struct {
   uint32_t id;
   double lat;
   double lon;
+  uint32_t tagListLength;
+  osmTag** tagList;
   uint32_t visible;
 } osmNode;
 
@@ -13,6 +20,14 @@ typedef struct {
   double minlon;
   double maxlon;
 } osmBounds;
+
+typedef struct {
+  uint32_t id;
+  uint32_t nodeListLength;
+  osmNode** nodeList;
+  uint32_t tagListLength;
+  osmTag** tagList;
+} osmWay;
 
 /**
  * @brief This function prints attribute values for a Bounds node
