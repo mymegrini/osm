@@ -11,9 +11,7 @@
  * This function prints the command prototype to the <out> stream.
  */
 static void usage(char* argv0, FILE* out){
-  fprintf(out,
-	  "Usage: %s [OPTIONS]... [FILE]\n",
-	  argv0);
+  fprintf(out, "Usage: %s [OPTIONS]... [FILE]\n", argv0);
 }
 
 /**
@@ -47,9 +45,9 @@ main(int argc, char **argv) {
     switch(opt){
     case 'h':
       usage(argv[0], stdout);
-      puts("\
+      puts("\n\
 OSmaps: the OpenStreetMaps renderer. This program takes an xml file containing\n\
-an OSM tree and renders it on screen.\n\n\
+an OSM tree and renders it.\n\
 Available options:\n\
 \t-b, --bounds\n\
 \t\tparse the OSM tree and list all its 'bounds' nodes\n\
@@ -90,7 +88,7 @@ Available options:\n\
     return 1;
   } else docname = argv[optind];
   
-  printDoc(docname, flags);
+  if(flags & F_TEXT) printDoc(docname, flags);
   
   return 0;
 }

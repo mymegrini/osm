@@ -66,23 +66,23 @@ printDoc(const char *docname, int flags){
   
   osm map;
   int i;
-  
+
   parseDoc(docname, &map);
   
-  if (flags|F_BOUNDS)
+  if (flags & F_BOUNDS)
     printBounds(map.bounds);
 
-  if (flags|F_NODES)
+  if (flags & F_NODES)
     for(i=0; i<map.nodec; i++){
       printNode(map.nodev[i]);
     }
   
-  if (flags|F_WAYS)
+  if (flags & F_WAYS)
     for(i=0; i<map.wayc; i++){
       printWay(map.wayv[i]);
     }
   
-  if (flags|F_RELATIONS)
+  if (flags & F_RELATIONS)
     for(i=0; i<map.relationc; i++){
       printRelation(map.relationv[i]);
     }
