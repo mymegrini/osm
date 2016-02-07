@@ -4,7 +4,6 @@
 #include <libxml/parser.h>
 #include "parse.h"
 
-
 /**
  * 
  * 
@@ -25,7 +24,15 @@ parseTag(const xmlNodePtr cur, osmNode* tag){
  */
 void
 parseBounds(const xmlNodePtr cur, osmBounds* bounds){
-
+  
+  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"),
+	 "%lf", &bounds->minlat);
+  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"),
+	 "%lf", &bounds->maxlat);
+  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlon"),
+	 "%lf", &bounds->minlon);
+  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlon"),
+	 "%lf", &bounds->maxlon); 
   return;
 }
 
