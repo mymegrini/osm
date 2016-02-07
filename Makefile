@@ -21,7 +21,7 @@ lib : $(LIB)
 osmaps : $(OBJECTS) $(LIB)
 	$(CC) -o $@ $^ $(LIBXML)
 
-%.o : %.c $(HEADERS)
+%.o : %.c %.h
 	$(CC) -c -o $@ $< $(CFLAGS) $(HXML) $(HFLAGS)
 
 clean :
