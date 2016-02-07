@@ -2,6 +2,7 @@
 #define PARSE_H
 
 #include <libxml/xmlmemory.h>
+#include <stdint.h>
 
 /**
  * A structure to hold a 'tag' node
