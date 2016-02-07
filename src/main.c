@@ -2,12 +2,6 @@
 #include <getopt.h>
 #include "osmaps.h"
 
-#define F_BOUND 1     /***< parse 'bounds' node */
-#define F_NODE 2      /***< parse 'node' nodes */
-#define F_WAY 4       /***< parse 'way' nodes */
-#define F_RELATION 8  /***< parse 'relation' nodes */
-#define F_TEXT 15     /***< parse in text form */
-
 /**
  * @brief This function prints the command prototype
  * @param[in] argv0 command name
@@ -74,16 +68,16 @@ Available options:\n\
       flags |= F_TEXT;
       break;
     case 'b':
-      flags |= F_BOUND;
+      flags |= F_BOUNDS;
       break;
     case 'n':
-      flags |= F_NODE;
+      flags |= F_NODES;
       break;
     case 'w':
-      flags |= F_WAY;
+      flags |= F_WAYS;
       break;
     case 'r':
-      flags |= F_RELATION;
+      flags |= F_RELATIONS;
       break;
     default : /* '?' ':' */
       usage(argv[0], stderr);
@@ -96,7 +90,7 @@ Available options:\n\
     return 1;
   } else docname = argv[optind];
   
-  parseDoc(docname);
+  printDoc(docname, flags);
   
   return 0;
 }
