@@ -24,7 +24,7 @@ parseTag(const xmlNodePtr cur, osmNode* tag){
  */
 void
 parseBounds(const xmlNodePtr cur, osmBounds* bounds){
-  
+
   sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"),
 	 "%lf", &bounds->minlat);
   sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"),
@@ -81,7 +81,7 @@ parseRelation(const xmlNodePtr cur, const osmWay** wayv, osmRelation* relation){
  */
 void
 parseDoc(const char *docname, osm* map) {
-  
+
   xmlDocPtr doc;
   xmlNodePtr cur;
   xmlNodePtr root;
@@ -113,29 +113,24 @@ parseDoc(const char *docname, osm* map) {
     return;
   }
 
-  //initialize counters
-  map->nodec = 0;
-  map->wayc = 0;
-  map->relationc = 0;
-
+  //set counters
+  way = 0;
+  node = 0;
+  relation = 0;
+  
   //get first child
   cur = root->xmlChildrenNode;
   while (cur != NULL) {
 
     //count nodes
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)){
-      map->nodec++;
-    }
+    if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)) node++;
 
     //count ways
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
-      map->wayc++;
-    }
+    if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)) way++;
 
     //count relations
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){
-      map->relationc++;
-    } 
+    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur))
+      relation++;
 
     //get next child
     cur = cur->next;
@@ -143,11 +138,11 @@ parseDoc(const char *docname, osm* map) {
 
   //alocate pointers and vectors
   map->bounds = (osmBounds*) malloc(sizeof(osmBounds));
-  map->nodev = (osmNode**) malloc(map->nodec * sizeof(osmNode*));
-  map->wayv = (osmWay**) malloc(map->wayc * sizeof(osmWay*));
-  map->relationv = (osmRelation**) malloc(map->relationc*sizeof(osmRelation*));
+  map->nodev = (osmNode**) malloc(node * sizeof(osmNode*));
+  map->wayv = (osmWay**) malloc(way * sizeof(osmWay*));
+  map->relationv = (osmRelation**) malloc(relation * sizeof(osmRelation*));
 
-  //initialize indexes
+  //reset counters
   way = 0;
   node = 0;
   relation = 0;
@@ -156,10 +151,10 @@ parseDoc(const char *docname, osm* map) {
   cur = root->xmlChildrenNode;
   while (cur != NULL) {
 
+    
     //parse bounds node
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"bounds") && VISIBLE(cur)){
+    if (!xmlStrcmp(cur->name, (const xmlChar *)"bounds"))
       parseBounds(cur, map->bounds);
-    }
 
     //parse node node
     if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)){
@@ -186,6 +181,11 @@ parseDoc(const char *docname, osm* map) {
     //get next child
     cur = cur->next;
   }
+
+  //fill counters
+  map->nodec = node;
+  map->wayc = way;
+  map->relationc = relation;
 
   //free opened document
   xmlFreeDoc(doc);
