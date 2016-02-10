@@ -49,6 +49,8 @@ typedef struct {
  */
 typedef struct {
   uint32_t id;             /***< id number >*/
+  uint32_t nodec;           /***< nodes cardinal >*/
+  osmWay** nodev;           /***< nodes vector >*/
   uint32_t wayc;           /***< ways cardinal >*/
   osmWay** wayv;           /***< ways vector >*/
 } osmRelation;
