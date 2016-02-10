@@ -68,7 +68,8 @@ parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way){
  * 
  */
 void
-parseRelation(const xmlNodePtr cur, const osmWay** wayv, osmRelation* relation){
+parseRelation(const xmlNodePtr cur, const osmNode** nodev,
+	      const osmWay** wayv, osmRelation* relation){
 
   return;
 }
@@ -163,8 +164,8 @@ parseDoc(const char *docname, osm* map) {
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){
       map->relationv[relation] = (osmRelation*) malloc(sizeof(osmRelation));
-      parseRelation(cur, (const osmWay**)map->relationv,
-		    map->relationv[relation]);
+      parseRelation(cur, (const osmNode**)map->nodev,
+		    (const osmWay**)map->wayv, map->relationv[relation]);
       relation++;
     } 
 
