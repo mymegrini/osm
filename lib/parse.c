@@ -96,7 +96,9 @@ parseDoc(const char *docname, osm* map) {
   xmlNodePtr cur;
   xmlNodePtr root;
   int node, way, relation;
-
+  int sortNode = 1;
+  int sortWay = 1;
+  
   doc = xmlParseFile(docname);
 
   if (doc == NULL ) {
@@ -157,12 +159,20 @@ parseDoc(const char *docname, osm* map) {
     }
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
+      if(sortNode) {
+	sortNodes(map->nodev, map->nodev);
+	sortNode = 0;
+      }
       map->wayv[way] = (osmWay*) malloc(sizeof(osmWay));
       parseWay(cur, (const osmNode**)map->nodev, map->wayv[way]);
       way++;
     }
 
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){
+    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){      
+      if(sortWay) {
+	sortWays(map->wayv, map->wayv);
+	sortWay = 0;
+      }
       map->relationv[relation] = (osmRelation*) malloc(sizeof(osmRelation));
       parseRelation(cur, (const osmNode**)map->nodev,
 		    (const osmWay**)map->wayv, map->relationv[relation]);
@@ -172,6 +182,7 @@ parseDoc(const char *docname, osm* map) {
     cur = cur->next;
   }
 
+  sortRelation(map->relationv, map->relationc);
   map->nodec = node;
   map->wayc = way;
   map->relationc = relation;
