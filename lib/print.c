@@ -20,7 +20,7 @@ printTag(const osmTag* tag){
 void
 printBounds(const osmBounds* bounds){
   
-  printf("Bounds:\n\tminlat: %f\n\tmaxlat: %f\n\tminlon: %f\n\tmaxlon: %f\n",
+  printf("Bounds:\n\tminlat: %f maxlat: %f\n\tminlon: %f -maxlon: %f\n",
 	 bounds->minlat, bounds->maxlat, bounds->minlon, bounds->maxlon);
   return;
 }
@@ -33,6 +33,10 @@ printBounds(const osmBounds* bounds){
 void
 printNode(const osmNode* node){
 
+  int t;
+  printf("Node: %d\n\tlatitude: %lf longitude: %lf\n",
+	 node->id, node->lat, node->lon);
+  for(t=0; t < node->tagc; t++){printf("\t"); printTag(node->tagv[t]);}
   return;
 }
  
