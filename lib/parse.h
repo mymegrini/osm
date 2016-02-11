@@ -49,6 +49,8 @@ typedef struct {
  */
 typedef struct {
   uint32_t id;             /***< id number >*/
+  uint32_t nodec;           /***< nodes cardinal >*/
+  osmWay** nodev;           /***< nodes vector >*/
   uint32_t wayc;           /***< ways cardinal >*/
   osmWay** wayv;           /***< ways vector >*/
 } osmRelation;
@@ -96,8 +98,9 @@ parseNode(const xmlNodePtr cur, osmNode* node);
 
 /**
  * @brief This function parses a 'way' subtree using a set of 'node' pointers
- * @param[in] way 'way' structure
+ * @param[in] cur xml node pointer
  * @param[in] nodev 'node' vector
+ * @param[out] way 'way' structure
  * @return void
  */
 void
@@ -105,12 +108,15 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way);
 
 /**
  * @brief This function parses a 'relation' node using a set of 'way' pointers
- * @param[in] relation 'relation' structure
+ * @param[in] cur xml node pointer
+ * @param[in] nodev 'node' vector
  * @param[in] wayv 'way' vector
+ * @param[out] relation 'relation' structure
  * @return void
  */
 void
-parseRelation(const xmlNodePtr cur, const osmWay** wayv, osmRelation* relation);
+parseRelation(const xmlNodePtr cur, const osmNode** nodev,
+	      const osmWay** wayv, osmRelation* relation);
 
 /**
  * @brief This function parses an osm file
