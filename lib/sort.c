@@ -12,7 +12,7 @@
  * @param p2 pointer to second osmNode structure
  * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpNode(const void* p1, const void* p2){
+static int _cmpNode(const void* p1, const void* p2){
   
   osmNode* np2 = *(osmNode* const*)p2;
   osmNode* np1 = *(osmNode* const*)p1;
@@ -25,7 +25,7 @@ static int cmpNode(const void* p1, const void* p2){
  * @param p2 pointer to second osmWay structure
  * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpWay(const void* p1, const void* p2){
+static int _cmpWay(const void* p1, const void* p2){
 
   osmNode* wp2 = *(osmNode* const*)p2;
   osmNode* wp1 = *(osmNode* const*)p1;
@@ -38,79 +38,114 @@ static int cmpWay(const void* p1, const void* p2){
  * @param p2 pointer to second osmRelation structure
  * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpRelation(const void* p1, const void* p2){
+static int _cmpRelation(const void* p1, const void* p2){
   
   osmNode* rp2 = *(osmNode* const*)p2;
   osmNode* rp1 = *(osmNode* const*)p1;
   return rp1->id - rp2->id;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// PUBLIC FUNCTIONS
-////////////////////////////////////////////////////////////////////////////////
-
 /**
- *
- * sortNodes uses qsort to sort \p nodev, with cmpNode as the comparison function
+ * @brief This function finds a 'node' in a sorted 'node' vector
+ * @param[in] id node id
+ * @param[out] nodev node vector
+ * @return pointer to the 'id' node
  */
-void
-sortNodes(osmNode** nodev, uint32_t nodec){
-
-  qsort(nodev, nodec, sizeof(osmNode*), &cmpNode);
-  return;
-}
-
-/**
- *
- * sortWays uses qsort to sort \p wayv, with cmpWay as the comparison function
- */
-void
-sortWays(osmWay** wayv, uint32_t wayc){
-
-  qsort(wayv, wayc, sizeof(osmWay*), cmpWay);
-  return;
-}
-
-/**
- *
- * sortRelations uses qsort to sort \p relationv, with cmpRelation as the 
- * comparison function
- */
-void
-sortRelations(osmRelation** relationv, uint32_t relationc){
-
-  qsort(relationv, relationc, sizeof(osmRelation*), cmpRelation);
-  return;
-}
-
-/*
- * 
- * findNode implements a dichotomic search in \p nodev assumed to be in
- * ascending sorted order
- */
-osmNode*
-findNode(osmNode** nodev, uint32_t nodec, uint32_t id){
-
+static osmNode*
+_findNode(osmNode** nodev, uint32_t nodec, uint32_t id){  
   uint32_t _id = nodev[nodec/2]->id;
+  
   if (nodec>0){
     if(_id==id) return nodev[nodec/2];
-    else if (_id>id) return findNode(nodev, nodec/2, id); 
-    else return findNode(nodev+(nodec/2)+1, nodec-1-(nodec/2), id);
+    else if (_id>id) return _findNode(nodev, nodec/2, id); 
+    else return _findNode(nodev+(nodec/2)+1, nodec-1-(nodec/2), id);
   } else return (_id==id ? nodev[0] : NULL);
 }
 
 /**
- *  
- * findWay implements a dichotomic search in \p wayv assumed to be in
- * ascending sorted order
+ * @brief This function finds a 'way' in a sorted 'way' vector
+ * @param[in] id way id
+ * @param[out] wayv way vector
+ * @return pointer to the 'id' way
  */
-osmWay*
-findWay(osmWay** wayv, uint32_t wayc, uint32_t id){
-
+static osmWay*
+_findWay(osmWay** wayv, uint32_t wayc, uint32_t id){  
   uint32_t _id = wayv[wayc/2]->id;
+  
   if (wayc>0){
     if(_id==id) return wayv[wayc/2];
-    else if (_id>id) return findWay(wayv, wayc/2, id); 
-    else return findWay(wayv+(wayc/2)+1, wayc-1-(wayc/2), id);
+    else if (_id>id) return _findWay(wayv, wayc/2, id); 
+    else return _findWay(wayv+(wayc/2)+1, wayc-1-(wayc/2), id);
   } else return (_id==id ? wayv[0] : NULL);
 }
+
+/**
+ * @brief This function finds a 'relation' in a sorted 'relation' vector
+ * @param[in] id relation id
+ * @param[out] relationv relation vector
+ * @return pointer to the 'id' relation
+ */
+static osmRelation*
+_findRelation(osmRelation** relationv, uint32_t relationc, uint32_t id){  
+  uint32_t _id = relationv[relationc/2]->id;
+  
+  if (relationc>0){
+    if(_id==id) return relationv[relationc/2];
+    else if (_id>id) return _findRelation(relationv, relationc/2, id); 
+    else return _findRelation(relationv+(relationc/2)+1,
+			      relationc-1-(relationc/2), id);
+  } else return (_id==id ? relationv[0] : NULL);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// PUBLIC FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+
+/*
+ * 
+ * findNode implements a dichotomic search (and sorts the array if necessary 
+ * using qsort and _cmpNode)
+ */
+osmNode*
+findNode(osm* map, uint32_t id){
+  
+  if(map->nodev_s) 
+    qsort(map->nodev, map->nodec, sizeof(osmNode*), &_cmpNode);
+
+  map->nodev_s = 0;
+
+  return _findNode(map->nodev, map->nodec, id);
+}
+
+/*
+ * 
+ * findWay implements a dichotomic search (and sorts the array if necessary 
+ * using qsort and _cmpWay)
+ */
+osmWay*
+findWay(osm* map, uint32_t id){
+  
+  if(map->wayv_s) 
+    qsort(map->wayv, map->wayc, sizeof(osmWay*), &_cmpWay);
+
+  map->wayv_s = 0;
+
+  return _findWay(map->wayv, map->wayc, id);
+}
+
+/*
+ * 
+ * findRelation implements a dichotomic search (and sorts the array if necessary 
+ * using qsort and _cmpRelation)
+ */
+osmRelation*
+findRelation(osm* map, uint32_t id){
+  
+  if(map->relationv_s) 
+    qsort(map->relationv, map->relationc, sizeof(osmRelation*), &_cmpRelation);
+
+  map->relationv_s = 0;
+
+  return _findRelation(map->relationv, map->relationc, id);
+}
+
