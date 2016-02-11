@@ -11,8 +11,10 @@
  * 
  */
 void
-parseTag(const xmlNodePtr cur, osmNode* tag){
+parseTag(const xmlNodePtr cur, osmTag* tag){
 
+  tag->k = xmlGetProp(cur, (const xmlChar*)"k");
+  tag->v = xmlGetProp(cur, (const xmlChar*)"v");
   return;
 }
 

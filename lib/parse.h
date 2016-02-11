@@ -73,7 +73,7 @@ typedef struct {
  * @return void
  */
 void
-parseTag(const xmlNodePtr cur, osmNode* tag);
+parseTag(const xmlNodePtr cur, osmTag* tag);
 
 /**
  * @brief This function parses a 'bounds' node
