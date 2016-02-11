@@ -37,6 +37,15 @@ sortNodes(osmNode** nodev, uint32_t nodec);
  * @return void
  */
 void
-sortWays(osmNode** wayv, uint32_t wayc);
+sortWays(osmWay** wayv, uint32_t wayc);
+
+/**
+ * @brief This function sorts a 'relation' vector
+ * @param[in] relationc relation vector size
+ * @param[out] relationv relatione vector
+ * @return void
+ */
+void
+sortRelations(osmRelation** relationv, uint32_t relationc);
 
 #endif
