@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <libxml/parser.h>
 #include "parse.h"
+#include "sort.h"
 
 /**
  * 
@@ -160,7 +161,7 @@ parseDoc(const char *docname, osm* map) {
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
       if(sortNode) {
-	sortNodes(map->nodev, map->nodev);
+	sortNodes(map->nodev, map->nodec);
 	sortNode = 0;
       }
       map->wayv[way] = (osmWay*) malloc(sizeof(osmWay));
@@ -170,7 +171,7 @@ parseDoc(const char *docname, osm* map) {
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){      
       if(sortWay) {
-	sortWays(map->wayv, map->wayv);
+	sortWays(map->wayv, map->wayc);
 	sortWay = 0;
       }
       map->relationv[relation] = (osmRelation*) malloc(sizeof(osmRelation));
@@ -182,7 +183,7 @@ parseDoc(const char *docname, osm* map) {
     cur = cur->next;
   }
 
-  sortRelation(map->relationv, map->relationc);
+  sortRelations(map->relationv, map->relationc);
   map->nodec = node;
   map->wayc = way;
   map->relationc = relation;

@@ -9,7 +9,7 @@
  * @param[out] nodev node vector
  * @return pointer to the 'id' node
  */
-osmNode *findNode(osmNode** nodev, uint32_t id);
+osmNode *findNode(osmNode** nodev, uint32_t nodec, uint32_t id);
 
 /**
  * @brief This function finds a 'way' in a sorted 'way' vector
@@ -17,7 +17,7 @@ osmNode *findNode(osmNode** nodev, uint32_t id);
  * @param[out] wayv way vector
  * @return pointer to the 'id' way
  */
-osmWay *findWay(osmWay** wayv, uint32_t id);
+osmWay *findWay(osmWay** wayv, uint32_t wayc, uint32_t id);
 
 /**
  * @brief This function sorts a 'node' vector
