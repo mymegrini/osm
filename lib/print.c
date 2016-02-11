@@ -1,5 +1,7 @@
 #include "print.h"
 
+#define SPACE "  "
+
 /**
  * 
  * 
@@ -8,7 +10,7 @@
 void
 printTag(const osmTag* tag){
 
-  printf("Tag: (%s : %s)\n", tag->k, tag->v);
+  printf("Tag:\t(%s):  \t%s\n", tag->k, tag->v);
   return;
 }
 
@@ -20,7 +22,7 @@ printTag(const osmTag* tag){
 void
 printBounds(const osmBounds* bounds){
   
-  printf("Bounds:\n\tminlat: %f maxlat: %f\n\tminlon: %f -maxlon: %f\n",
+  printf("Bounds:\n\tminlat= %f \tmaxlat= %f\n\tminlon= %f \tmaxlon= %f\n",
 	 bounds->minlat, bounds->maxlat, bounds->minlon, bounds->maxlon);
   return;
 }
@@ -34,9 +36,10 @@ void
 printNode(const osmNode* node){
 
   int t;
-  printf("Node:\t(%d)\tlat: %lf\tlon: %lf\n",
+  printf("Node:\t(%d)\tlat= %lf\tlon= %lf\n",
 	 node->id, node->lat, node->lon);
-  for(t=0; t < node->tagc; t++){printf("\t"); printTag(node->tagv[t]);}
+  for(t=0; t < node->tagc; t++)
+    {printf(SPACE); printTag(node->tagv[t]);}
   return;
 }
  
@@ -50,8 +53,10 @@ printWay(const osmWay* way){
 
   int i;
   printf("Way:\t(%d)\n", way->id);
-  for(i=0; i<way->nodec; i++) printf("\tNode:\t(%d)\n", way->nodev[i]->id);
-  for(i=0; i < way->tagc; i++){printf("\t"); printTag(way->tagv[i]);}
+  for(i=0; i<way->nodec; i++)
+    printf("%sNode:\t(%d)\n", SPACE, way->nodev[i]->id);
+  for(i=0; i < way->tagc; i++)
+    {printf(SPACE); printTag(way->tagv[i]);}
   return;
 }
  
@@ -66,11 +71,11 @@ printRelation(const osmRelation* relation){
   int i;
   printf("Relation:\t(%d)\n", relation->id);
   for(i=0; i<relation->nodec; i++)
-    printf("\tNode:\t(%d)\n", relation->nodev[i]->id);
+    printf("%sNode:\t(%d)\n", SPACE, relation->nodev[i]->id);
   for(i=0; i<relation->wayc; i++)
-    printf("\tWay:\t(%d)\n", relation->wayv[i]->id);
+    printf("%sWay:\t(%d)\n", SPACE, relation->wayv[i]->id);
   for(i=0; i < relation->tagc; i++)
-    {printf("\t"); printTag(relation->tagv[i]);}
+    {printf(SPACE); printTag(relation->tagv[i]);}
   return;
 }
 
@@ -88,23 +93,34 @@ printDoc(const char *docname, int flags){
 
   parseDoc(docname, &map);
   
-  if (flags & F_BOUNDS)
+  if (flags & F_BOUNDS){
     printBounds(map.bounds);
+    puts("");
+  }
 
-  if (flags & F_NODES)
+  if (flags & F_NODES){
+    printf("%d\n", map.nodec);
     for(i=0; i<map.nodec; i++){
       printNode(map.nodev[i]);
     }
+    puts("");
+  }
   
-  if (flags & F_WAYS)
+  if (flags & F_WAYS){
+    printf("%d\n", map.nodec);
     for(i=0; i<map.wayc; i++){
       printWay(map.wayv[i]);
     }
+    puts("");
+  }
   
-  if (flags & F_RELATIONS)
+  if (flags & F_RELATIONS){
+    printf("%d\n", map.nodec);
     for(i=0; i<map.relationc; i++){
       printRelation(map.relationv[i]);
     }
+    puts("");
+  }
   
   return;
 }
