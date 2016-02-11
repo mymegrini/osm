@@ -7,6 +7,9 @@
  */
 void
 printTag(const osmTag* tag){
+
+  printf("Tag: (%s : %s)\n", tag->k, tag->v);
+  return;
 }
 
 /**
