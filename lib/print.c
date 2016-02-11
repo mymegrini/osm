@@ -34,7 +34,7 @@ void
 printNode(const osmNode* node){
 
   int t;
-  printf("Node: %d\n\tlatitude: %lf longitude: %lf\n",
+  printf("Node:\t(%d)\tlat: %lf\tlon: %lf\n",
 	 node->id, node->lat, node->lon);
   for(t=0; t < node->tagc; t++){printf("\t"); printTag(node->tagv[t]);}
   return;
@@ -48,6 +48,10 @@ printNode(const osmNode* node){
 void
 printWay(const osmWay* way){
 
+  int i;
+  printf("Way:\t(%d)\n", way->id);
+  for(i=0; i<way->nodec; i++) printf("\tNode:\t(%d)\n", way->nodev[i]->id);
+  for(i=0; i < way->tagc; i++){printf("\t"); printTag(way->tagv[i]);}
   return;
 }
  
@@ -59,6 +63,14 @@ printWay(const osmWay* way){
 void
 printRelation(const osmRelation* relation){
 
+  int i;
+  printf("Relation:\t(%d)\n", relation->id);
+  for(i=0; i<relation->nodec; i++)
+    printf("\tNode:\t(%d)\n", relation->nodev[i]->id);
+  for(i=0; i<relation->wayc; i++)
+    printf("\tWay:\t(%d)\n", relation->wayv[i]->id);
+  for(i=0; i < relation->tagc; i++)
+    {printf("\t"); printTag(relation->tagv[i]);}
   return;
 }
 
