@@ -85,26 +85,32 @@ sortRelations(osmRelation** relationv, uint32_t relationc){
 
 /*
  * 
- * 
- * 
- * 
+ * findNode implements a dichotomic search in \p nodev assumed to be in
+ * ascending sorted order
  */
 osmNode*
 findNode(osmNode** nodev, uint32_t nodec, uint32_t id){
 
-  
-  return *nodev; //place holder
+  uint32_t _id = nodev[nodec/2]->id;
+  if (nodec>0){
+    if(_id==id) return nodev[nodec/2];
+    else if (_id>id) return findNode(nodev, nodec/2, id); 
+    else return findNode(nodev+(nodec/2)+1, nodec-1-(nodec/2), id);
+  } else return (_id==id ? nodev[0] : NULL);
 }
 
 /**
- * 
- * 
- * 
- * 
+ *  
+ * findWay implements a dichotomic search in \p wayv assumed to be in
+ * ascending sorted order
  */
 osmWay*
 findWay(osmWay** wayv, uint32_t wayc, uint32_t id){
 
-  
-  return *wayv; //place holder
+  uint32_t _id = wayv[wayc/2]->id;
+  if (wayc>0){
+    if(_id==id) return wayv[wayc/2];
+    else if (_id>id) return findWay(wayv, wayc/2, id); 
+    else return findWay(wayv+(wayc/2)+1, wayc-1-(wayc/2), id);
+  } else return (_id==id ? wayv[0] : NULL);
 }
