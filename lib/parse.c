@@ -28,14 +28,10 @@ parseTag(const xmlNodePtr cur, osmTag* tag){
 void
 parseBounds(const xmlNodePtr cur, osmBounds* bounds){
 
-  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"),
-	 "%lf", &bounds->minlat);
-  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"),
-	 "%lf", &bounds->maxlat);
-  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlon"),
-	 "%lf", &bounds->minlon);
-  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlon"),
-	 "%lf", &bounds->maxlon); 
+  bounds->minlat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"));
+  bounds->maxlat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"));
+  bounds->minlon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"minlon"));
+  bounds->maxlon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"maxlon"));
   return;
 }
 
