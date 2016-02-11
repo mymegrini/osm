@@ -109,8 +109,7 @@ parseNode(const xmlNodePtr cur, osmNode* node);
  * @return void
  */
 void
-parseWay(const xmlNodePtr cur, const osmNode** nodev,
-	 uint32_t nodec, osmWay* way);
+parseWay(const xmlNodePtr cur, const osm* map, osmWay* way);
 
 /**
  * @brief This function parses a 'relation' node using a set of 'way' pointers
@@ -121,9 +120,7 @@ parseWay(const xmlNodePtr cur, const osmNode** nodev,
  * @return void
  */
 void
-parseRelation(const xmlNodePtr cur, const osmNode** nodev,
-	      uint32_t nodec, const osmWay** wayv,
-	      uint32_t wayc, osmRelation* relation);
+parseRelation(const xmlNodePtr cur, const osm* map, osmRelation* relation);
 
 /**
  * @brief This function parses an osm file
