@@ -1,5 +1,6 @@
-#include "sort.h"
 #include <stdlib.h>
+#include "sort.h"
+#include "print.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS
@@ -7,35 +8,41 @@
 
 /**
  * @brief comparison function for osmNode structures
- * @param n1 pointer to first osmNode structure
- * @param n2 pointer to second osmNode structure
- * @return int difference between id of \p n2 id and id of \p n1
+ * @param p1 pointer to first osmNode structure
+ * @param p2 pointer to second osmNode structure
+ * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpNode(const void* n1, const void* n2){
+static int cmpNode(const void* p1, const void* p2){
   
-  return ((osmNode*)n2)->id-((osmNode*)n1)->id;
+  osmNode* np2 = *(osmNode* const*)p2;
+  osmNode* np1 = *(osmNode* const*)p1;
+  return np1->id - np2->id;
 }
 
 /**
  * @brief comparison function for osmWay structures
- * @param n1 pointer to first osmWay structure
- * @param n2 pointer to second osmWay structure
- * @return int difference between id of \p n2 id and id of \p n1
+ * @param p1 pointer to first osmWay structure
+ * @param p2 pointer to second osmWay structure
+ * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpWay(const void* n1, const void* n2){
-  
-  return ((osmWay*)n2)->id-((osmWay*)n1)->id;
+static int cmpWay(const void* p1, const void* p2){
+
+  osmNode* wp2 = *(osmNode* const*)p2;
+  osmNode* wp1 = *(osmNode* const*)p1;
+  return wp1->id - wp2->id;
 }
 
 /**
  * @brief comparison function for osmRelation structures
- * @param n1 pointer to first osmRelation structure
- * @param n2 pointer to second osmRelation structure
- * @return int difference between id of \p n2 id and id of \p n1
+ * @param p1 pointer to first osmRelation structure
+ * @param p2 pointer to second osmRelation structure
+ * @return int difference between id of \p p2 id and id of \p p1
  */
-static int cmpRelation(const void* n1, const void* n2){
+static int cmpRelation(const void* p1, const void* p2){
   
-  return ((osmRelation*)n2)->id-((osmRelation*)n1)->id;
+  osmNode* rp2 = *(osmNode* const*)p2;
+  osmNode* rp1 = *(osmNode* const*)p1;
+  return rp1->id - rp2->id;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +56,7 @@ static int cmpRelation(const void* n1, const void* n2){
 void
 sortNodes(osmNode** nodev, uint32_t nodec){
 
-  qsort(nodev, nodec, sizeof(osmNode *), cmpNode);
+  qsort(nodev, nodec, sizeof(osmNode*), &cmpNode);
   return;
 }
 
@@ -60,7 +67,7 @@ sortNodes(osmNode** nodev, uint32_t nodec){
 void
 sortWays(osmWay** wayv, uint32_t wayc){
 
-  qsort(wayv, wayc, sizeof(osmWay *), cmpWay);
+  qsort(wayv, wayc, sizeof(osmWay*), cmpWay);
   return;
 }
 
@@ -72,7 +79,7 @@ sortWays(osmWay** wayv, uint32_t wayc){
 void
 sortRelations(osmRelation** relationv, uint32_t relationc){
 
-  qsort(relationv, relationc, sizeof(osmRelation *), cmpRelation);
+  qsort(relationv, relationc, sizeof(osmRelation*), cmpRelation);
   return;
 }
 
