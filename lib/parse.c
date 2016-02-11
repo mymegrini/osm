@@ -83,7 +83,8 @@ parseNode(const xmlNodePtr cur, osmNode* node){
  * 
  */
 void
-parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way){
+parseWay(const xmlNodePtr cur, const osmNode** nodev,
+	 uint32_t nodec, osmWay* way){
 
   return;
 }
@@ -95,7 +96,8 @@ parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way){
  */
 void
 parseRelation(const xmlNodePtr cur, const osmNode** nodev,
-	      const osmWay** wayv, osmRelation* relation){
+	      uint32_t nodec, const osmWay** wayv,
+	      uint32_t wayc, osmRelation* relation){
 
   return;
 }
@@ -190,7 +192,8 @@ parseDoc(const char *docname, osm* map) {
 	sortNode = 0;
       }
       map->wayv[way] = (osmWay*) malloc(sizeof(osmWay));
-      parseWay(cur, (const osmNode**)map->nodev, map->wayv[way]);
+      parseWay(cur, (const osmNode**)map->nodev,
+	       map->nodec, map->wayv[way]);
       way++;
     }
 
@@ -201,7 +204,8 @@ parseDoc(const char *docname, osm* map) {
       }
       map->relationv[relation] = (osmRelation*) malloc(sizeof(osmRelation));
       parseRelation(cur, (const osmNode**)map->nodev,
-		    (const osmWay**)map->wayv, map->relationv[relation]);
+		    map->nodec, (const osmWay**)map->wayv,
+		    map->wayc, map->relationv[relation]);
       relation++;
     } 
 

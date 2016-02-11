@@ -53,6 +53,8 @@ typedef struct {
   osmWay** nodev;           /***< nodes vector >*/
   uint32_t wayc;           /***< ways cardinal >*/
   osmWay** wayv;           /***< ways vector >*/
+  uint32_t tagc;           /***< tags cardinal >*/
+  osmTag** tagv;           /***< tags vector >*/
 } osmRelation;
 
 /**
@@ -104,7 +106,8 @@ parseNode(const xmlNodePtr cur, osmNode* node);
  * @return void
  */
 void
-parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way);
+parseWay(const xmlNodePtr cur, const osmNode** nodev,
+	 uint32_t nodec, osmWay* way);
 
 /**
  * @brief This function parses a 'relation' node using a set of 'way' pointers
@@ -116,7 +119,8 @@ parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way);
  */
 void
 parseRelation(const xmlNodePtr cur, const osmNode** nodev,
-	      const osmWay** wayv, osmRelation* relation);
+	      uint32_t nodec, const osmWay** wayv,
+	      uint32_t wayc, osmRelation* relation);
 
 /**
  * @brief This function parses an osm file
