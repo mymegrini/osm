@@ -1,6 +1,10 @@
 #include "sort.h"
 #include <stdlib.h>
 
+////////////////////////////////////////////////////////////////////////////////
+// PRIVATE FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * @brief comparison function for osmNode structures
  * @param n1 pointer to first osmNode structure
@@ -8,6 +12,7 @@
  * @return int difference between id of \p n2 id and id of \p n1
  */
 static int cmpNode(const void* n1, const void* n2){
+  
   return ((osmNode*)n2)->id-((osmNode*)n1)->id;
 }
 
@@ -18,6 +23,7 @@ static int cmpNode(const void* n1, const void* n2){
  * @return int difference between id of \p n2 id and id of \p n1
  */
 static int cmpWay(const void* n1, const void* n2){
+  
   return ((osmWay*)n2)->id-((osmWay*)n1)->id;
 }
 
@@ -28,8 +34,13 @@ static int cmpWay(const void* n1, const void* n2){
  * @return int difference between id of \p n2 id and id of \p n1
  */
 static int cmpRelation(const void* n1, const void* n2){
+  
   return ((osmRelation*)n2)->id-((osmRelation*)n1)->id;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// PUBLIC FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  *
@@ -72,8 +83,9 @@ sortRelations(osmRelation** relationv, uint32_t relationc){
  * 
  */
 osmNode*
-findNode(osmNode** nodev, uint32_t id){
+findNode(osmNode** nodev, uint32_t nodec, uint32_t id){
 
+  
   return *nodev; //place holder
 }
 
@@ -84,7 +96,8 @@ findNode(osmNode** nodev, uint32_t id){
  * 
  */
 osmWay*
-findWay(osmWay** wayv, uint32_t id){
+findWay(osmWay** wayv, uint32_t wayc, uint32_t id){
 
+  
   return *wayv; //place holder
 }
