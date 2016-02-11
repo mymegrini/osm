@@ -44,6 +44,35 @@ parseBounds(const xmlNodePtr cur, osmBounds* bounds){
 void
 parseNode(const xmlNodePtr cur, osmNode* node){
 
+  xmlNodePtr child;
+  node->id = atoi((const char*)xmlGetProp(cur, (const xmlChar*)"id"));
+  node->lat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"lat"));
+  node->lon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"lon"));
+
+  node->tagc=0;
+  child = cur->xmlChildrenNode;
+  while (child != NULL){
+    
+    if(!xmlStrcmp(child->name, (const xmlChar*)"tag")) node->tagc++;
+
+    child = child->next;
+  }
+
+  node->tagv = (osmTag**) malloc(node->tagc * sizeof(osmTag*));
+  
+  node->tagc=0;
+  child = cur->xmlChildrenNode;
+  while (child != NULL){
+    
+    if(!xmlStrcmp(child->name, (const xmlChar*)"tag")){
+      node->tagv[node->tagc] = (osmTag*) malloc(sizeof(osmTag));
+      parseTag(child, node->tagv[node->tagc]);
+      node->tagc++;
+    }
+
+    child = child->next;
+  }
+  
   return;
 }
 
