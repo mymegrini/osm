@@ -18,8 +18,8 @@ sortNodes(osmNode** nodev, uint32_t nodec);
  * @param[out] nodev node vector
  * @return pointer to the 'id' node
  */
-osmNode*
-findNode(osmNode** nodev, uint32_t id);
+osmWay*
+findNode(osm* map, uint32_t id);
 
 /**
  * @brief This function sorts a 'way' vector

@@ -57,8 +57,43 @@ parseNode(const xmlNodePtr cur, osmNode* node){
  * 
  */
 void
-parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way){
+parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
 
+xmlNodePtr curseur = cur->xmlChildrenNode;
+int node=0;
+int tag=0;
+
+way->id=xmlGetProp(cur, "id");
+way->nodec=0;
+way->tagc=0;
+while (curseur != NULL) {
+	if ((!xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
+       		way->nodec++;
+	}
+	if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
+       		way->tagc++;	
+	}
+    	curseur = cur->next;
+}
+
+way->nodev=(osmNode**)malloc(way->nodec*sizeof(osmNode*));
+way->tagv=(osmTag**)malloc(way->tagc*sizeof(osmTag*));
+
+curseur=cur->xmlChildrenNode;
+while (curseur != NULL) {
+	if ((!xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
+
+       		way->nodev[node]=findNode(map,(int)xmlGetProp(cur, "ref"));
+	node++;
+	}
+	if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
+       		parseTag(curseur,way->tagv+tag);
+		tag++;
+	}
+    	curseur = cur->next;
+}
+way->nodec=node;
+way->tagc=tag;
   return;
 }
 

@@ -19,10 +19,15 @@ sortNodes(osmNode** nodev, uint32_t nodec){
  * 
  * 
  */
-osmNode*
-findNode(osmNode** nodev, uint32_t id){
-
-  return *nodev; //place holder
+osmWay*
+findNode(osm* map, uint32_t id){
+int i;
+i=map->nodec;
+while( i > 0){
+if(map->wayv[i]->id != id)
+i--;
+}
+return *(map->wayv);
 }
 
 /**
