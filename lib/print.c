@@ -1,4 +1,5 @@
 #include "print.h"
+#include "sort.h"
 
 #define SPACE "  "
 
@@ -86,7 +87,28 @@ printRelation(const osmRelation* relation){
  * 
  */
 void
-printDoc(const char *docname, int flags){
+printElement(const char *docname, uint32_t id){
+  
+  osm map;
+  osmNode* nd;
+  osmWay* wy;
+  osmRelation* rl;
+  
+  parseDoc(docname, &map);
+
+  if ((nd=findNode(&map, id))) printNode(nd);
+  else if ((wy=findWay(&map, id))) printWay(wy);
+  else if ((rl=findRelation(&map, id))) printRelation(rl);
+  else printf("Not found.");
+}
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+void
+printDoc(const char *docname, uint32_t flags){
   
   osm map;
   int i;
