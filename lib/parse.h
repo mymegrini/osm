@@ -47,30 +47,33 @@ typedef struct {
 /**
  * A structure to hold a relation subtree
  */
-typedef struct {
+typedef struct osmRelation osmRelation;
+struct osmRelation {
   uint32_t id;                /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
   osmWay** nodev;             /***< nodes vector >*/
   uint32_t wayc;              /***< ways cardinal >*/
   osmWay** wayv;              /***< ways vector >*/
+  uint32_t relationc;         /***< relations cardinal >*/
+  osmRelation** relationv;    /***< relations vector >*/
   uint32_t tagc;              /***< tags cardinal >*/
   osmTag** tagv;              /***< tags vector >*/
-} osmRelation;
+};
 
 /**
  * A structure to hold an osm tree
  */
 typedef struct {
-  osmBounds* bounds;         /***< 'bounds' node >*/
-  uint32_t nodec;            /***< nodes cardinal >*/
-  osmNode** nodev;           /***< nodes vector >*/
-  uint8_t nodev_s;           /***< null if nodev is sorted */
-  uint32_t wayc;             /***< ways cardinal >*/
-  osmWay** wayv;             /***< ways vector >*/
-  uint8_t wayv_s;            /***< null if wayv is sorted */
-  uint32_t relationc;        /***< relations cardinal >*/
-  osmRelation** relationv;   /***< relations vector >*/
-  uint8_t relationv_s;       /***< null if relationv is sorted */
+  osmBounds* bounds;          /***< 'bounds' node >*/
+  uint32_t nodec;             /***< nodes cardinal >*/
+  osmNode** nodev;            /***< nodes vector >*/
+  uint8_t nodev_s;            /***< null if nodev is sorted */
+  uint32_t wayc;              /***< ways cardinal >*/
+  osmWay** wayv;              /***< ways vector >*/
+  uint8_t wayv_s;             /***< null if wayv is sorted */
+  uint32_t relationc;         /***< relations cardinal >*/
+  osmRelation** relationv;    /***< relations vector >*/
+  uint8_t relationv_s;        /***< null if relationv is sorted */
 } osm;
 
 /**
@@ -109,7 +112,7 @@ parseNode(const xmlNodePtr cur, osmNode* node);
  * @return void
  */
 void
-parseWay(const xmlNodePtr cur, const osm* map, osmWay* way);
+parseWay(const xmlNodePtr cur, osm* map, osmWay* way);
 
 
 /**
@@ -121,7 +124,7 @@ parseWay(const xmlNodePtr cur, const osm* map, osmWay* way);
  * @return void
  */
 void
-parseRelation(const xmlNodePtr cur, const osm* map, osmRelation* relation);
+parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation);
 
 /**
  * @brief This function parses an osm file
