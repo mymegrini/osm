@@ -99,7 +99,9 @@ printElement(const char *docname, uint32_t id){
   if ((nd=findNode(&map, id))) printNode(nd);
   else if ((wy=findWay(&map, id))) printWay(wy);
   else if ((rl=findRelation(&map, id))) printRelation(rl);
-  else printf("Not found.");
+  else printf("Not found.\n");
+
+  return;
 }
 /**
  * 
