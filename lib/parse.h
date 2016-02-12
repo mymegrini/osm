@@ -111,6 +111,7 @@ parseNode(const xmlNodePtr cur, osmNode* node);
 void
 parseWay(const xmlNodePtr cur, const osm* map, osmWay* way);
 
+
 /**
  * @brief This function parses a 'relation' node using a set of 'way' pointers
  * @param[in] cur xml node pointer

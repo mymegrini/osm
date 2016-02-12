@@ -148,4 +148,3 @@ findRelation(osm* map, uint32_t id){
 
   return _findRelation(map->relationv, map->relationc, id);
 }
-

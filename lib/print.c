@@ -43,6 +43,8 @@ printNode(const osmNode* node){
     {printf(SPACE); printTag(node->tagv[t]);}
   return;
 }
+
+
  
 /**
  * 
@@ -51,6 +53,14 @@ printNode(const osmNode* node){
  */
 void
 printWay(const osmWay* way){
+int compt;
+ for(compt=0; compt < way->nodec; compt++){
+printf("\t"); 
+printf("%s",way->nodev+compt);}
+ for(compt=0; compt < way->tagc; compt++){
+printf("\t"); 
+printTag(way->tagv[compt]);
+}
 
   int i;
   printf("Way:\t(%d)\n", way->id);
