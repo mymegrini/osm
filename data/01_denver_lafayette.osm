@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.0.2">
+ <bounds minlat="39.7492900" minlon="-104.9737800" maxlat="39.7525610" maxlon="-104.9693810"/>
+ <node id="1321042431" lat="39.7519707" lon="-104.9739674" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <node id="176096518" lat="39.7507340" lon="-104.9708826" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="176071903" lat="39.7532291" lon="-104.9696574" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:45Z"/>
+ <node id="176085445" lat="39.7664884" lon="-104.9733488" user="DavidJDBA" uid="139555" visible="true" version="10" changeset="6591862" timestamp="2010-12-09T04:43:03Z"/>
+ <node id="176085406" lat="39.7477190" lon="-104.9727580" user="DavidJDBA" uid="139555" visible="true" version="7" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="288061472" lat="39.7511915" lon="-104.9531907" user="Peter Batty" uid="20846" visible="true" version="3" changeset="6313583" timestamp="2010-11-07T17:15:18Z"/>
+ <node id="176108497" lat="39.7507381" lon="-104.9721264" user="DenvaDude" uid="232785" visible="true" version="5" changeset="4995867" timestamp="2010-06-15T21:15:54Z"/>
+ <node id="176104637" lat="39.7510409" lon="-104.9407655" user="MQGavin" uid="349452" visible="true" version="6" changeset="5833459" timestamp="2010-09-20T22:21:11Z"/>
+ <node id="176085402" lat="39.7459649" lon="-104.9724659" user="DavidJDBA" uid="139555" visible="true" version="6" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="670119428" lat="39.7507423" lon="-104.9763678" user="DenvaDude" uid="232785" visible="true" version="2" changeset="4186292" timestamp="2010-03-21T00:04:52Z"/>
+ <node id="1321042421" lat="39.7494793" lon="-104.9739728" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <node id="1321042416" lat="39.7507304" lon="-104.9739701" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <node id="176085422" lat="39.7586980" lon="-104.9733516" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176109404" lat="39.7507119" lon="-104.9671690" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:58:08Z"/>
+ <node id="279896077" lat="39.7458131" lon="-104.9728007" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176074340" lat="39.7632488" lon="-104.9733500" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:47Z"/>
+ <node id="176070499" lat="39.7508014" lon="-104.9583963" user="Peter Batty" uid="20846" visible="true" version="6" changeset="6323706" timestamp="2010-11-08T20:41:50Z"/>
+ <node id="773306237" lat="39.7494389" lon="-104.9757617" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="176085434" lat="39.7620548" lon="-104.9733504" user="StellanL" uid="28775" visible="true" version="9" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="670119429" lat="39.7494877" lon="-104.9763549" user="DenvaDude" uid="232785" visible="true" version="2" changeset="4176123" timestamp="2010-03-20T02:32:37Z"/>
+ <node id="176095759" lat="39.7494857" lon="-104.9757621" user="DenvaDude" uid="232785" visible="true" version="4" changeset="4176123" timestamp="2010-03-20T02:32:37Z"/>
+ <node id="176109464" lat="39.7510451" lon="-104.9394486" user="MQGavin" uid="349452" visible="true" version="6" changeset="5833459" timestamp="2010-09-20T22:21:12Z"/>
+ <node id="176096524" lat="39.7582295" lon="-104.9708823" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="176111834" lat="39.7519675" lon="-104.9745528" user="DenvaDude" uid="232785" visible="true" version="8" changeset="4021668" timestamp="2010-03-03T00:55:42Z"/>
+ <node id="176088006" lat="39.7544863" lon="-104.9708824" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:45Z"/>
+ <node id="176085404" lat="39.7469535" lon="-104.9722001" user="DavidJDBA" uid="139555" visible="true" version="5" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176085906" lat="39.7594411" lon="-104.9708822" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="176091804" lat="39.7494919" lon="-104.9769503" user="DenvaDude" uid="232785" visible="true" version="4" changeset="4176123" timestamp="2010-03-20T02:32:37Z"/>
+ <node id="773306222" lat="39.7495132" lon="-104.9721125" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:52Z"/>
+ <node id="981250855" lat="39.7511812" lon="-104.9548831" user="Peter Batty" uid="20846" visible="true" version="1" changeset="6313583" timestamp="2010-11-07T17:15:18Z"/>
+ <node id="176096516" lat="39.7494657" lon="-104.9708826" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="176094243" lat="39.7582276" lon="-104.9696601" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:49Z"/>
+ <node id="176100068" lat="39.7494781" lon="-104.9721130" user="DenvaDude" uid="232785" visible="true" version="5" changeset="4995867" timestamp="2010-06-15T21:15:54Z"/>
+ <node id="176095815" lat="39.7507140" lon="-104.9597448" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:38Z"/>
+ <node id="176067712" lat="39.7511373" lon="-104.9457557" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:42:39Z"/>
+ <node id="670119590" lat="39.7494980" lon="-104.9783209" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:34:08Z"/>
+ <node id="773306219" lat="39.7495255" lon="-104.9757616" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:52Z"/>
+ <node id="176109405" lat="39.7519921" lon="-104.9671604" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:58:08Z"/>
+ <node id="176095816" lat="39.7519514" lon="-104.9597495" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:38Z"/>
+ <node id="392790712" lat="39.7495027" lon="-104.9781487" user="MetroStateMan" uid="104996" visible="true" version="1" changeset="1130007" timestamp="2009-05-09T18:37:45Z"/>
+ <node id="392790711" lat="39.7494609" lon="-104.9784604" user="DenvaDude" uid="232785" visible="true" version="3" changeset="4176123" timestamp="2010-03-20T02:34:08Z"/>
+ <node id="773342211" lat="39.7607146" lon="-104.9733509" user="StellanL" uid="28775" visible="true" version="4" changeset="8411074" timestamp="2011-06-11T23:41:50Z"/>
+ <node id="1029126922" lat="39.7437918" lon="-104.9733956" user="DavidJDBA" uid="139555" visible="true" version="1" changeset="6592030" timestamp="2010-12-09T05:46:49Z">
+  <tag k="highway" v="traffic_signals"/>
+ </node>
+ <node id="176085408" lat="39.7478589" lon="-104.9729638" user="DavidJDBA" uid="139555" visible="true" version="5" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176105793" lat="39.7512101" lon="-104.9500498" user="Peter Batty" uid="20846" visible="true" version="5" changeset="6313583" timestamp="2010-11-07T17:15:18Z"/>
+ <node id="176109460" lat="39.7507448" lon="-104.9781435" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:58:09Z"/>
+ <node id="981250845" lat="39.7510039" lon="-104.9567097" user="Peter Batty" uid="20846" visible="true" version="1" changeset="6313583" timestamp="2010-11-07T17:15:17Z"/>
+ <node id="773306214" lat="39.7494286" lon="-104.9609926" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:50Z"/>
+ <node id="176071022" lat="39.7623867" lon="-104.9733503" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:44Z"/>
+ <node id="773306241" lat="39.7494183" lon="-104.9696554" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:51Z"/>
+ <node id="279895568" lat="39.7481427" lon="-104.9732556" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176095760" lat="39.7507464" lon="-104.9757455" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4186292" timestamp="2010-03-21T00:04:52Z"/>
+ <node id="526676377" lat="39.7510409" lon="-104.9401701" user="MQGavin" uid="349452" visible="true" version="2" changeset="5833459" timestamp="2010-09-20T22:21:12Z"/>
+ <node id="773306209" lat="39.7494967" lon="-104.9647155" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:45Z"/>
+ <node id="176089588" lat="39.7519078" lon="-104.9634376" user="woodpeck_fixbot" uid="147510" visible="true" version="4" changeset="3078896" timestamp="2009-11-09T23:51:25Z"/>
+ <node id="176094237" lat="39.7507215" lon="-104.9696561" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:49Z"/>
+ <node id="176085411" lat="39.7519741" lon="-104.9733540" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176085430" lat="39.7607599" lon="-104.9733508" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:43Z">
+  <tag k="highway" v="traffic_signals"/>
+ </node>
+ <node id="773306213" lat="39.7495049" lon="-104.9622174" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:49Z"/>
+ <node id="176091849" lat="39.7569777" lon="-104.9696595" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:47Z"/>
+ <node id="392790710" lat="39.7485669" lon="-104.9796276" user="DenvaDude" uid="232785" visible="true" version="3" changeset="4662708" timestamp="2010-05-10T19:36:53Z"/>
+ <node id="176085910" lat="39.7595114" lon="-104.9696608" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="288062021" lat="39.7474221" lon="-104.9723804" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176086147" lat="39.7506919" lon="-104.9647073" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:50:01Z"/>
+ <node id="176073049" lat="39.7507175" lon="-104.9622398" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:49Z"/>
+ <node id="176096520" lat="39.7519878" lon="-104.9708825" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="176085412" lat="39.7545278" lon="-104.9733531" user="StellanL" uid="28775" visible="true" version="10" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176109462" lat="39.7511152" lon="-104.9556878" user="Peter Batty" uid="20846" visible="true" version="5" changeset="6313583" timestamp="2010-11-07T17:15:18Z"/>
+ <node id="526676375" lat="39.7510451" lon="-104.9410069" user="MQGavin" uid="349452" visible="true" version="2" changeset="5833459" timestamp="2010-09-20T22:21:11Z"/>
+ <node id="176095761" lat="39.7519986" lon="-104.9757231" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:53:41Z"/>
+ <node id="176085409" lat="39.7494740" lon="-104.9733549" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="288062072" lat="39.7482082" lon="-104.9696547" user="StellanL" uid="28775" visible="true" version="3" changeset="8411074" timestamp="2011-06-11T23:41:52Z"/>
+ <node id="661856937" lat="39.7454966" lon="-104.9732337" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:57Z"/>
+ <node id="981250841" lat="39.7509028" lon="-104.9576002" user="Peter Batty" uid="20846" visible="true" version="1" changeset="6313583" timestamp="2010-11-07T17:15:17Z"/>
+ <node id="176085416" lat="39.7553064" lon="-104.9733528" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176106320" lat="39.7519878" lon="-104.9683660" user="atkailash" uid="458035" visible="true" version="6" changeset="8208919" timestamp="2011-05-21T18:07:32Z"/>
+ <node id="176094239" lat="39.7519733" lon="-104.9696568" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:49Z"/>
+ <node id="670119487" lat="39.7507424" lon="-104.9751503" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:32:23Z"/>
+ <node id="773306239" lat="39.7494369" lon="-104.9733549" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:59Z"/>
+ <node id="176085417" lat="39.7557317" lon="-104.9733526" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="288062020" lat="39.7464074" lon="-104.9721781" user="DavidJDBA" uid="139555" visible="true" version="3" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176085443" lat="39.7660612" lon="-104.9733490" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="176111832" lat="39.7520022" lon="-104.9781265" user="DenvaDude" uid="232785" visible="true" version="5" changeset="4995867" timestamp="2010-06-15T21:15:59Z"/>
+ <node id="279896076" lat="39.7456085" lon="-104.9731182" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="670119588" lat="39.7493949" lon="-104.9785730" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:34:08Z"/>
+ <node id="176085424" lat="39.7594897" lon="-104.9733513" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176100070" lat="39.7494616" lon="-104.9671912" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:57Z"/>
+ <node id="450241073" lat="39.7497369" lon="-104.9736147" user="BeamandTrout" uid="112856" visible="true" version="1" changeset="1970167" timestamp="2009-07-28T21:54:18Z">
+  <tag k="highway" v="bus_stop"/>
+  <tag k="name" v="22nd and Downing"/>
+ </node>
+ <node id="176089585" lat="39.7494637" lon="-104.9634629" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:57Z"/>
+ <node id="773306211" lat="39.7494925" lon="-104.9659346" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:47Z"/>
+ <node id="176108496" lat="39.7482271" lon="-104.9721336" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:47Z"/>
+ <node id="176091806" lat="39.7507423" lon="-104.9769525" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4186292" timestamp="2010-03-21T00:04:51Z"/>
+ <node id="176091807" lat="39.7519986" lon="-104.9769247" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:52:09Z"/>
+ <node id="671010689" lat="39.7486883" lon="-104.9733798" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="670119427" lat="39.7519986" lon="-104.9763093" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:30:50Z"/>
+ <node id="176071901" lat="39.7532194" lon="-104.9708825" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:45Z"/>
+ <node id="176102963" lat="39.7507051" lon="-104.9609953" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:51Z"/>
+ <node id="176085400" lat="39.7448319" lon="-104.9733802" user="StellanL" uid="28775" visible="true" version="9" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176094241" lat="39.7557441" lon="-104.9696588" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:49Z"/>
+ <node id="773306245" lat="39.7494348" lon="-104.9598419" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="773306220" lat="39.7495235" lon="-104.9745602" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:52Z"/>
+ <node id="773306218" lat="39.7495358" lon="-104.9768847" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:52Z"/>
+ <node id="176085426" lat="39.7595161" lon="-104.9733513" user="StellanL" uid="28775" visible="true" version="9" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="773342216" lat="39.7607084" lon="-104.9696615" user="StellanL" uid="28775" visible="true" version="3" changeset="8411074" timestamp="2011-06-11T23:41:52Z"/>
+ <node id="773306240" lat="39.7494224" lon="-104.9708826" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:51Z"/>
+ <node id="773306244" lat="39.7494224" lon="-104.9634682" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="1032632375" lat="39.7611723" lon="-104.9733507" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:53Z"/>
+ <node id="861669348" lat="39.7519582" lon="-104.9653014" user="Steve" uid="1" visible="true" version="1" changeset="5502771" timestamp="2010-08-15T18:26:13Z"/>
+ <node id="176085441" lat="39.7657577" lon="-104.9733491" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="176085420" lat="39.7582331" lon="-104.9733518" user="StellanL" uid="28775" visible="true" version="10" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="773306221" lat="39.7495173" lon="-104.9733549" user="StellanL" uid="28775" visible="true" version="3" changeset="8411074" timestamp="2011-06-11T23:41:50Z"/>
+ <node id="176108499" lat="39.7519819" lon="-104.9720959" user="woodpeck_fixbot" uid="147510" visible="true" version="4" changeset="3078896" timestamp="2009-11-09T23:57:55Z"/>
+ <node id="773306217" lat="39.7494987" lon="-104.9609901" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:50Z"/>
+ <node id="773306226" lat="39.7495008" lon="-104.9671905" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:52Z"/>
+ <node id="671010677" lat="39.7461806" lon="-104.9722640" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="670119587" lat="39.7492341" lon="-104.9787715" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:34:08Z"/>
+ <node id="176100069" lat="39.7494616" lon="-104.9683794" user="atkailash" uid="458035" visible="true" version="7" changeset="8208919" timestamp="2011-05-21T18:07:32Z"/>
+ <node id="671010684" lat="39.7472076" lon="-104.9722532" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="773306208" lat="39.7494183" lon="-104.9647128" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:44Z"/>
+ <node id="176098142" lat="39.7519789" lon="-104.9659330" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:54:26Z"/>
+ <node id="176085439" lat="39.7651507" lon="-104.9733493" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="176096522" lat="39.7557400" lon="-104.9708824" user="StellanL" uid="28775" visible="true" version="6" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="671010682" lat="39.7466390" lon="-104.9721725" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="773306210" lat="39.7494162" lon="-104.9659359" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:46Z"/>
+ <node id="670119488" lat="39.7494897" lon="-104.9751681" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:50Z"/>
+ <node id="176073051" lat="39.7519540" lon="-104.9622462" user="woodpeck_fixbot" uid="147510" visible="true" version="4" changeset="3078896" timestamp="2009-11-09T23:44:30Z"/>
+ <node id="176095814" lat="39.7494760" lon="-104.9597507" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:16:00Z"/>
+ <node id="176094235" lat="39.7494546" lon="-104.9696554" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:49Z"/>
+ <node id="773306238" lat="39.7494389" lon="-104.9745608" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="773306232" lat="39.7494369" lon="-104.9721157" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:54Z"/>
+ <node id="176100066" lat="39.7494843" lon="-104.9745599" user="DenvaDude" uid="232785" visible="true" version="9" changeset="4186292" timestamp="2010-03-21T00:05:23Z"/>
+ <node id="176086145" lat="39.7494554" lon="-104.9647128" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:45Z"/>
+ <node id="861669721" lat="39.7507111" lon="-104.9615992" user="Steve" uid="1" visible="true" version="1" changeset="5502771" timestamp="2010-08-15T18:26:27Z"/>
+ <node id="861669349" lat="39.7507017" lon="-104.9653109" user="Steve" uid="1" visible="true" version="1" changeset="5502771" timestamp="2010-08-15T18:26:14Z"/>
+ <node id="773306242" lat="39.7494204" lon="-104.9683794" user="atkailash" uid="458035" visible="true" version="2" changeset="8208919" timestamp="2011-05-21T18:07:34Z"/>
+ <node id="176086149" lat="39.7519393" lon="-104.9647228" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:50:01Z"/>
+ <node id="176094244" lat="39.7607527" lon="-104.9696615" user="DavidJDBA" uid="139555" visible="true" version="6" changeset="6619167" timestamp="2010-12-11T04:33:39Z"/>
+ <node id="176109461" lat="39.7507269" lon="-104.9745699" user="DenvaDude" uid="232785" visible="true" version="8" changeset="4021668" timestamp="2010-03-03T00:55:42Z"/>
+ <node id="773306223" lat="39.7495111" lon="-104.9708826" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:50Z"/>
+ <node id="1321042419" lat="39.7507127" lon="-104.9603859" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <node id="1321042435" lat="39.7507132" lon="-104.9590765" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <node id="670119486" lat="39.7519832" lon="-104.9751450" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4176123" timestamp="2010-03-20T02:32:23Z"/>
+ <node id="773306228" lat="39.7495090" lon="-104.9598419" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:53Z"/>
+ <node id="176098141" lat="39.7507119" lon="-104.9659330" user="woodpeck_fixbot" uid="147510" visible="true" version="7" changeset="3078896" timestamp="2009-11-09T23:54:26Z"/>
+ <node id="773306243" lat="39.7494265" lon="-104.9671965" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="176085410" lat="39.7507340" lon="-104.9733544" user="StellanL" uid="28775" visible="true" version="9" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="981250859" lat="39.7511874" lon="-104.9542126" user="Peter Batty" uid="20846" visible="true" version="1" changeset="6313583" timestamp="2010-11-07T17:15:18Z"/>
+ <node id="176096514" lat="39.7482126" lon="-104.9708826" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:39Z"/>
+ <node id="176072246" lat="39.7645106" lon="-104.9733495" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:46Z"/>
+ <node id="176085436" lat="39.7642240" lon="-104.9733496" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:43Z"/>
+ <node id="176085414" lat="39.7551547" lon="-104.9733529" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="279896075" lat="39.7453181" lon="-104.9733586" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:57Z"/>
+ <node id="526676376" lat="39.7510409" lon="-104.9405885" user="MQGavin" uid="349452" visible="true" version="2" changeset="5833459" timestamp="2010-09-20T22:21:11Z"/>
+ <node id="176091847" lat="39.7570100" lon="-104.9708823" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:47Z"/>
+ <node id="773306212" lat="39.7494307" lon="-104.9622186" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:49Z"/>
+ <node id="176106319" lat="39.7507196" lon="-104.9683740" user="atkailash" uid="458035" visible="true" version="7" changeset="8208919" timestamp="2011-05-21T18:07:32Z"/>
+ <node id="176102965" lat="39.7519490" lon="-104.9610250" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:56:05Z"/>
+ <node id="176073047" lat="39.7494743" lon="-104.9622168" user="woodpeck_fixbot" uid="147510" visible="true" version="5" changeset="3078896" timestamp="2009-11-09T23:44:29Z"/>
+ <node id="176085428" lat="39.7604399" lon="-104.9733510" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="671010687" lat="39.7484285" lon="-104.9733530" user="DavidJDBA" uid="139555" visible="true" version="2" changeset="6571090" timestamp="2010-12-07T05:10:58Z"/>
+ <node id="176098140" lat="39.7494554" lon="-104.9659386" user="DenvaDude" uid="232785" visible="true" version="6" changeset="4995867" timestamp="2010-06-15T21:15:47Z"/>
+ <node id="176085418" lat="39.7569824" lon="-104.9733522" user="StellanL" uid="28775" visible="true" version="7" changeset="8411074" timestamp="2011-06-11T23:41:42Z"/>
+ <node id="176081505" lat="39.7638075" lon="-104.9733498" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:40Z"/>
+ <node id="773306224" lat="39.7495029" lon="-104.9696554" user="StellanL" uid="28775" visible="true" version="2" changeset="8411074" timestamp="2011-06-11T23:41:50Z"/>
+ <node id="773306227" lat="39.7494904" lon="-104.9634621" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:53Z"/>
+ <node id="176088008" lat="39.7544835" lon="-104.9696581" user="StellanL" uid="28775" visible="true" version="9" changeset="8411074" timestamp="2011-06-11T23:41:45Z"/>
+ <node id="176071897" lat="39.7532345" lon="-104.9733535" user="StellanL" uid="28775" visible="true" version="8" changeset="8411074" timestamp="2011-06-11T23:41:45Z"/>
+ <node id="773306225" lat="39.7495029" lon="-104.9683794" user="atkailash" uid="458035" visible="true" version="2" changeset="8208919" timestamp="2011-05-21T18:07:33Z"/>
+ <node id="176100072" lat="39.7494657" lon="-104.9609926" user="DenvaDude" uid="232785" visible="true" version="8" changeset="4995867" timestamp="2010-06-15T21:15:50Z"/>
+ <node id="773306236" lat="39.7494410" lon="-104.9768766" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z"/>
+ <node id="861669722" lat="39.7519514" lon="-104.9616094" user="Steve" uid="1" visible="true" version="1" changeset="5502771" timestamp="2010-08-15T18:26:27Z"/>
+ <node id="526676374" lat="39.7510824" lon="-104.9417306" user="DavidJDBA" uid="139555" visible="true" version="1" changeset="2789650" timestamp="2009-10-09T05:18:26Z"/>
+ <node id="176089587" lat="39.7507051" lon="-104.9634285" user="woodpeck_fixbot" uid="147510" visible="true" version="6" changeset="3078896" timestamp="2009-11-09T23:51:25Z"/>
+ <node id="1321042417" lat="39.7494708" lon="-104.9603820" user="StellanL" uid="28775" visible="true" version="1" changeset="8411074" timestamp="2011-06-11T23:41:37Z"/>
+ <way id="16983914" user="StellanL" uid="28775" visible="true" version="32" changeset="8411074" timestamp="2011-06-11T23:41:59Z">
+  <nd ref="1029126922"/>
+  <nd ref="176085400"/>
+  <nd ref="279896075"/>
+  <nd ref="661856937"/>
+  <nd ref="279896076"/>
+  <nd ref="279896077"/>
+  <nd ref="176085402"/>
+  <nd ref="671010677"/>
+  <nd ref="288062020"/>
+  <nd ref="671010682"/>
+  <nd ref="176085404"/>
+  <nd ref="671010684"/>
+  <nd ref="288062021"/>
+  <nd ref="176085406"/>
+  <nd ref="176085408"/>
+  <nd ref="279895568"/>
+  <nd ref="671010687"/>
+  <nd ref="671010689"/>
+  <nd ref="773306239"/>
+  <nd ref="176085409"/>
+  <nd ref="773306221"/>
+  <nd ref="176085410"/>
+  <nd ref="176085411"/>
+  <nd ref="176071897"/>
+  <nd ref="176085412"/>
+  <nd ref="176085414"/>
+  <nd ref="176085416"/>
+  <nd ref="176085417"/>
+  <nd ref="176085418"/>
+  <nd ref="176085420"/>
+  <nd ref="176085422"/>
+  <nd ref="176085424"/>
+  <nd ref="176085426"/>
+  <nd ref="176085428"/>
+  <nd ref="773342211"/>
+  <nd ref="176085430"/>
+  <nd ref="1032632375"/>
+  <nd ref="176085434"/>
+  <nd ref="176071022"/>
+  <nd ref="176074340"/>
+  <nd ref="176081505"/>
+  <nd ref="176085436"/>
+  <nd ref="176072246"/>
+  <nd ref="176085439"/>
+  <nd ref="176085441"/>
+  <nd ref="176085443"/>
+  <nd ref="176085445"/>
+  <tag k="highway" v="tertiary"/>
+  <tag k="name" v="Downing Street"/>
+  <tag k="tiger:cfcc" v="A31"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="Downing"/>
+  <tag k="tiger:name_base_1" v="State Highway 33"/>
+  <tag k="tiger:name_type" v="St"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177304947:177305044:177305045"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+ <way id="78378072" user="StellanL" uid="28775" visible="true" version="3" changeset="8411074" timestamp="2011-06-11T23:41:56Z">
+  <nd ref="176109460"/>
+  <nd ref="176091806"/>
+  <nd ref="670119428"/>
+  <nd ref="176095760"/>
+  <nd ref="670119487"/>
+  <nd ref="176109461"/>
+  <nd ref="1321042416"/>
+  <nd ref="176085410"/>
+  <nd ref="176108497"/>
+  <nd ref="176096518"/>
+  <nd ref="176094237"/>
+  <nd ref="176106319"/>
+  <nd ref="176109404"/>
+  <nd ref="176098141"/>
+  <nd ref="861669349"/>
+  <nd ref="176086147"/>
+  <nd ref="176089587"/>
+  <nd ref="176073049"/>
+  <nd ref="861669721"/>
+  <nd ref="176102963"/>
+  <nd ref="1321042419"/>
+  <nd ref="176095815"/>
+  <nd ref="1321042435"/>
+  <nd ref="176070499"/>
+  <nd ref="981250841"/>
+  <nd ref="981250845"/>
+  <nd ref="176109462"/>
+  <nd ref="981250855"/>
+  <nd ref="981250859"/>
+  <nd ref="288061472"/>
+  <nd ref="176105793"/>
+  <nd ref="176067712"/>
+  <nd ref="526676374"/>
+  <nd ref="526676375"/>
+  <nd ref="176104637"/>
+  <nd ref="526676376"/>
+  <nd ref="526676377"/>
+  <nd ref="176109464"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="East 23rd Avenue"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="23rd"/>
+  <tag k="tiger:name_direction_prefix" v="E"/>
+  <tag k="tiger:name_type" v="Ave"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177313321:177313323:177313328:177313252:177313253:177313272:177313277:177313318:177312390:177313246:177312349:177312300:177312351:177312356:177312358:177312359:177312273:177312279:177312281:177312282:177312011:177312012:177312019:177311911:177311918:17731"/>
+  <tag k="tiger:zip_left" v="80207"/>
+  <tag k="tiger:zip_right" v="80207"/>
+ </way>
+ <way id="16985131" user="DenvaDude" uid="232785" visible="true" version="9" changeset="4995867" timestamp="2010-06-15T22:18:18Z">
+  <nd ref="288062072"/>
+  <nd ref="773306241"/>
+  <nd ref="176094235"/>
+  <nd ref="773306224"/>
+  <nd ref="176094237"/>
+  <nd ref="176094239"/>
+  <nd ref="176071903"/>
+  <nd ref="176088008"/>
+  <nd ref="176094241"/>
+  <nd ref="176091849"/>
+  <nd ref="176094243"/>
+  <nd ref="176085910"/>
+  <nd ref="773342216"/>
+  <nd ref="176094244"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="Humboldt Street"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="Humboldt"/>
+  <tag k="tiger:name_type" v="St"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177305356:177305359:177305372:177305903:177305905:177305374:177305911:177305913:177305944:177305947:177390998:177305920:177305367"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+ <way id="62040460" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:53Z">
+  <nd ref="773306218"/>
+  <nd ref="773306219"/>
+  <nd ref="773306220"/>
+  <nd ref="773306221"/>
+  <nd ref="773306222"/>
+  <nd ref="773306223"/>
+  <nd ref="773306224"/>
+  <nd ref="773306225"/>
+  <nd ref="773306226"/>
+  <nd ref="773306211"/>
+  <nd ref="773306209"/>
+  <nd ref="773306227"/>
+  <nd ref="773306213"/>
+  <nd ref="773306217"/>
+  <nd ref="773306228"/>
+  <tag k="highway" v="cycleway"/>
+ </way>
+ <way id="26296702" user="StellanL" uid="28775" visible="true" version="4" changeset="8411074" timestamp="2011-06-11T23:41:55Z">
+  <nd ref="176096514"/>
+  <nd ref="773306240"/>
+  <nd ref="176096516"/>
+  <nd ref="773306223"/>
+  <nd ref="176096518"/>
+  <nd ref="176096520"/>
+  <nd ref="176071901"/>
+  <nd ref="176088006"/>
+  <nd ref="176096522"/>
+  <nd ref="176091847"/>
+  <nd ref="176096524"/>
+  <nd ref="176085906"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="Lafayette Street"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="Lafayette"/>
+  <tag k="tiger:name_type" v="St"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177630964:177305351:177305888:177305890:177305897:177305901:177305899:177305354:177305932:177305934"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+ <way id="16988811" user="StellanL" uid="28775" visible="true" version="11" changeset="8411074" timestamp="2011-06-11T23:42:03Z">
+  <nd ref="176111832"/>
+  <nd ref="176091807"/>
+  <nd ref="670119427"/>
+  <nd ref="176095761"/>
+  <nd ref="670119486"/>
+  <nd ref="176111834"/>
+  <nd ref="1321042431"/>
+  <nd ref="176085411"/>
+  <nd ref="176108499"/>
+  <nd ref="176096520"/>
+  <nd ref="176094239"/>
+  <nd ref="176106320"/>
+  <nd ref="176109405"/>
+  <nd ref="176098142"/>
+  <nd ref="861669348"/>
+  <nd ref="176086149"/>
+  <nd ref="176089588"/>
+  <nd ref="176073051"/>
+  <nd ref="861669722"/>
+  <nd ref="176102965"/>
+  <nd ref="176095816"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="East 24th Avenue"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="24th"/>
+  <tag k="tiger:name_direction_prefix" v="E"/>
+  <tag k="tiger:name_type" v="Ave"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177306001:177306006:177306012:177306014:177305912:177305916:177305926:177305644:177305650:177305654:177305611:177305892:177305898:177305976:177305982"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+ <way id="62040461" user="DenvaDude" uid="232785" visible="true" version="1" changeset="4995867" timestamp="2010-06-15T21:15:56Z">
+  <nd ref="773306236"/>
+  <nd ref="773306237"/>
+  <nd ref="773306238"/>
+  <nd ref="773306239"/>
+  <nd ref="773306232"/>
+  <nd ref="773306240"/>
+  <nd ref="773306241"/>
+  <nd ref="773306242"/>
+  <nd ref="773306243"/>
+  <nd ref="773306210"/>
+  <nd ref="773306208"/>
+  <nd ref="773306244"/>
+  <nd ref="773306212"/>
+  <nd ref="773306214"/>
+  <nd ref="773306245"/>
+  <tag k="highway" v="cycleway"/>
+ </way>
+ <way id="52867667" user="StellanL" uid="28775" visible="true" version="5" changeset="8411074" timestamp="2011-06-11T23:41:56Z">
+  <nd ref="392790710"/>
+  <nd ref="670119587"/>
+  <nd ref="670119588"/>
+  <nd ref="392790711"/>
+  <nd ref="670119590"/>
+  <nd ref="392790712"/>
+  <nd ref="176091804"/>
+  <nd ref="670119429"/>
+  <nd ref="176095759"/>
+  <nd ref="670119488"/>
+  <nd ref="176100066"/>
+  <nd ref="1321042421"/>
+  <nd ref="176085409"/>
+  <nd ref="176100068"/>
+  <nd ref="176096516"/>
+  <nd ref="176094235"/>
+  <nd ref="176100069"/>
+  <nd ref="176100070"/>
+  <nd ref="176098140"/>
+  <nd ref="176086145"/>
+  <nd ref="176089585"/>
+  <nd ref="176073047"/>
+  <nd ref="176100072"/>
+  <nd ref="1321042417"/>
+  <nd ref="176095814"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="East 22nd Avenue"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="22nd"/>
+  <tag k="tiger:name_direction_prefix" v="E"/>
+  <tag k="tiger:name_type" v="Ave"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+ <way id="25674920" user="DenvaDude" uid="232785" visible="true" version="4" changeset="4995867" timestamp="2010-06-15T21:15:54Z">
+  <nd ref="176108496"/>
+  <nd ref="773306232"/>
+  <nd ref="176100068"/>
+  <nd ref="773306222"/>
+  <nd ref="176108497"/>
+  <nd ref="176108499"/>
+  <tag k="highway" v="residential"/>
+  <tag k="name" v="Marion Street"/>
+  <tag k="tiger:cfcc" v="A41"/>
+  <tag k="tiger:county" v="Denver, CO"/>
+  <tag k="tiger:name_base" v="Marion"/>
+  <tag k="tiger:name_type" v="St"/>
+  <tag k="tiger:reviewed" v="no"/>
+  <tag k="tiger:separated" v="no"/>
+  <tag k="tiger:source" v="tiger_import_dch_v0.6_20070809"/>
+  <tag k="tiger:tlid" v="177305893:177305929:177305895:177305930"/>
+  <tag k="tiger:zip_left" v="80205"/>
+  <tag k="tiger:zip_right" v="80205"/>
+ </way>
+</osm>
