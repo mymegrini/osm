@@ -7,7 +7,8 @@
 #define F_NODES 2      /***< print 'node' nodes */
 #define F_WAYS 4       /***< print 'way' nodes */
 #define F_RELATIONS 8  /***< print 'relation' nodes */
-#define F_TEXT 15      /***< print in text form */
+#define F_TEXT 15      /***< print all nodes in text form */
+#define F_ID 16        /***< print 'id' node */
 
 /**
  * @brief This function prints attribute values for a 'tag' node
@@ -56,6 +57,15 @@ printRelation(const osmRelation* relation);
  * @return void
  */
 void
-printDoc(const char *docname, int flags);
+printDoc(const char *docname, uint32_t flags);
+
+/**
+ * @brief This function parses an osm file and prints its contents
+ * @param[in] flags selects which nodes are printed
+ * @param[in] docname filename of osm file
+ * @return void
+ */
+void
+printElement(const char *docname, uint32_t id);
 
 #endif

@@ -1,4 +1,7 @@
 #include "print.h"
+#include "sort.h"
+
+#define SPACE " L_"
 
 /**
  * 
@@ -8,7 +11,7 @@
 void
 printTag(const osmTag* tag){
 
-  printf("Tag: (%s : %s)\n", tag->k, tag->v);
+  printf("Tag:\t(%s):  \t%s\n", tag->k, tag->v);
   return;
 }
 
@@ -20,7 +23,7 @@ printTag(const osmTag* tag){
 void
 printBounds(const osmBounds* bounds){
   
-  printf("Bounds:\n\tminlat: %f maxlat: %f\n\tminlon: %f -maxlon: %f\n",
+  printf("Bounds:\n\tminlat= %f \tmaxlat= %f\n\tminlon= %f \tmaxlon= %f\n",
 	 bounds->minlat, bounds->maxlat, bounds->minlon, bounds->maxlon);
   return;
 }
@@ -34,9 +37,10 @@ void
 printNode(const osmNode* node){
 
   int t;
-  printf("Node: %d\n\tlatitude: %lf longitude: %lf\n",
+  printf("Node:\t(%d)\tlat= %lf\tlon= %lf\n",
 	 node->id, node->lat, node->lon);
-  for(t=0; t < node->tagc; t++){printf("\t"); printTag(node->tagv[t]);}
+  for(t=0; t < node->tagc; t++)
+    {printf(SPACE); printTag(node->tagv[t]);}
   return;
 }
  
@@ -47,11 +51,14 @@ printNode(const osmNode* node){
  */
 void
 printWay(const osmWay* way){
-  /* 
-   *printf("Way: %d\n\t", way->id);
-   *for(int t=0;t< way->nodec; t++){printf("\t"); printNode(way->nodev[t]);}
-   *for(int t=0;t< way->tagc;t++){printf("\t"); printTag(way->tagv[t];}
-   */
+
+  int i;
+  printf("Way:\t(%d)\n", way->id);
+  for(i=0; i<way->nodec; i++)
+    printf("%sNode:\t(%d)\n", SPACE, way->nodev[i]->id);
+  for(i=0; i < way->tagc; i++)
+    {printf(SPACE); printTag(way->tagv[i]);}
+
   return;
 }
  
@@ -62,10 +69,15 @@ printWay(const osmWay* way){
  */
 void
 printRelation(const osmRelation* relation){
-  /*
-   *printf("Relation: %d\n\t", relation->id);
-   *for(int t=0; t< relation->wayc;t++){printf("\t"); printWay(relation->wayv[t]);}
-   */
+
+  int i;
+  printf("Relation:\t(%d)\n", relation->id);
+  for(i=0; i<relation->nodec; i++)
+    printf("%sNode:\t(%d)\n", SPACE, relation->nodev[i]->id);
+  for(i=0; i<relation->wayc; i++)
+    printf("%sWay:\t(%d)\n", SPACE, relation->wayv[i]->id);
+  for(i=0; i < relation->tagc; i++)
+    {printf(SPACE); printTag(relation->tagv[i]);}
   return;
 }
 
@@ -76,30 +88,65 @@ printRelation(const osmRelation* relation){
  * 
  */
 void
-printDoc(const char *docname, int flags){
+printElement(const char *docname, uint32_t id){
+  
+  osm map;
+  osmNode* nd;
+  osmWay* wy;
+  osmRelation* rl;
+  
+  parseDoc(docname, &map);
+
+  if ((nd=findNode(&map, id))) printNode(nd);
+  else if ((wy=findWay(&map, id))) printWay(wy);
+  else if ((rl=findRelation(&map, id))) printRelation(rl);
+  else printf("Not found.\n");
+
+  return;
+}
+
+/**
+ * 
+ * 
+ * 
+ * 
+ */
+void
+printDoc(const char *docname, uint32_t flags){
   
   osm map;
   int i;
 
   parseDoc(docname, &map);
   
-  if (flags & F_BOUNDS)
+  if (flags & F_BOUNDS){
     printBounds(map.bounds);
+    puts("");
+  }
 
-  if (flags & F_NODES)
+  if (flags & F_NODES){
+    printf("%d\n", map.nodec);
     for(i=0; i<map.nodec; i++){
       printNode(map.nodev[i]);
     }
+    puts("");
+  }
   
-  if (flags & F_WAYS)
+  if (flags & F_WAYS){
+    printf("%d\n", map.wayc);
     for(i=0; i<map.wayc; i++){
       printWay(map.wayv[i]);
     }
+    puts("");
+  }
   
-  if (flags & F_RELATIONS)
+  if (flags & F_RELATIONS){
+    printf("%d\n", map.relationc);
     for(i=0; i<map.relationc; i++){
       printRelation(map.relationv[i]);
     }
+    puts("");
+  }
   
   return;
 }

@@ -2,6 +2,7 @@
 #include <getopt.h>
 #include "osmaps.h"
 
+
 /**
  * @brief This function prints the command prototype
  * @param[in] argv0 command name
@@ -27,20 +28,24 @@ int
 main(int argc, char **argv) {
 
   char *docname;
-  int opt;
-  int flags = 0;
-  int index = 0;
+  int32_t opt;
+  uint32_t flags = 0;
+  int32_t index = 0;
+  uint32_t id = 0;
+  
   static struct option long_options[] = {
     {"help", no_argument, NULL, 'h'},
     {"bounds", no_argument, NULL, 'b'},
     {"nodes", no_argument, NULL, 'n'},
+    {"id", required_argument, NULL, 'i'},
     {"ways", no_argument, NULL, 'w'},
     {"relations", no_argument, NULL, 'r'},
     {"text", no_argument, NULL, 't'},
     {0, 0, 0, 0}
   };
   
-  while((opt = getopt_long_only(argc,argv,"bnwrt",long_options,&index)) !=-1){
+  while((opt = getopt_long_only(argc,argv,
+				"bnwri:t",long_options,&index)) !=-1){
 
     switch(opt){
     case 'h':
@@ -51,6 +56,8 @@ an OSM tree and renders it.\n\
 Available options:\n\
 \t-b, --bounds\n\
 \t\tparse the OSM tree and list all its 'bounds' nodes\n\
+\t-i, --id id\n\
+\t\tparse the OSM tree and print the node corresponding to 'id'\n\
 \t-n, --nodes\n\
 \t\tparse the OSM tree and list all its 'node' nodes\n\
 \t-r, --relations\n\
@@ -71,6 +78,9 @@ Available options:\n\
     case 'n':
       flags |= F_NODES;
       break;
+    case 'i':
+      flags |= F_ID;
+      id = atoi(optarg);
     case 'w':
       flags |= F_WAYS;
       break;
@@ -87,8 +97,11 @@ Available options:\n\
     usage(argv[0], stderr);
     return 1;
   } else docname = argv[optind];
-  
-  if(flags & F_TEXT) printDoc(docname, flags);
+
+  if (flags & F_ID){
+    printElement(docname, id);
+  } else if(flags & F_TEXT)
+    printDoc(docname, flags);
   
   return 0;
 }
