@@ -1,18 +1,20 @@
-CC 	= gcc
+CC 	= gcc -g
 CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HFLAGS  = -Ilib -Isrc
+HFLAGS  = -Ilib
 HXML	= `xml2-config --cflags`
 LIBXML	= `xml2-config --libs`
-LIBSDL	= 
+HSDL	= `sdl2-config --cflags`
+LIBSDL	= `sdl2-config --libs`
+
 VPATH 	= src:lib
 
 EXEC 	= osmaps
 LIB 	= $(patsubst lib/%.c, lib/%.o, $(wildcard lib/*.c))
 
-HEADERS	= $(wildcard *.h)
+HEADERS	= $(wildcard lib/*.h)
 OBJECTS	= $(patsubst src/%.c, src/%.o, $(wildcard src/*.c)) $(LIB)
 
-all : lib exe clean
+all : lib exe
 
 exe : $(EXEC)
 

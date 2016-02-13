@@ -4,3 +4,7 @@ Authors :
 Ziane Aghouiles
 Amani Youssef
 Mohammed Younes Megrini
+
+Setup :
+1- use command 'source setup.sh'
+2- launch the 'osmaps' program
