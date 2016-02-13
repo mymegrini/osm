@@ -1,8 +1,8 @@
+#include <string.h>
 #include "print.h"
 #include "sort.h"
 
 #define SPACE " L_"
-
 /**
  * 
  * 
@@ -11,7 +11,8 @@
 void
 printTag(const osmTag* tag){
 
-  printf("Tag:\t(%s):  \t%s\n", tag->k, tag->v);
+  printf("Tag:\t\t(%s): %.41s%s\n", tag->k, tag->v,
+	 (strlen(tag->v)>40 ? "..." : ""));
   return;
 }
 

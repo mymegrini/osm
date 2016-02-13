@@ -231,21 +231,26 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
     
     curseur= curseur->next;
   }
+  /*
+  printf("parseRelation : %d id %d node %d way %d relation %d tag\n",
+	 relation->id, relation->nodec, relation->wayc, relation->relationc,
+	 relation->tagc);
+  */
   
   relation->nodev = (osmNode**)malloc(relation->nodec * sizeof(osmNode*)); 
   relation->wayv = (osmWay**)malloc(relation->wayc * sizeof(osmWay*));
   relation->relationv =
     (osmRelation**)malloc(relation->relationc * sizeof(osmRelation*));
   relation->tagv = (osmTag**)malloc(relation->tagc * sizeof(osmTag*));
-  
-  curseur=cur->xmlChildrenNode;
-  
+    
   relation->nodec=0;
   relation->wayc=0;
   relation->relationc=0;
   relation->tagc=0;
   
+  curseur=cur->xmlChildrenNode;
   while(curseur !=NULL){
+   
     if(!xmlStrcmp(curseur->name, (const xmlChar *)"member")){
       
       prop = xmlGetProp(curseur, (const xmlChar*)"type");
@@ -291,9 +296,10 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
 	parseTag(curseur, relation->tagv[relation->tagc]);
 	if (relation->tagv[relation->tagc]) relation->tagc++;
       }
-
-      curseur = curseur->next;
     }
+
+    curseur = curseur->next;
+
   }
 
   return;
