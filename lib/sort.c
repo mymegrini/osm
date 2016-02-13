@@ -53,13 +53,19 @@ static int _cmpRelation(const void* p1, const void* p2){
  */
 static osmNode*
 _findNode(osmNode** nodev, uint32_t nodec, uint32_t id){  
-  uint32_t _id = nodev[nodec/2]->id;
-  //printf("findnode(%d)>%d\n", id, _id);
-  if (nodec>0){
+
+  uint32_t _id;
+  switch(nodec){
+  case 0 :
+    return NULL;
+  case 1 :
+    return (id == nodev[0]->id ? nodev[0] : NULL);
+  default :
+    _id = nodev[nodec/2]->id;
     if(_id==id) return nodev[nodec/2];
     else if (_id>id) return _findNode(nodev, nodec/2, id); 
     else return _findNode(nodev+(nodec/2)+1, nodec-1-(nodec/2), id);
-  } else return (_id==id ? nodev[0] : NULL);
+  }
 }
 
 /**
@@ -70,13 +76,19 @@ _findNode(osmNode** nodev, uint32_t nodec, uint32_t id){
  */
 static osmWay*
 _findWay(osmWay** wayv, uint32_t wayc, uint32_t id){  
-  uint32_t _id = wayv[wayc/2]->id;
-  
-  if (wayc>0){
+
+  uint32_t _id;
+  switch(wayc){
+  case 0 :
+    return NULL;
+  case 1 :
+    return (id == wayv[0]->id ? wayv[0] : NULL);
+  default :
+    _id = wayv[wayc/2]->id;
     if(_id==id) return wayv[wayc/2];
     else if (_id>id) return _findWay(wayv, wayc/2, id); 
     else return _findWay(wayv+(wayc/2)+1, wayc-1-(wayc/2), id);
-  } else return (_id==id ? wayv[0] : NULL);
+  }
 }
 
 /**
@@ -87,14 +99,20 @@ _findWay(osmWay** wayv, uint32_t wayc, uint32_t id){
  */
 static osmRelation*
 _findRelation(osmRelation** relationv, uint32_t relationc, uint32_t id){  
-  uint32_t _id = relationv[relationc/2]->id;
-  
-  if (relationc>0){
+
+  uint32_t _id;
+  switch(relationc){
+  case 0 :
+    return NULL;
+  case 1 :
+    return (id == relationv[0]->id ? relationv[0] : NULL);
+  default :
+    _id = relationv[relationc/2]->id;
     if(_id==id) return relationv[relationc/2];
     else if (_id>id) return _findRelation(relationv, relationc/2, id); 
     else return _findRelation(relationv+(relationc/2)+1,
 			      relationc-1-(relationc/2), id);
-  } else return (_id==id ? relationv[0] : NULL);
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
