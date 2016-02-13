@@ -5,6 +5,7 @@
 #include "parse.h"
 #include "sort.h"
 #include "print.h"
+#define DEBUG true
 
 /**
  * 
@@ -149,6 +150,8 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
     }
     curseur = curseur->next;
   }
+
+  //printf("parseWay: %d id %d node %d tag\n", way->id, way->nodec, way->tagc);
   
   way->nodev=(osmNode**)malloc(way->nodec * sizeof(osmNode*));
   way->tagv=(osmTag**)malloc(way->tagc * sizeof(osmTag*));
@@ -159,19 +162,19 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
   curseur = cur->xmlChildrenNode;
   while (curseur != NULL) {
     
-    if ((xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
+    if ((!xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
       prop = xmlGetProp(curseur, (const xmlChar*)"ref");
-      if (!prop) {free(prop); way = NULL; return;}
+      if (!prop) free(prop);
       else {
 	way->nodev[way->nodec] = findNode(map, atoi((char*) prop));
 	free(prop);
 	if (way->nodev[way->nodec]) way->nodec++;
-	else {way = NULL; puts("nd"); return;}
       }
 	
     }
     
     if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
+      way->tagv[way->tagc] = (osmTag*) malloc(sizeof(osmTag));
       parseTag(curseur, way->tagv[way->tagc]);
       if (way->tagv[way->tagc]) way->tagc++;
       else {way = NULL; puts("tag"); return;}
@@ -179,7 +182,7 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
     
     curseur = curseur->next;
   }
-  
+  //printf("parseWay: %d id %d node %d tag\n", way->id, way->nodec, way->tagc);
   return;
 }
 
