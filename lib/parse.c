@@ -145,7 +145,7 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
     if ((!xmlStrcmp(curseur->name, (const xmlChar*)"nd"))) {
       way->nodec++;
     }
-    if ((!xmlStrcmp(curseur->name, (const xmlChar*)"tag"))) {
+    else if ((!xmlStrcmp(curseur->name, (const xmlChar*)"tag"))) {
       way->tagc++;	
     }
     curseur = curseur->next;
@@ -169,11 +169,9 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
 	way->nodev[way->nodec] = findNode(map, atoi((char*) prop));
 	free(prop);
 	if (way->nodev[way->nodec]) way->nodec++;
-      }
-	
+      }	
     }
-    
-    if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
+    else if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
       way->tagv[way->tagc] = (osmTag*) malloc(sizeof(osmTag));
       parseTag(curseur, way->tagv[way->tagc]);
       if (way->tagv[way->tagc]) way->tagc++;
@@ -225,24 +223,22 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
 	free(prop);
       }
     }     
-
-    if(!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))
+    else if(!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))
       relation->tagc++;
     
     curseur= curseur->next;
   }
-  /*
-  printf("parseRelation : %d id %d node %d way %d relation %d tag\n",
-	 relation->id, relation->nodec, relation->wayc, relation->relationc,
-	 relation->tagc);
-  */
   
+  /*printf("parseRelation : %d id %d node %d way %d relation %d tag\n",
+	 relation->id, relation->nodec, relation->wayc, relation->relationc,
+	 relation->tagc);*/
+    
   relation->nodev = (osmNode**)malloc(relation->nodec * sizeof(osmNode*)); 
   relation->wayv = (osmWay**)malloc(relation->wayc * sizeof(osmWay*));
   relation->relationv =
     (osmRelation**)malloc(relation->relationc * sizeof(osmRelation*));
   relation->tagv = (osmTag**)malloc(relation->tagc * sizeof(osmTag*));
-    
+ 
   relation->nodec=0;
   relation->wayc=0;
   relation->relationc=0;
@@ -250,56 +246,52 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
   
   curseur=cur->xmlChildrenNode;
   while(curseur !=NULL){
-   
+
     if(!xmlStrcmp(curseur->name, (const xmlChar *)"member")){
       
       prop = xmlGetProp(curseur, (const xmlChar*)"type");
-      if (!prop) {free(prop);}
-      else {
+      if (!prop)
+	{free(prop);}
+      else if(!xmlStrcmp(prop, (const xmlChar*)"node")){
+	free(prop);
+	prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+	if (!prop) {free(prop);}
+	else {
+	  relation->nodev[relation->nodec] = findNode(map, atoi((char*) prop));
+	  free(prop);
+	  if (relation->nodev[relation->nodec]) relation->nodec++;
+	}	  
+      }
+      else if(!xmlStrcmp(prop, (const xmlChar*)"way")){
 	
-	if(!xmlStrcmp(prop, (const xmlChar*)"node")){
-
+	free(prop);
+	prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+	if (!prop) {free(prop);}
+	else {
+	  relation->wayv[relation->wayc] = findWay(map, atoi((char*) prop));
 	  free(prop);
-	  prop = xmlGetProp(curseur, (const xmlChar*)"ref");
-	  if (!prop) {free(prop);}
-	  else {
-	    relation->nodev[relation->nodec] = findNode(map, atoi((char*) prop));
-	    free(prop);
-	    if (relation->nodev[relation->nodec]) relation->nodec++;
-	  }	  
-	} else if(!xmlStrcmp(prop, (const xmlChar*)"way")){
-
+	  if (relation->wayv[relation->wayc]) relation->wayc++;
+	}	  
+      }
+      else if(!xmlStrcmp(prop, (const xmlChar*)"relation")){
+	free(prop);
+	prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+	if (!prop) {free(prop);}
+	else {
+	  relation->relationv[relation->relationc] =
+	    findRelation(map, atoi((char*) prop));
 	  free(prop);
-	  prop = xmlGetProp(curseur, (const xmlChar*)"ref");
-	  if (!prop) {free(prop);}
-	  else {
-	    relation->wayv[relation->wayc] = findWay(map, atoi((char*) prop));
-	    free(prop);
-	    if (relation->wayv[relation->wayc]) relation->wayc++;
-	  }	  
-	} else if(!xmlStrcmp(prop, (const xmlChar*)"relation")){
-
-	  free(prop);
-	  prop = xmlGetProp(curseur, (const xmlChar*)"ref");
-	  if (!prop) {free(prop);}
-	  else {
-	    relation->relationv[relation->relationc] =
-	      findRelation(map, atoi((char*) prop));
-	    free(prop);
 	    if (relation->relationv[relation->relationc]) relation->relationc++;
-	  }
 	}
       }
-
-      if(!xmlStrcmp(curseur->name, (const xmlChar *)"tag")){
-	relation->tagv[relation->tagc] = (osmTag*) malloc(sizeof(osmTag));
-	parseTag(curseur, relation->tagv[relation->tagc]);
-	if (relation->tagv[relation->tagc]) relation->tagc++;
-      }
+    }
+    else if(!xmlStrcmp(curseur->name, (const xmlChar *)"tag")){
+      relation->tagv[relation->tagc] = (osmTag*) malloc(sizeof(osmTag));
+      parseTag(curseur, relation->tagv[relation->tagc]);
+      if (relation->tagv[relation->tagc]) relation->tagc++;
     }
 
     curseur = curseur->next;
-
   }
 
   return;
@@ -358,23 +350,23 @@ parseDoc(const char *docname, osm* map) {
     if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur))
       map->nodec++;
 
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur))
+    else if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur))
       map->wayc++;
 
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur))
+    else if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur))
       map->relationc++;
 
     cur = cur->next;
   }
 
-  map->bounds = (osmBounds*) calloc(1, (sizeof(osmBounds)));
-  map->nodev = (osmNode**) calloc(1, (map->nodec * sizeof(osmNode*)));
-  map->wayv = (osmWay**) calloc(1, (map->wayc * sizeof(osmWay*)));
-  map->relationv =
-    (osmRelation**) calloc(1, (map->relationc * sizeof(osmRelation*)));
+  //printf("count: n%d w%d r%d\n", map->nodec, map->wayc, map->relationc);
+  map->bounds = (osmBounds*) malloc(sizeof(osmBounds));
+  map->nodev = (osmNode**) malloc(map->nodec * sizeof(osmNode*));
+  map->wayv = (osmWay**) malloc(map->wayc * sizeof(osmWay*));
+  map->relationv = (osmRelation**) malloc(map->relationc * sizeof(osmRelation*));
 
-  map->wayc = 0;
   map->nodec = 0;
+  map->wayc = 0;
   map->relationc = 0;
 
   cur = root->xmlChildrenNode;
@@ -383,29 +375,30 @@ parseDoc(const char *docname, osm* map) {
     if (!xmlStrcmp(cur->name, (const xmlChar *)"bounds"))
       parseBounds(cur, map->bounds);
 
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)){
-      map->nodev[map->nodec] = (osmNode*) calloc(1, sizeof(osmNode));
+    else if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)){
+      map->nodev[map->nodec] = (osmNode*) malloc(sizeof(osmNode));
       parseNode(cur, map->nodev[map->nodec]);
       if (map->nodev[map->nodec]){
 	map->nodev_s = 1;
+	//printNode(map->nodev[map->nodec]);
 	map->nodec++;
       }
     }
-    
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
-      map->wayv[map->wayc] = (osmWay*) calloc(1, sizeof(osmWay));
+    else if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
+      map->wayv[map->wayc] = (osmWay*) malloc(sizeof(osmWay));
       parseWay(cur, map, map->wayv[map->wayc]);
       if (map->wayv[map->wayc]){
 	map->wayv_s = 1;
+	//printWay(map->wayv[map->wayc]);
 	map->wayc++;
       }
     }
-
-    if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){      
+    else if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){
       map->relationv[map->relationc]=
-	(osmRelation*) calloc(1, sizeof(osmRelation));
+	(osmRelation*) malloc(sizeof(osmRelation));
       parseRelation(cur, map, map->relationv[map->relationc]);
       map->relationv_s = 1;
+      //printRelation(map->relationv[map->relationc]);
       map->relationc++;
     } 
     
