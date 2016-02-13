@@ -51,7 +51,7 @@ typedef struct osmRelation osmRelation;
 struct osmRelation {
   int32_t id;                /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
-  osmWay** nodev;             /***< nodes vector >*/
+  osmNode** nodev;             /***< nodes vector >*/
   uint32_t wayc;              /***< ways cardinal >*/
   osmWay** wayv;              /***< ways vector >*/
   uint32_t relationc;         /***< relations cardinal >*/
