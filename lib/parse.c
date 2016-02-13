@@ -27,7 +27,7 @@ parseTag(const xmlNodePtr cur, osmTag* tag){
 void
 parseBounds(const xmlNodePtr cur, osmBounds* bounds){
 
-  sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"),
+   sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"),
 	 "%lf", &bounds->minlat);
   sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"),
 	 "%lf", &bounds->maxlat);
@@ -35,7 +35,8 @@ parseBounds(const xmlNodePtr cur, osmBounds* bounds){
 	 "%lf", &bounds->minlon);
   sscanf((const char*)xmlGetProp(cur, (const xmlChar*)"maxlon"),
 	 "%lf", &bounds->maxlon); 
-  return;
+ 
+ return;
 }
 
 /**
@@ -46,7 +47,7 @@ parseBounds(const xmlNodePtr cur, osmBounds* bounds){
  */
 void
 parseNode(const xmlNodePtr cur, osmNode* node){
-
+    
   return;
 }
 
@@ -69,6 +70,60 @@ parseWay(const xmlNodePtr cur, const osmNode** nodev, osmWay* way){
  */
 void
 parseRelation(const xmlNodePtr cur, const osmWay** wayv, osmRelation* relation){
+  xmlChar* prop;
+  
+  prop = xmlGetProp(cur, (const xmlChar*)"id");
+  if (!prop) {free(prop); relation = NULL; return;}  
+  relation->id= atoi((const char*) prop);
+  free(prop);
+
+  relation->nodec=0;
+  relation->wayc=0;
+  
+  xmlNodePtr curseur;
+  curseur = cur->xmlChildrenNode;
+  
+  while (curseur != NULL){
+    if(!xmlStrcmp(curseur->name, (const xmlChar *)"node"))
+      {relation->nodec++;}
+
+    if(!xmlStrcmp(curseur->name, (const xmlChar *)"way"))
+      {relation->wayc++;}
+
+    curseur= curseur->next;
+  }
+  
+  relation->nodev = (osmNode**) malloc(relation->nodec * sizeof(osmNode*)); 
+  relation->wayv = (osmWay**) malloc(relation->wayc * sizeof(osmNode*));
+  
+  curseur=cur->xmlChildrenNode;
+  
+  relation->nodec=0;
+  relation->wayc=0;
+  
+  while(curseur !=NULL){
+    if(!xmlStrcmp(curseur->name, (const xmlChar *)"node")){
+      prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+      if (!prop) {free(prop); relation = NULL; return;}
+      else {
+	relation->nodev[relation->nodec] = findNode(map, atoi((char*) prop));
+	free(prop);
+	if (relation->nodev[relation->nodec]){relation->nodec++;}
+	else{relation=NULL, puts("node");return;}
+      }
+    }
+    if(!xmlStrcmp(curseur->name, (const xmlChar *)"way")){
+	prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+	if (!prop) {free(prop); relation = NULL; return;}
+	else {
+	  relation->wayv[relation->wayc] = findNode(map, atoi((char*) prop));
+	  free(prop);
+	  if (relation->wayv[relation->wayc]){relation->wayc++;}
+	  else{relation=NULL, puts("way");return;}
+	}
+    }
+    
+  }
 
   return;
 }

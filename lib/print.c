@@ -47,7 +47,11 @@ printNode(const osmNode* node){
  */
 void
 printWay(const osmWay* way){
-
+  /* 
+   *printf("Way: %d\n\t", way->id);
+   *for(int t=0;t< way->nodec; t++){printf("\t"); printNode(way->nodev[t]);}
+   *for(int t=0;t< way->tagc;t++){printf("\t"); printTag(way->tagv[t];}
+   */
   return;
 }
  
@@ -58,7 +62,10 @@ printWay(const osmWay* way){
  */
 void
 printRelation(const osmRelation* relation){
-
+  /*
+   *printf("Relation: %d\n\t", relation->id);
+   *for(int t=0; t< relation->wayc;t++){printf("\t"); printWay(relation->wayv[t]);}
+   */
   return;
 }
 
