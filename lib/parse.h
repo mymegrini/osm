@@ -8,15 +8,15 @@
  * A structure to hold a 'tag' node
  */
 typedef struct {
-  xmlChar* k;                 /***< key >*/
-  xmlChar* v;                 /***< value >*/
+  char* k;                 /***< key >*/
+  char* v;                 /***< value >*/
 } osmTag;
 
 /**
  * A structure to hold a 'node' node or subtree
  */
 typedef struct {
-  uint32_t id;                /***< id number >*/
+  int32_t id;                /***< id number >*/
   double lat;                 /***< latitude coordinate >*/
   double lon;                 /***< longitude coordinate >*/
   uint32_t tagc;              /***< tags cardinal >*/
@@ -37,7 +37,7 @@ typedef struct {
  * A structure to hold a 'way' subtree
  */
 typedef struct {
-  uint32_t id;                /***< id number >*/
+  int32_t id;                /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
   osmNode** nodev;            /***< nodes vector >*/
   uint32_t tagc;              /***< tags cardinal >*/
@@ -49,7 +49,7 @@ typedef struct {
  */
 typedef struct osmRelation osmRelation;
 struct osmRelation {
-  uint32_t id;                /***< id number >*/
+  int32_t id;                /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
   osmWay** nodev;             /***< nodes vector >*/
   uint32_t wayc;              /***< ways cardinal >*/
@@ -107,7 +107,7 @@ parseNode(const xmlNodePtr cur, osmNode* node);
 /**
  * @brief This function parses a 'way' subtree using a set of 'node' pointers
  * @param[in] cur xml node pointer
- * @param[in] nodev 'node' vector
+ * @param[in] map osm tree
  * @param[out] way 'way' structure
  * @return void
  */
@@ -118,8 +118,7 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way);
 /**
  * @brief This function parses a 'relation' node using a set of 'way' pointers
  * @param[in] cur xml node pointer
- * @param[in] nodev 'node' vector
- * @param[in] wayv 'way' vector
+ * @param[in] map osm tree
  * @param[out] relation 'relation' structure
  * @return void
  */
@@ -128,8 +127,8 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation);
 
 /**
  * @brief This function parses an osm file
- * @param[in] map an osm tree structure
  * @param[in] docname filename of osm file
+ * @param[out] map an osm tree structure
  * @return void
  */
 void

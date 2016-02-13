@@ -1,4 +1,4 @@
-CC 	= gcc
+CC 	= gcc -g
 CFLAGS 	= -Wall --pedantic -O2 -std=c11
 HFLAGS  = -Ilib
 HXML	= `xml2-config --cflags`

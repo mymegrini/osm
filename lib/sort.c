@@ -54,7 +54,7 @@ static int _cmpRelation(const void* p1, const void* p2){
 static osmNode*
 _findNode(osmNode** nodev, uint32_t nodec, uint32_t id){  
   uint32_t _id = nodev[nodec/2]->id;
-  
+  //printf("findnode(%d)>%d\n", id, _id);
   if (nodec>0){
     if(_id==id) return nodev[nodec/2];
     else if (_id>id) return _findNode(nodev, nodec/2, id); 
@@ -108,13 +108,16 @@ _findRelation(osmRelation** relationv, uint32_t relationc, uint32_t id){
  */
 osmNode*
 findNode(osm* map, uint32_t id){
-  
+
+  osmNode* node;
   if(map->nodev_s) 
     qsort(map->nodev, map->nodec, sizeof(osmNode*), &_cmpNode);
 
   map->nodev_s = 0;
-
-  return _findNode(map->nodev, map->nodec, id);
+  node = _findNode(map->nodev, map->nodec, id);
+  if(node) printf("+%d\n", node->id);
+  else printf("-%d\n", id);
+  return node;
 }
 
 /*

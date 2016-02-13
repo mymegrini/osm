@@ -43,8 +43,6 @@ printNode(const osmNode* node){
     {printf(SPACE); printTag(node->tagv[t]);}
   return;
 }
-
-
  
 /**
  * 
@@ -105,6 +103,7 @@ printElement(const char *docname, uint32_t id){
 
   return;
 }
+
 /**
  * 
  * 
@@ -133,7 +132,7 @@ printDoc(const char *docname, uint32_t flags){
   }
   
   if (flags & F_WAYS){
-    printf("%d\n", map.nodec);
+    printf("%d\n", map.wayc);
     for(i=0; i<map.wayc; i++){
       printWay(map.wayv[i]);
     }
@@ -141,7 +140,7 @@ printDoc(const char *docname, uint32_t flags){
   }
   
   if (flags & F_RELATIONS){
-    printf("%d\n", map.nodec);
+    printf("%d\n", map.relationc);
     for(i=0; i<map.relationc; i++){
       printRelation(map.relationv[i]);
     }

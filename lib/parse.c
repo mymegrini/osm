@@ -4,57 +4,97 @@
 #include <libxml/parser.h>
 #include "parse.h"
 #include "sort.h"
+#include "print.h"
 
 /**
  * 
- * 
- * 
- * 
+ * parseTag uses xmlGetProp to parse the attributes. 
+ * If parseTag fails, it stores NULL in \p tag.
  */
 void
 parseTag(const xmlNodePtr cur, osmTag* tag){
 
-  tag->k = xmlGetProp(cur, (const xmlChar*)"k");
-  tag->v = xmlGetProp(cur, (const xmlChar*)"v");
+  xmlChar* prop;
+
+  prop = xmlGetProp(cur, (const xmlChar*)"k");
+  if (!prop) {free(prop); tag = NULL; return;}
+  tag->k = (char*) prop;
+  
+  prop = xmlGetProp(cur, (const xmlChar*)"v");
+  if (!prop) {free(prop); tag = NULL; return;}
+  tag->v = (char*) prop;
+  
   return;
 }
 
-/**
+/** 
  * 
- * 
- * 
- * 
+ * parseBounds uses xmlGetProp to parse the attributes. 
+ * If parseBounds fails, it stores NULL in \p bounds.
  */
 void
 parseBounds(const xmlNodePtr cur, osmBounds* bounds){
 
-  bounds->minlat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"minlat"));
-  bounds->maxlat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"maxlat"));
-  bounds->minlon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"minlon"));
-  bounds->maxlon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"maxlon"));
+  xmlChar* prop;
+  
+  prop = xmlGetProp(cur, (const xmlChar*)"minlat");
+  if (!prop) {free(prop); bounds = NULL; return;}
+  bounds->minlat = atof((const char*) prop);
+  free(prop);
+
+  prop = xmlGetProp(cur, (const xmlChar*)"maxlat");
+  if (!prop) {free(prop); bounds = NULL; return;}
+  bounds->maxlat = atof((const char*) prop);
+  free(prop);
+  
+  prop = xmlGetProp(cur, (const xmlChar*)"minlon");
+  if (!prop) {free(prop); bounds = NULL; return;}
+  bounds->minlon = atof((const char*) prop);
+  free(prop);
+
+  prop = xmlGetProp(cur, (const xmlChar*)"maxlon");
+  if (!prop) {free(prop); bounds = NULL; return;}
+  bounds->maxlon = atof((const char*) prop);
+  free(prop);
+  
   return;
 }
 
 /**
  * 
- * 
- * 
- * 
+ * parseBounds uses xmlGetProp to parse the attributes. It then calls parseTag
+ * on every child 'tag' node when they exit.
+ * If parseNode fails, it stores NULL in \p node.
+ *
+ * @see parseTag
  */
 void
 parseNode(const xmlNodePtr cur, osmNode* node){
 
   xmlNodePtr child;
-  node->id = atoi((const char*)xmlGetProp(cur, (const xmlChar*)"id"));
-  node->lat = atof((const char*)xmlGetProp(cur, (const xmlChar*)"lat"));
-  node->lon = atof((const char*)xmlGetProp(cur, (const xmlChar*)"lon"));
+  xmlChar* prop;
+
+  prop = xmlGetProp(cur, (const xmlChar*)"id");
+  if (!prop) {free(prop); node = NULL; return;}
+  node->id = atoi((const char*) prop);
+  free(prop);
+  
+  prop = xmlGetProp(cur, (const xmlChar*)"lat");
+  if (!prop) {free(prop); node = NULL; return;}
+  node->lat = atof((const char*) prop);
+  free(prop);
+
+  prop = xmlGetProp(cur, (const xmlChar*)"lon");
+  if (!prop) {free(prop); node = NULL; return;}
+  node->lon = atof((const char*) prop);
+  free(prop);
 
   node->tagc=0;
   child = cur->xmlChildrenNode;
-  while (child != NULL){
-    
+  
+  while (child != NULL){    
     if(!xmlStrcmp(child->name, (const xmlChar*)"tag")) node->tagc++;
-
+    
     child = child->next;
   }
 
@@ -78,48 +118,68 @@ parseNode(const xmlNodePtr cur, osmNode* node){
 
 
 /**
- * 
- * 
- * 
+ * parseWay uses xmlGetProp to parse the attributes. It then uses findNode to 
+ * identify every 'nd' child node. Then parses every 'tag' child node by calling
+ * parseTag.
+ * If parseWay fails, it stores NULL in \p way.
+ *
+ * @see parseTag
+ * @see findNode
  */
 void
-parseWay(const xmlNodePtr cur, const osm* map, osmWay* way){
-  
+parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
+
+  xmlChar* prop;
   xmlNodePtr curseur = cur->xmlChildrenNode;
-  int node=0;
-  int tag=0;
+
+  prop = xmlGetProp(cur, (const xmlChar*)"id");
+  if (!prop) {free(prop); way = NULL; return;}  
+  way->id= atoi((const char*) prop);
+  free(prop);
   
-  way->id=xmlGetProp(cur, "id");
   way->nodec=0;
   way->tagc=0;
+  
   while (curseur != NULL) {
-    if ((!xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
+    if ((!xmlStrcmp(curseur->name, (const xmlChar*)"nd"))) {
       way->nodec++;
     }
-    if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
+    if ((!xmlStrcmp(curseur->name, (const xmlChar*)"tag"))) {
       way->tagc++;	
     }
-    curseur = cur->next;
+    curseur = curseur->next;
   }
   
-  way->nodev=(osmNode**)malloc(way->nodec*sizeof(osmNode*));
-  way->tagv=(osmTag**)malloc(way->tagc*sizeof(osmTag*));
+  way->nodev=(osmNode**)malloc(way->nodec * sizeof(osmNode*));
+  way->tagv=(osmTag**)malloc(way->tagc * sizeof(osmTag*));
   
-  curseur=cur->xmlChildrenNode;
+  way->nodec=0;
+  way->tagc=0;
+  
+  curseur = cur->xmlChildrenNode;
   while (curseur != NULL) {
-    if ((!xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
-      
-      way->nodev[node]=findNode(map,(int)xmlGetProp(cur, "ref"));
-      node++;
+    
+    if ((xmlStrcmp(curseur->name, (const xmlChar *)"nd"))) {
+      prop = xmlGetProp(curseur, (const xmlChar*)"ref");
+      if (!prop) {free(prop); way = NULL; return;}
+      else {
+	way->nodev[way->nodec] = findNode(map, atoi((char*) prop));
+	free(prop);
+	if (way->nodev[way->nodec]) way->nodec++;
+	else {way = NULL; puts("nd"); return;}
+      }
+	
     }
+    
     if ((!xmlStrcmp(curseur->name, (const xmlChar *)"tag"))) {
-      parseTag(curseur,way->tagv+tag);
-      tag++;
+      parseTag(curseur, way->tagv[way->tagc]);
+      if (way->tagv[way->tagc]) way->tagc++;
+      else {way = NULL; puts("tag"); return;}
     }
-    curseur = cur->next;
+    
+    curseur = curseur->next;
   }
-  way->nodec=node;
-  way->tagc=tag;
+  
   return;
 }
 
@@ -129,13 +189,24 @@ parseWay(const xmlNodePtr cur, const osm* map, osmWay* way){
  * 
  */
 void
-parseRelation(const xmlNodePtr cur, const osm* map, osmRelation* relation){
+parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
 
+  xmlChar* prop;
+  prop = xmlGetProp(cur, (const xmlChar*)"id");
+  if (!prop) {free(prop); relation = NULL; return;}  
+  relation->id= atoi((const char*) prop);
+  free(prop);
+  
+  relation->nodec=0;
+  relation->tagc=0;
+  relation->wayc=0;
+  relation->relationc=0;
+  
   return;
 }
 
-#define VISIBLE(cur) (!xmlStrcmp(xmlGetProp((cur),(const xmlChar*)"visible"),\
-				 (const xmlChar*)"true"))
+#define VISIBLE(cur) \
+(!xmlStrcmp(xmlGetProp((cur),(const xmlChar*)"visible"), (const xmlChar*)"true"))
 
 /**
  * parseDoc parses the file \p docname using xmlParseFile then tests if parsing
@@ -196,10 +267,11 @@ parseDoc(const char *docname, osm* map) {
     cur = cur->next;
   }
 
-  map->bounds = (osmBounds*) malloc(sizeof(osmBounds));
-  map->nodev = (osmNode**) malloc(map->nodec * sizeof(osmNode*));
-  map->wayv = (osmWay**) malloc(map->wayc * sizeof(osmWay*));
-  map->relationv = (osmRelation**) malloc(map->relationc * sizeof(osmRelation*));
+  map->bounds = (osmBounds*) calloc(1, (sizeof(osmBounds)));
+  map->nodev = (osmNode**) calloc(1, (map->nodec * sizeof(osmNode*)));
+  map->wayv = (osmWay**) calloc(1, (map->wayc * sizeof(osmWay*)));
+  map->relationv =
+    (osmRelation**) calloc(1, (map->relationc * sizeof(osmRelation*)));
 
   map->wayc = 0;
   map->nodec = 0;
@@ -212,27 +284,31 @@ parseDoc(const char *docname, osm* map) {
       parseBounds(cur, map->bounds);
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"node") && VISIBLE(cur)){
-      map->nodev[map->nodec] = (osmNode*) malloc(sizeof(osmNode));
+      map->nodev[map->nodec] = (osmNode*) calloc(1, sizeof(osmNode));
       parseNode(cur, map->nodev[map->nodec]);
-      map->nodev_s = 1;
-      map->nodec++;
+      if (map->nodev[map->nodec]){
+	map->nodev_s = 1;
+	map->nodec++;
+      }
     }
-
+    
     if (!xmlStrcmp(cur->name, (const xmlChar *)"way") && VISIBLE(cur)){
-
-      map->wayv[map->wayc] = (osmWay*) malloc(sizeof(osmWay));
-      parseWay(cur, (const osm*)&map, map->wayv[map->wayc]);
-      map->wayv_s = 1;
-      map->wayc++;
+      map->wayv[map->wayc] = (osmWay*) calloc(1, sizeof(osmWay));
+      parseWay(cur, map, map->wayv[map->wayc]);
+      if (map->wayv[map->wayc]){
+	map->wayv_s = 1;
+	map->wayc++;
+      }
     }
 
     if (!xmlStrcmp(cur->name, (const xmlChar *)"relation") && VISIBLE(cur)){      
-      map->relationv[map->relationc]= (osmRelation*) malloc(sizeof(osmRelation));
-      parseRelation(cur, (const osm*)&map, map->relationv[map->relationc]);
+      map->relationv[map->relationc]=
+	(osmRelation*) calloc(1, sizeof(osmRelation));
+      parseRelation(cur, map, map->relationv[map->relationc]);
       map->relationv_s = 1;
       map->relationc++;
     } 
-
+    
     cur = cur->next;
   }
 
