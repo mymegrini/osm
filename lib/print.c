@@ -1,7 +1,7 @@
 #include "print.h"
 #include "sort.h"
 
-#define SPACE "  "
+#define SPACE " L_"
 
 /**
  * 
