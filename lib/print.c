@@ -3,6 +3,8 @@
 #include "sort.h"
 
 #define SPACE " L_"
+#define SPACE_S 3
+
 /**
  * 
  * 
@@ -11,8 +13,12 @@
 void
 printTag(const osmTag* tag){
 
-  printf("Tag:\t\t(%s): %.41s%s\n", tag->k, tag->v,
-	 (strlen(tag->v)>40 ? "..." : ""));
+  char line[72 - SPACE_S];
+
+  snprintf(line, 72 - SPACE_S, "Tag:\t\t(%s): %s", tag->k, tag->v);
+  if (strlen(line) > 70-SPACE_S) printf("%.*s...\n", 67-SPACE_S, line);
+  else puts(line);
+  
   return;
 }
 
@@ -28,7 +34,7 @@ printBounds(const osmBounds* bounds){
 	 bounds->minlat, bounds->maxlat, bounds->minlon, bounds->maxlon);
   return;
 }
- 
+
 /**
  * 
  * 
@@ -62,7 +68,7 @@ printWay(const osmWay* way){
 
   return;
 }
- 
+
 /**
  * 
  * 
