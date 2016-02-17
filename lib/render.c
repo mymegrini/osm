@@ -3,13 +3,13 @@
 #include "render.h"
 #include "free.h"
 
-#define MAP "data/map.bmp"
+#define MAP "data/logo480.bmp"
 
 /**
  *Screen dimension constants
  */
-const int SCREEN_WIDTH = 886;
-const int SCREEN_HEIGHT = 773;
+const int SCREEN_WIDTH = 480;
+const int SCREEN_HEIGHT = 480;
 
 /**
  *The window we'll be rendering to
