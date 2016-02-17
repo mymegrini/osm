@@ -102,6 +102,5 @@ Available options:\n\
     printElement(docname, id);
   } else if(flags & F_TEXT)
     printDoc(docname, flags);
-  
-  return 0;
+  else return renderDoc(docname, flags);
 }
