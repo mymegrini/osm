@@ -4,7 +4,7 @@ HFLAGS  = -Ilib
 HXML	= `xml2-config --cflags`
 LIBXML	= `xml2-config --libs`
 HSDL	= `sdl2-config --cflags`
-LIBSDL	= `sdl2-config --libs`
+LIBSDL	= `sdl2-config --libs` -lSDL2_gfx
 
 VPATH 	= src:lib
 
