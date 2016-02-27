@@ -5,7 +5,9 @@
 #include "render.h"
 #include "free.h"
 
-#define MAP "data/logo480.bmp"
+//#define __TRACE_RENDER__
+#define LOGO "data/logo480.bmp"
+#define WINDOW_SIZE 1280
 
 /**
  * Screen dimension constants
@@ -51,6 +53,10 @@ static Sint16 posy(double lat){
 void
 renderArea(osmWay* way){
 
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "renderArea(way:%d): ", (way ? way->id : 0));
+  #endif
+
   int node;
   
   Sint16* vy = (Sint16*) malloc((way->nodec-1)*sizeof(Sint16));
@@ -59,7 +65,15 @@ renderArea(osmWay* way){
   for(node = 0; node<way->nodec-1; node++){
     vy[node] = posy(way->nodev[node]->lat);
     vx[node] = posx(way->nodev[node]->lon);
+    
+    #ifdef __TRACE_RENDER__
+    fprintf(stderr, "(%d,%d)", vx[node], vy[node]);
+    #endif
   }
+
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "\n");
+  #endif
 
   aapolygonColor(gRenderer, vx, vy, way->nodec-1, area);
   
@@ -151,6 +165,12 @@ renderDoc(const char* docname, uint32_t flags){
     SCREEN_HEIGHT = WINDOW_SIZE;
   }
   
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "Screen size: %dx%d (%lf,%lf)\n",
+	  SCREEN_WIDTH, SCREEN_HEIGHT,
+	  (maxlon-minlon), (maxlat-minlat));
+  #endif
+
   //Initialize SDL
   if(SDL_Init(SDL_INIT_VIDEO) < 0){
     printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
