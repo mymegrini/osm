@@ -10,16 +10,16 @@
 /**
  * Screen dimension constants
  */
-const int SCREEN_WIDTH = 480;
-const int SCREEN_HEIGHT = 480;
+static int SCREEN_WIDTH;
+static int SCREEN_HEIGHT;
 
 /**
  * Local rendering variables
  */
-static int minlat;
-static int maxlat;
-static int minlon;
-static int maxlon;
+static double minlat;
+static double maxlat;
+static double minlon;
+static double maxlon;
 
 /**
  * Palette
@@ -34,28 +34,18 @@ const static uint32_t area = 0x993350FF;
 SDL_Window* gWindow = NULL;
 
 /**
- *The surface contained by the window
- */
-SDL_Surface* gScreenSurface = NULL;
-
-/**
- *The image we will load and show on the screen
- */
-SDL_Surface* gMap = NULL;
-
-/**
  *SDL Renderer
  */
 SDL_Renderer* gRenderer = NULL;
 
-Sint16 posx(double lon){
+static Sint16 posx(double lon){
   
-  return (Sint16)((lon-minlon)/(maxlon-minlon)*SCREEN_WIDTH);
+  return (Sint16)(SCREEN_WIDTH * (lon-minlon)/(maxlon-minlon));
 }
 
-Sint16 posy(double lat){
+static Sint16 posy(double lat){
 
-  return (Sint16)((lat-maxlat)/(minlat-maxlat)*SCREEN_HEIGHT);
+  return (Sint16)(SCREEN_HEIGHT * (maxlat-lat)/(maxlat-minlat));
 }
 
 void
@@ -80,38 +70,45 @@ renderArea(osmWay* way){
 void
 renderWay(osmWay* way){
 
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "renderWay(way:%d)", (way? way->id : 0));
+  #endif
+
   int node;
   if(way->nodec > 0)
-    for(node = 0; ++node<way->nodec;)
+    for(node = 0; node<way->nodec-1; node++) {
       aalineColor(gRenderer,
-		     posx(way->nodev[node-1]->lon), posy(way->nodev[node-1]->lat),
 		     posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
+		     posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
 		     line);
-  
+    
+      #ifdef __TRACE_RENDER__
+      fprintf(stderr, "(%d,%d)(%d,%d) ",
+	      posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
+	      posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat));
+      #endif
+    }
+
+    #ifdef __TRACE_RENDER__
+    fprintf(stderr, "\n");
+    #endif
   return;
 }
 
 void
 renderOsm(osm* map){
+
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "renderOsm(map)\n");
+  #endif
   
   int way;
-
-  minlat = map->bounds->minlat;
-  maxlat = map->bounds->maxlat;
-  minlon = map->bounds->minlon;
-  maxlon = map->bounds->maxlon;
-
-  //Fill background
-  SDL_FillRect(gMap, NULL, background);
   
-  //Blit surface
-  SDL_BlitSurface(gMap, NULL, gScreenSurface, NULL);
-
-  //Update the surface
-  SDL_UpdateWindowSurface( gWindow );
-  
-  //get Render
+  //get Renderer
   gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+  //clear screen
+  SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+  SDL_RenderClear(gRenderer);
   
   for(way=0; way<map->wayc; way++){
     osmWay* w = map->wayv[way];
@@ -120,16 +117,40 @@ renderOsm(osm* map){
     else renderWay(w);
   }
 
-  puts("bug");
+  //present Rendered map
+  SDL_RenderPresent(gRenderer);
   return;
 }
 
 int
 renderDoc(const char* docname, uint32_t flags){
 
+  #ifdef __TRACE_RENDER__
+  fprintf(stderr, "renderDoc(%s, %d)\n", docname, flags);
+  #endif
+  
   osm* map; 	
   SDL_Event evt;
 
+  //Parse Osm xml file
+  map = (osm*) malloc(sizeof(osm));
+  parseDoc(docname, map);
+
+  //Initialize global variables
+  minlat = map->bounds->minlat;
+  maxlat = map->bounds->maxlat;
+  minlon = map->bounds->minlon;
+  maxlon = map->bounds->maxlon;
+ 
+  //Determine window width and height
+  if ((maxlat-minlat)<(maxlon-minlon)) {
+    SCREEN_WIDTH = WINDOW_SIZE;
+    SCREEN_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)/(maxlon-minlon));
+  } else {
+    SCREEN_WIDTH = (int)(WINDOW_SIZE * (maxlon-minlon)/(maxlat-minlat));
+    SCREEN_HEIGHT = WINDOW_SIZE;
+  }
+  
   //Initialize SDL
   if(SDL_Init(SDL_INIT_VIDEO) < 0){
     printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -145,39 +166,10 @@ renderDoc(const char* docname, uint32_t flags){
     printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
     return 1;
   }
-  
-  //Get window surface
-  gScreenSurface = SDL_GetWindowSurface(gWindow);  
-  
-  //Parse Osm xml file
-  map = (osm*) malloc(sizeof(osm));
-  parseDoc(docname, map);
 
-  //Load image on gOsmaps
-  gMap = SDL_LoadBMP(MAP);
-  if( gMap == NULL ) {
-    printf( "Unable to load image %s! SDL Error: %s\n", MAP, SDL_GetError() );
-    return 1;
-  }
-
-  //Blit surface
-  SDL_BlitSurface(gMap, NULL, gScreenSurface, NULL);
-
-  //Update the surface
-  SDL_UpdateWindowSurface( gWindow );
-
-  //Pause on logo
-  SDL_Delay(1000);
-  
   //render osm tree
   renderOsm(map);
   
-  //Blit surface
-  SDL_BlitSurface(gMap, NULL, gScreenSurface, NULL);
-
-  //Update the surface
-  SDL_UpdateWindowSurface( gWindow );
-
   //Wait for close  
   while(1) {
     while(SDL_PollEvent(&evt)) {
@@ -186,9 +178,8 @@ renderDoc(const char* docname, uint32_t flags){
 	//deallocate osm map
 	freeOsm(map);
 	
-	//Deallocate surface
-	SDL_FreeSurface( gMap );
-	gMap = NULL;
+	//Destroy renderer
+	SDL_DestroyRenderer( gRenderer );
 	
 	//Destroy window
 	SDL_DestroyWindow( gWindow );
@@ -196,6 +187,8 @@ renderDoc(const char* docname, uint32_t flags){
 	
 	//Quit SDL subsystems
 	SDL_Quit();
+	
+	return 0;
       }
     }
   }
