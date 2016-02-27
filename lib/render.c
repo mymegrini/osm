@@ -55,7 +55,7 @@ Sint16 posx(double lon){
 
 Sint16 posy(double lat){
 
-  return (Sint16)((lat-minlat)/(maxlat-minlat)*SCREEN_HEIGHT);
+  return (Sint16)((lat-maxlat)/(minlat-maxlat)*SCREEN_HEIGHT);
 }
 
 void
@@ -83,10 +83,10 @@ renderWay(osmWay* way){
   int node;
   if(way->nodec > 0)
     for(node = 0; ++node<way->nodec;)
-      thickLineColor(gRenderer,
+      aalineColor(gRenderer,
 		     posx(way->nodev[node-1]->lon), posy(way->nodev[node-1]->lat),
 		     posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
-		     2, line);
+		     line);
   
   return;
 }
@@ -119,7 +119,8 @@ renderOsm(osm* map){
       renderArea(w);
     else renderWay(w);
   }
-  
+
+  puts("bug");
   return;
 }
 
