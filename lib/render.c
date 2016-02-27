@@ -26,9 +26,9 @@ static double maxlon;
 /**
  * Palette
  */
-const static uint32_t background = 0xEEC1CEFF;
-const static uint32_t line = 0x650A24FF;
-const static uint32_t area = 0x993350FF;
+const static uint32_t background = 0xf2ebffff;
+const static uint32_t line = 0x90a1502e;
+const static uint32_t area = 0x8031502e;
 
 /**
  *The window we'll be rendering to
@@ -75,6 +75,7 @@ renderArea(osmWay* way){
   fprintf(stderr, "\n");
   #endif
 
+  filledPolygonColor(gRenderer, vx, vy, way->nodec-1, area);
   aapolygonColor(gRenderer, vx, vy, way->nodec-1, area);
   
   free(vy);
@@ -92,9 +93,9 @@ renderWay(osmWay* way){
   if(way->nodec > 0)
     for(node = 0; node<way->nodec-1; node++) {
       aalineColor(gRenderer,
-		     posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
-		     posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
-		     line);
+		  posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
+		  posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
+		  line);
     
       #ifdef __TRACE_RENDER__
       fprintf(stderr, "(%d,%d)(%d,%d) ",
@@ -121,7 +122,8 @@ renderOsm(osm* map){
   //get Renderer
   gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
   //clear screen
-  SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+  uint8_t* c = (uint8_t*) &background;
+  SDL_SetRenderDrawColor(gRenderer, c[0], c[1], c[2], c[3]);
   SDL_RenderClear(gRenderer);
   
   for(way=0; way<map->wayc; way++){
