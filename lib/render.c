@@ -26,9 +26,9 @@ static double maxlon;
 /**
  * Palette
  */
-const static uint32_t background = 0xf2ebffff;
-const static uint32_t line = 0x90a1502e;
-const static uint32_t area = 0x8031502e;
+const static uint32_t background = 0xceeaffff;
+const static uint32_t line = 0x955f5f2e;
+const static uint32_t area = 0x7792532e;
 
 /**
  *The window we'll be rendering to
