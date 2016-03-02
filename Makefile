@@ -4,7 +4,7 @@ HFLAGS  = -Ilib
 HXML	= `xml2-config --cflags`
 LIBXML	= `xml2-config --libs`
 HSDL	= `sdl2-config --cflags`
-LIBSDL	= `sdl2-config --libs`
+LIBSDL	= `sdl2-config --libs` -lSDL2_gfx -lm
 
 VPATH 	= src:lib
 
@@ -21,10 +21,10 @@ exe : $(EXEC)
 lib : $(LIB)
 
 osmaps : $(OBJECTS) $(LIB)
-	$(CC) -o $@ $^ $(LIBXML)
+	$(CC) -o $@ $^ $(LIBXML) $(LIBSDL)
 
 %.o : %.c $(HEADERS)
-	$(CC) -c -o $@ $< $(CFLAGS) $(HXML) $(HFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS) $(HXML) $(HSDL) $(HFLAGS)
 
 clean :
 	rm -f $(OBJECTS)

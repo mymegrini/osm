@@ -34,7 +34,7 @@ freeWay(osmWay* way){
   int c;
   for(c=0; c<way->tagc; c++) freeTag(way->tagv[c]);
   free(way->tagv);
-  for(c=0; c<way->nodec; c++) freeNode(way->nodev[c]);
+  //for(c=0; c<way->nodec; c++) freeNode(way->nodev[c]);
   free(way->nodev);
   free(way);
 }
@@ -49,11 +49,11 @@ freeRelation(osmRelation* relation){
   int c;
   for(c=0; c<relation->tagc; c++) freeTag(relation->tagv[c]);
   free(relation->tagv);
-  for(c=0; c<relation->nodec; c++) freeNode(relation->nodev[c]);
+  //for(c=0; c<relation->nodec; c++) freeNode(relation->nodev[c]);
   free(relation->nodev);
-  for(c=0; c<relation->wayc; c++) freeWay(relation->wayv[c]);
+  //for(c=0; c<relation->wayc; c++) freeWay(relation->wayv[c]);
   free(relation->wayv);
-  for(c=0; c<relation->relationc; c++) freeRelation(relation->relationv[c]);
+  //for(c=0; c<relation->relationc; c++) freeRelation(relation->relationv[c]);
   free(relation->relationv);
   free(relation);
 }
