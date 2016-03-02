@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2_gfxPrimitives.h>
+#include <math.h>
 #include "render.h"
 #include "free.h"
 
 //#define __TRACE_RENDER__
 #define LOGO "data/logo480.bmp"
-#define WINDOW_SIZE 1280
+#define WINDOW_SIZE 720
 
 /**
  * Screen dimension constants
@@ -159,11 +160,14 @@ renderDoc(const char* docname, uint32_t flags){
   maxlon = map->bounds->maxlon;
  
   //Determine window width and height
+  double ratio = cos(M_PI*(minlat+maxlat)/360);
   if ((maxlat-minlat)<(maxlon-minlon)) {
     SCREEN_WIDTH = WINDOW_SIZE;
-    SCREEN_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)/(maxlon-minlon));
+    SCREEN_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)
+			  /(ratio * (maxlon-minlon)));
   } else {
-    SCREEN_WIDTH = (int)(WINDOW_SIZE * (maxlon-minlon)/(maxlat-minlat));
+    SCREEN_WIDTH = (int)(WINDOW_SIZE * (maxlon-minlon) * ratio
+			 /(maxlat-minlat));
     SCREEN_HEIGHT = WINDOW_SIZE;
   }
   
