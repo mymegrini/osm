@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <libxml/parser.h>
+#include <libxml/xmlmemory.h>
 #include "parse.h"
 #include "sort.h"
-#include "print.h"
 
 //#define __TRACE_PARSE__
 
