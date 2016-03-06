@@ -127,6 +127,10 @@ _findRelation(osmRelation** relationv, uint32_t relationc, uint32_t id){
 osmNode*
 findNode(osm* map, uint32_t id){
 
+  #ifdef __TRACE_SORT__
+  fprintf(stderr, "findNode(map, %d)\n", id);
+  #endif
+
   if(map->nodev_s) 
     qsort(map->nodev, map->nodec, sizeof(osmNode*), &_cmpNode);
 
@@ -142,6 +146,10 @@ findNode(osm* map, uint32_t id){
  */
 osmWay*
 findWay(osm* map, uint32_t id){
+
+  #ifdef __TRACE_SORT__
+  fprintf(stderr, "findWay(map, %d)\n", id);
+  #endif
   
   if(map->wayv_s) 
     qsort(map->wayv, map->wayc, sizeof(osmWay*), &_cmpWay);
@@ -158,6 +166,10 @@ findWay(osm* map, uint32_t id){
  */
 osmRelation*
 findRelation(osm* map, uint32_t id){
+
+  #ifdef __TRACE_SORT__
+  fprintf(stderr, "findRelation(map, %d)\n", id);
+  #endif
   
   if(map->relationv_s) 
     qsort(map->relationv, map->relationc, sizeof(osmRelation*), &_cmpRelation);

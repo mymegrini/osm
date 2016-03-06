@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <getopt.h>
-#include "osmaps.h"
-
+#include "parse.h"
+#include "print.h"
+#include "render.h"
 
 /**
  * @brief This function prints the command prototype
@@ -102,6 +104,5 @@ Available options:\n\
     printElement(docname, id);
   } else if(flags & F_TEXT)
     printDoc(docname, flags);
-  
-  return 0;
+  else return renderDoc(docname, flags);
 }
