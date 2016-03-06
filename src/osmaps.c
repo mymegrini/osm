@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
-#include "osmaps.h"
-
+#include "parse.h"
+#include "print.h"
+#include "render.h"
 
 /**
  * @brief This function prints the command prototype
