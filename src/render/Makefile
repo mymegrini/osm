@@ -1,7 +1,7 @@
 CC 	= gcc
 CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HSDL	= `sdl2-config --cflags` -I../parse
-LIBSDL	= `sdl2-config --libs` -lSDL2_gfx -lm
+HSDL	= -I../parse `pkg-config --cflags sdl2`
+LIBSDL	= `pkg-config --libs sdl2 SDL2_gfx` -lm
 SOURCES = render.c
 OBJS	= $(SOURCES:%.c=%.o)
 

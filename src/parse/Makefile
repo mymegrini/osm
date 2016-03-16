@@ -1,7 +1,7 @@
 CC 	= gcc
 CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HXML	= `xml2-config --cflags`
-LIBXML	= `xml2-config --libs`
+HXML	= `pkg-config --cflags libxml-2.0`
+LIBXML	= `pkg-config --libs libxml-2.0`
 SOURCES = parse.c sort.c print.c free.c
 OBJS	= $(SOURCES:%.c=%.o)
 
