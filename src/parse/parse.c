@@ -182,6 +182,10 @@ parseWay(const xmlNodePtr cur, osm* map, osmWay* way){
     
     curseur = curseur->next;
   }
+
+  //free unused memory
+  way->nodev=(osmNode**)realloc(way->nodev,
+				way->nodec * sizeof(osmNode*));
   
   #ifdef __TRACE_PARSE__
   printf("parseWay: %d id %d node %d tag\n", way->id, way->nodec, way->tagc);
@@ -303,6 +307,15 @@ parseRelation(const xmlNodePtr cur, osm* map, osmRelation* relation){
     curseur = curseur->next;
   }
 
+  //free extra memory
+  relation->nodev = (osmNode**)realloc(relation->nodev,
+				       relation->nodec * sizeof(osmNode*)); 
+  relation->wayv = (osmWay**)realloc(relation->wayv,
+				     relation->wayc * sizeof(osmWay*));
+  relation->relationv =
+    (osmRelation**)realloc(relation->relationv,
+			   relation->relationc * sizeof(osmRelation*));
+  
   return;
 }
 
