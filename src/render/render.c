@@ -41,11 +41,17 @@ SDL_Window* gWindow = NULL;
  */
 SDL_Renderer* gRenderer = NULL;
 
+/**
+ * Longitude to coordiante conversion
+ */
 static Sint16 posx(double lon){
   
   return (Sint16)(SCREEN_WIDTH * (lon-minlon)/(maxlon-minlon));
 }
 
+/**
+ * Longitude to coordiante conversion
+ */
 static Sint16 posy(double lat){
 
   return (Sint16)(SCREEN_HEIGHT * (maxlat-lat)/(maxlat-minlat));
