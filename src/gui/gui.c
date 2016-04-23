@@ -53,7 +53,7 @@ initSDL(){
     }
     
     //Create window
-    window = SDL_CreateWindow("OSMaps : OpenStreetMaps renderer.",
+    window = SDL_CreateWindow("osmaps",
 			      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 			      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
   
