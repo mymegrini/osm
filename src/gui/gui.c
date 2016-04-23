@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "render.h"
+#include "parse.h"
 
 #define LOGO_BMP "data/logo480.bmp"
 
@@ -48,7 +49,7 @@ initSDL(){
     //Initialize SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
 	printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-	return 1;
+	return;
     }
     
     //Create window
@@ -58,11 +59,12 @@ initSDL(){
   
     if( window == NULL ) {
 	printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
-	return 1;
+	return;
     }
 
     //get Renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    return;
 }
 
 /**
@@ -71,14 +73,14 @@ initSDL(){
 int
 handleEvents(){
     
+    SDL_Event evt;
+    
     while(SDL_PollEvent(&evt)) {
 	if(evt.type == SDL_QUIT) {
 	    
-	    //deallocate osm map
-	    freeOsm(map);
-	    
 	    //Destroy renderer
 	    SDL_DestroyRenderer( renderer );
+	    renderer = NULL;
 	    
 	    //Destroy window
 	    SDL_DestroyWindow( window );
@@ -111,4 +113,26 @@ renderLogo(){
     SDL_RenderPresent(renderer);
 
     SDL_RenderClear(renderer);
+}
+
+/**
+ * This function launches graphical interface
+ */
+void
+launchGUI(char* docname, int flags){
+
+    initParameters();
+    
+    initSDL();
+    
+    renderLogo();
+
+    //event loop
+    while(1){
+
+	if(handleEvents()) break;
+
+    }
+    
+    return;
 }

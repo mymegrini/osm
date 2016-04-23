@@ -3,7 +3,7 @@
 #include <getopt.h>
 #include "parse.h"
 #include "print.h"
-#include "render.h"
+#include "gui.h"
 
 /**
  * @brief This function prints the command prototype
@@ -13,8 +13,8 @@
  * 
  * This function prints the command prototype to the <out> stream.
  */
-static void usage(char* argv0, FILE* out){
-  fprintf(out, "Usage: %s [OPTIONS]... [FILE]\n", argv0);
+static void usage(FILE* out){
+  fprintf(out, "Usage: osmaps [OPTIONS]... [FILE]\n");
 }
 
 /**
@@ -51,9 +51,9 @@ main(int argc, char **argv) {
 
     switch(opt){
     case 'h':
-      usage(argv[0], stdout);
+      usage(stdout);
       puts("\n\
-OSmaps: the OpenStreetMaps renderer. This program takes an xml file containing\n\
+osmaps: the OpenStreetMaps renderer. This program takes an xml file containing\n\
 an OSM tree and renders it.\n\
 Available options:\n\
 \t-b, --bounds\n\
@@ -90,13 +90,13 @@ Available options:\n\
       flags |= F_RELATIONS;
       break;
     default : /* '?' ':' */
-      usage(argv[0], stderr);
+      usage(stderr);
       return 1;
     }
   }
   
   if(optind >= argc){
-    usage(argv[0], stderr);
+    usage(stderr);
     return 1;
   } else docname = argv[optind];
 
@@ -104,5 +104,5 @@ Available options:\n\
     printElement(docname, id);
   } else if(flags & F_TEXT)
     printDoc(docname, flags);
-  else return renderDoc(docname, flags);
+  else return launchGUI(docname, flags);
 }
