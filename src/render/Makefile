@@ -1,21 +1,23 @@
-CC 	= gcc
-CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HSDL	= -I../parse `pkg-config --cflags sdl2`
-LIBSDL	= `pkg-config --libs sdl2 SDL2_gfx` -lm
-SOURCES = render.c
-OBJS	= $(SOURCES:%.c=%.o)
+CC 		= gcc
+OPATH		= ../../bin
+LPATH		= ../../lib
+VPATH 		= $(OPATH)
 
-NAME	= ../../lib/librender.so
+CFLAGS 		= -Wall --pedantic -O2 -std=c11
+HSDL		= -I../parse `pkg-config --cflags sdl2`
+LIBSDL		= `pkg-config --libs sdl2 SDL2_gfx` -lm
+SOURCES 	= render.c
+OBJS		= $(SOURCES:%.c=$(OPATH)/%.o)
 
-.PHONY	: all clean
+NAME		= ../../lib/librender.so
 
 all 	: $(NAME)
 
-%.so	: $(OBJS)
+$(LPATH)/%.so	: $(OBJS)
 	$(CC) -shared -o $@ $^ $(LIBSDL)
 
-%.o	: %.c
-	$(CC) $(CFLAGS) $(HSDL) -fPIC -c $<
+$(OPATH)/%.o	: %.c
+	$(CC) $(CFLAGS) $(HSDL) -fPIC -c -o $@ $<
 
 render.o: render.h
 

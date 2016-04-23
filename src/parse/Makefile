@@ -1,26 +1,28 @@
-CC 	= gcc
-CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HXML	= `pkg-config --cflags libxml-2.0`
-LIBXML	= `pkg-config --libs libxml-2.0`
-SOURCES = parse.c sort.c print.c free.c
-OBJS	= $(SOURCES:%.c=%.o)
+CC 		= gcc
+OPATH		= ../../bin
+LPATH		= ../../lib
+VPATH 		= $(OPATH)
 
-NAME	= ../../lib/libparse.so
+CFLAGS 		= -Wall --pedantic -O2 -std=c11
+HXML		= `pkg-config --cflags libxml-2.0`
+LIBXML		= `pkg-config --libs libxml-2.0`
+SOURCES 	= parse.c sort.c print.c free.c
+OBJS		= $(SOURCES:%.c=$(OPATH)/%.o)
 
-.PHONY	: all clean
+NAME		= ../../lib/libparse.so
 
-all 	: $(NAME) clean
+all 		: $(NAME)
 
-%.so	: $(OBJS)
+$(LPATH)/%.so	: $(OBJS)
 	$(CC) -shared -o $@ $^ $(LIBXML)
 
-%.o	: %.c
-	$(CC) $(CFLAGS) $(HXML) -fPIC -c $<
+$(OPATH)/%.o	: %.c
+	$(CC) $(CFLAGS) $(HXML) -fPIC -c -o $@ $<
 
-parse.o : parse.h sort.h
-print.o : print.h parse.h
-sort.o 	: sort.h parse.h
-free.o	: parse.h
+parse.o 	: parse.h sort.h
+print.o 	: print.h parse.h
+sort.o 		: sort.h parse.h
+free.o		: parse.h
 
-clean	:
+clean		:
 	rm -f $(OBJS)
