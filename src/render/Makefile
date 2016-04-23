@@ -5,7 +5,9 @@ LIBSDL	= `pkg-config --libs sdl2 SDL2_gfx` -lm
 SOURCES = render.c
 OBJS	= $(SOURCES:%.c=%.o)
 
-NAME	= ../librender.so
+NAME	= ../../lib/librender.so
+
+.PHONY	: all clean
 
 all 	: $(NAME)
 
@@ -18,4 +20,4 @@ all 	: $(NAME)
 render.o: render.h
 
 clean	:
-	rm -f $(NAME) $(OBJS)
+	rm -f $(OBJS)

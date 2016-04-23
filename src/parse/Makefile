@@ -5,9 +5,11 @@ LIBXML	= `pkg-config --libs libxml-2.0`
 SOURCES = parse.c sort.c print.c free.c
 OBJS	= $(SOURCES:%.c=%.o)
 
-NAME	= ../libparse.so
+NAME	= ../../lib/libparse.so
 
-all 	: $(NAME)
+.PHONY	: all clean
+
+all 	: $(NAME) clean
 
 %.so	: $(OBJS)
 	$(CC) -shared -o $@ $^ $(LIBXML)
@@ -21,4 +23,4 @@ sort.o 	: sort.h parse.h
 free.o	: parse.h
 
 clean	:
-	rm -f $(NAME) $(OBJS)
+	rm -f $(OBJS)
