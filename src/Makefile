@@ -28,5 +28,6 @@ clean 		:
 	make -C parse clean
 	make -C gui clean
 	make -C render clean
+	rm -f $(OBJS)
 	rm -f $(LIB:%.so=$(LPATH)/%.so)
 	rm -f $(EXEC)
