@@ -1,20 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL2/SDL.h>
 #include <SDL2_gfxPrimitives.h>
 #include <math.h>
 #include "parse.h"
 #include "free.h"
+#include "render.h"
 
-//#define __TRACE_RENDER__
-#define LOGO "data/logo480.bmp"
-#define WINDOW_SIZE 720
+#ifdef DEBUG
+#define __TRACE_RENDER__
+#endif
 
-/**
- * Screen dimension constants
- */
-static int SCREEN_WIDTH;
-static int SCREEN_HEIGHT;
+#define WINDOW_SIZE 960
 
 /**
  * Local rendering variables
@@ -23,23 +19,6 @@ static double minlat;
 static double maxlat;
 static double minlon;
 static double maxlon;
-
-/**
- * Palette
- */
-const static uint32_t background = 0xceeaffff;
-const static uint32_t line = 0x795f5f2e;
-const static uint32_t area = 0x7992532e;
-
-/**
- *The window we'll be rendering to
- */
-SDL_Window* gWindow = NULL;
-
-/**
- *SDL Renderer
- */
-SDL_Renderer* gRenderer = NULL;
 
 /**
  * Longitude to coordiante conversion
@@ -82,8 +61,8 @@ renderArea(osmWay* way){
   fprintf(stderr, "\n");
   #endif
 
-  filledPolygonColor(gRenderer, vx, vy, way->nodec-1, area);
-  aapolygonColor(gRenderer, vx, vy, way->nodec-1, area);
+  filledPolygonColor(renderer, vx, vy, way->nodec-1, area);
+  aapolygonColor(renderer, vx, vy, way->nodec-1, area);
   
   free(vy);
   free(vx);
@@ -99,7 +78,7 @@ renderWay(osmWay* way){
   int node;
   if(way->nodec > 0)
     for(node = 0; node<way->nodec-1; node++) {
-      aalineColor(gRenderer,
+      aalineColor(renderer,
 		  posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
 		  posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
 		  line);
@@ -126,12 +105,11 @@ renderOsm(osm* map){
   
   int way;
   
-  //get Renderer
-  gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
   //clear screen
   uint8_t* c = (uint8_t*) &background;
-  SDL_SetRenderDrawColor(gRenderer, c[0], c[1], c[2], c[3]);
-  SDL_RenderClear(gRenderer);
+  SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
+  SDL_RenderClear(renderer);
+  SDL_RenderPresent(renderer);
   
   for(way=0; way<map->wayc; way++){
     osmWay* w = map->wayv[way];
@@ -139,9 +117,9 @@ renderOsm(osm* map){
       renderArea(w);
     else renderWay(w);
   }
-
+    
   //present Rendered map
-  SDL_RenderPresent(gRenderer);
+  SDL_RenderPresent(renderer);
   return;
 }
 
@@ -152,9 +130,8 @@ renderDoc(const char* docname, uint32_t flags){
   fprintf(stderr, "renderDoc(%s, %d)\n", docname, flags);
   #endif
   
-  osm* map; 	
-  SDL_Event evt;
-
+  osm* map;
+  
   //Parse Osm xml file
   map = (osm*) malloc(sizeof(osm));
   parseDoc(docname, map);
@@ -167,7 +144,7 @@ renderDoc(const char* docname, uint32_t flags){
  
   //Determine window width and height
   double ratio = cos(M_PI*(minlat+maxlat)/360);
-  if ((maxlat-minlat)<(maxlon-minlon)) {
+  if ((maxlat-minlat)>(maxlon-minlon)) {
     SCREEN_WIDTH = WINDOW_SIZE;
     SCREEN_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)
 			  /(ratio * (maxlon-minlon)));
@@ -182,48 +159,40 @@ renderDoc(const char* docname, uint32_t flags){
 	  SCREEN_WIDTH, SCREEN_HEIGHT,
 	  (maxlon-minlon), (maxlat-minlat));
   #endif
-
-  //Initialize SDL
-  if(SDL_Init(SDL_INIT_VIDEO) < 0){
-    printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-    return 1;
+  
+  //Destroy renderer
+  SDL_DestroyRenderer( renderer );
+  renderer = NULL;
+  
+  //Destroy window
+  SDL_DestroyWindow( window );
+  window = NULL;
+  
+  //Create window
+  window = SDL_CreateWindow("osmaps",
+			    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			    SCREEN_WIDTH, SCREEN_HEIGHT,
+			    SDL_WINDOW_SHOWN );
+  
+  if( window == NULL ) {
+      printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
+      return 1;
+  }
+  
+  //get Renderer
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  
+  if( renderer == NULL ) {
+      printf( "Renderer could not be created! SDL_Eroor: %s\n",
+	      SDL_GetError());
+      return 1;
   }
     
-  //Create window
-  gWindow = SDL_CreateWindow("OSMaps", SDL_WINDOWPOS_UNDEFINED,
-			     SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
-			     SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-  
-  if( gWindow == NULL ) {
-    printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
-    return 1;
-  }
-
   //render osm tree
   renderOsm(map);
-  
-  //Wait for close  
-  while(1) {
-    while(SDL_PollEvent(&evt)) {
-      if(evt.type == SDL_QUIT) {
-	
-	//deallocate osm map
-	freeOsm(map);
-	
-	//Destroy renderer
-	SDL_DestroyRenderer( gRenderer );
-	
-	//Destroy window
-	SDL_DestroyWindow( gWindow );
-	gWindow = NULL;
-	
-	//Quit SDL subsystems
-	SDL_Quit();
-	
-	return 0;
-      }
-    }
-  }
+
+  //free osm structure
+  freeOsm(map);
 
   return 0;
 }

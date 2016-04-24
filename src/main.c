@@ -38,8 +38,8 @@ main(int argc, char **argv) {
   static struct option long_options[] = {
     {"help", no_argument, NULL, 'h'},
     {"bounds", no_argument, NULL, 'b'},
-    {"nodes", no_argument, NULL, 'n'},
     {"id", required_argument, NULL, 'i'},
+    {"nodes", no_argument, NULL, 'n'},
     {"ways", no_argument, NULL, 'w'},
     {"relations", no_argument, NULL, 'r'},
     {"text", no_argument, NULL, 't'},

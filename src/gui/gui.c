@@ -2,32 +2,6 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include "render.h"
-#include "parse.h"
-
-#define LOGO_BMP "data/logo480.bmp"
-
-/**
- * Screen dimension constants
- */
-static int SCREEN_WIDTH;
-static int SCREEN_HEIGHT;
-
-/**
- * Palette
- */
-const static uint32_t background = 0xceeaffff;
-const static uint32_t line = 0x795f5f2e;
-const static uint32_t area = 0x7992532e;
-
-/**
- * The window we'll be rendering to
- */
-static SDL_Window* window = NULL;
-
-/**
- * SDL Renderer
- */
-static SDL_Renderer* renderer = NULL;
 
 /**
  * This function takes care of initializing variables
@@ -54,7 +28,7 @@ initSDL(){
     
     //Create window
     window = SDL_CreateWindow("osmaps",
-			      SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+			      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
   
     if( window == NULL ) {
@@ -64,6 +38,13 @@ initSDL(){
 
     //get Renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    if( renderer == NULL ) {
+	printf( "Renderer could not be created! SDL_Eroor: %s\n",
+		SDL_GetError());
+	return;
+    }
+    
     return;
 }
 
@@ -110,9 +91,11 @@ renderLogo(){
 
     SDL_RenderCopy(renderer, logoT, NULL, NULL);
 
+    SDL_DestroyTexture(logoT);
+
     SDL_RenderPresent(renderer);
 
-    SDL_RenderClear(renderer);
+    SDL_Delay(500);
 }
 
 /**
@@ -126,6 +109,8 @@ launchGUI(char* docname, int flags){
     initSDL();
     
     renderLogo();
+
+    if (renderDoc(docname, flags)) return;
 
     //event loop
     while(1){
