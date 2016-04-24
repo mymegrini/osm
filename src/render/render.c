@@ -10,7 +10,7 @@
 #define __TRACE_RENDER__
 #endif
 
-#define WINDOW_SIZE 960
+#define WINDOW_SIZE 640
 
 /**
  * Local rendering variables
@@ -180,7 +180,8 @@ renderDoc(const char* docname, uint32_t flags){
   }
   
   //get Renderer
-  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+  renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_TARGETTEXTURE
+				| SDL_RENDERER_ACCELERATED);
   
   if( renderer == NULL ) {
       printf( "Renderer could not be created! SDL_Eroor: %s\n",

@@ -12,6 +12,10 @@ initParameters(){
     //initialize width and height for splash screen
     SCREEN_WIDTH = 480;
     SCREEN_HEIGHT = 480;
+
+    //SDL Hints
+    if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2") == SDL_FALSE)
+	puts( "Failed to set rendering scale quality.");
 }
 
 /**
@@ -29,7 +33,8 @@ initSDL(){
     //Create window
     window = SDL_CreateWindow("osmaps",
 			      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-			      SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+			      SCREEN_WIDTH, SCREEN_HEIGHT,
+			      SDL_WINDOW_BORDERLESS | SDL_WINDOW_SHOWN );
   
     if( window == NULL ) {
 	printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -95,7 +100,7 @@ renderLogo(){
 
     SDL_RenderPresent(renderer);
 
-    SDL_Delay(500);
+    SDL_Delay(1000);
 }
 
 /**
@@ -114,7 +119,7 @@ launchGUI(char* docname, int flags){
 
     //event loop
     while(1){
-
+	
 	if(handleEvents()) break;
 
     }
