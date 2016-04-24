@@ -10,12 +10,9 @@ void
 initParameters(){
 
     //initialize width and height for splash screen
-    SCREEN_WIDTH = 480;
-    SCREEN_HEIGHT = 480;
+    WINDOW_WIDTH = 480;
+    WINDOW_HEIGHT = 480;
 
-    //SDL Hints
-    if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2") == SDL_FALSE)
-	puts( "Failed to set rendering scale quality.");
 }
 
 /**
@@ -33,7 +30,7 @@ initSDL(){
     //Create window
     window = SDL_CreateWindow("osmaps",
 			      SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-			      SCREEN_WIDTH, SCREEN_HEIGHT,
+			      WINDOW_WIDTH, WINDOW_HEIGHT,
 			      SDL_WINDOW_BORDERLESS | SDL_WINDOW_SHOWN );
   
     if( window == NULL ) {

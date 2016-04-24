@@ -9,8 +9,8 @@
 /**
  * Screen dimension constants
  */
-int SCREEN_WIDTH;
-int SCREEN_HEIGHT;
+int WINDOW_WIDTH;
+int WINDOW_HEIGHT;
 
 /**
  * Palette
@@ -25,9 +25,14 @@ const static uint32_t area = 0x7992532e;
 SDL_Window* window = NULL;
 
 /**
- *SDL Renderer
+ * SDL Renderer
  */
 SDL_Renderer* renderer = NULL;
+
+/**
+ * Map texture
+ */
+SDL_Texture* maptexture = NULL;
 
 int
 renderDoc(const char* docname, uint32_t flags);
