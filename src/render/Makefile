@@ -14,12 +14,12 @@ NAME		= ../../lib/librender.so
 all 	: $(NAME)
 
 $(LPATH)/%.so	: $(OBJS)
-	$(CC) -shared -o $@ $^ $(LIBSDL)
+		$(CC) -shared -o $@ $^ $(LIBSDL)
 
 $(OPATH)/%.o	: %.c
-	$(CC) $(CFLAGS) $(HSDL) -fPIC -c -o $@ $<
+		$(CC) $(CFLAGS) $(HSDL) -fPIC -c -o $@ $<
 
-render.o: render.h
+$(OPATH)/render.o: render.h ../gui/gui.h
 
 clean	:
-	rm -f $(OBJS)
+		rm -f $(OBJS)

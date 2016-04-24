@@ -13,21 +13,21 @@ OBJS		= $(SOURCES:%.c=$(OPATH)/%.o)
 EXEC 		= $(OPATH)/osmaps
 
 all 		:
-	make -C parse
-	make -C gui
-	make -C render
-	make $(EXEC)
+		make -C parse
+		make -C render
+		make -C gui
+		make $(EXEC)
 
 $(EXEC)		: $(OBJS)
-	$(CC) -o $@ $^ $(LIBLINK)
+		$(CC) -o $@ $^ $(LIBLINK)
 
-$(OPATH)/%.o 	: %.c
-	$(CC) $(CFLAGS) $(HFLAGS) -c -o $@ $<
+$(OPATH)/%.o 	: %.c parse/parse.h parse/print.h gui/gui.h
+		$(CC) $(CFLAGS) $(HFLAGS) -c -o $@ $<
 
 clean 		:
-	make -C parse clean
-	make -C gui clean
-	make -C render clean
-	rm -f $(OBJS)
-	rm -f $(LIB:%.so=$(LPATH)/%.so)
-	rm -f $(EXEC)
+		make -C parse clean
+		make -C gui clean
+		make -C render clean
+		rm -f $(OBJS)
+		rm -f $(LIB:%.so=$(LPATH)/%.so)
+		rm -f $(EXEC)

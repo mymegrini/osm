@@ -4,8 +4,10 @@ LPATH		= ../../lib
 VPATH 		= $(OPATH)
 
 CFLAGS 		= -Wall --pedantic -O2 -std=c11
-HSDL		= -I../render -I../parse `pkg-config --cflags sdl2`
-LIBSDL		= `pkg-config --libs sdl2 SDL2_gfx` -lm
+HSDL		= -I../render `pkg-config --cflags sdl2`
+LIBSDL		= `pkg-config --libs sdl2 SDL2_gfx`
+LIB 		= librender.so libparse.so
+LIBLINK		= -L../../lib $(LIBSDL) $(LIB:lib%.so=-l%)
 SOURCES		= gui.c
 OBJS		= $(SOURCES:%.c=$(OPATH)/%.o)
 
@@ -14,12 +16,12 @@ NAME		= ../../lib/libgui.so
 all 		: $(NAME)
 
 $(LPATH)/%.so	: $(OBJS)
-	$(CC) -shared -o $@ $^ $(LIBSDL)
+		$(CC) -shared -o $@ $^ $(LIBLINK)
 
 $(OPATH)/%.o	: %.c
-	$(CC) $(CFLAGS) $(HSDL) -fPIC -c -o $@ $<
+		$(CC) $(CFLAGS) $(HSDL) -fPIC -c -o $@ $<
 
-gui.o		: gui.h parse.h render.h
+$(OPATH)/gui.o	: ../render/render.h
 
 clean		:
-	rm -f $(OBJS)
+		rm -f $(OBJS)

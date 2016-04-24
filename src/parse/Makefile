@@ -14,15 +14,15 @@ NAME		= ../../lib/libparse.so
 all 		: $(NAME)
 
 $(LPATH)/%.so	: $(OBJS)
-	$(CC) -shared -o $@ $^ $(LIBXML)
+		$(CC) -shared -o $@ $^ $(LIBXML)
 
 $(OPATH)/%.o	: %.c
-	$(CC) $(CFLAGS) $(HXML) -fPIC -c -o $@ $<
+		$(CC) $(CFLAGS) $(HXML) -fPIC -c -o $@ $<
 
-parse.o 	: parse.h sort.h
-print.o 	: print.h parse.h
-sort.o 		: sort.h parse.h
-free.o		: parse.h
+$(OPATH)/parse.o: parse.h sort.h
+$(OPATH)/print.o: print.h parse.h
+$(OPATH)/sort.o : sort.h parse.h
+$(OPATH)/free.o	: parse.h
 
 clean		:
-	rm -f $(OBJS)
+		rm -f $(OBJS)
