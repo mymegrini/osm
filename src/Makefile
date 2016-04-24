@@ -1,25 +1,33 @@
-CC 	= gcc
-CFLAGS 	= -Wall --pedantic -O2 -std=c11
-HFLAGS  = -Iparse -Irender
-LIB 	= librender.so libparse.so
-LIBLINK	= -L$(PWD)/src $(LIB:lib%.so=-l%)
-SOURCES	= $(wildcard *.c)
-OBJS	= $(SOURCES:%.c=%.o)
+CC 		= gcc
+OPATH		= ../bin
+LPATH		= ../lib
+VPATH 		= $(OPATH)
 
-EXEC 	= ../osmaps
+CFLAGS 		= -Wall --pedantic -O2 -std=c11
+HFLAGS  	= -Iparse -Irender -Igui
+LIB 		= librender.so libgui.so libparse.so
+LIBLINK		= -L../lib $(LIB:lib%.so=-l%)
+SOURCES		= $(wildcard *.c)
+OBJS		= $(SOURCES:%.c=$(OPATH)/%.o)
 
-all 	:
-	make -C parse
-	make -C render
-	make $(EXEC)
+EXEC 		= $(OPATH)/osmaps
 
-$(EXEC)	: $(OBJS)
-	$(CC) -o $@ $^ $(LIBLINK)
+all 		:
+		make -C parse
+		make -C render
+		make -C gui
+		make $(EXEC)
 
-%.o 	: %.c
-	$(CC) $(CFLAGS) $(HFLAGS) -c -o $@ $<
+$(EXEC)		: $(OBJS)
+		$(CC) -o $@ $^ $(LIBLINK)
 
-clean 	:
-	make -C parse clean
-	make -C render clean
-	rm -f $(EXEC) $(OBJS)
+$(OPATH)/%.o 	: %.c parse/parse.h parse/print.h gui/gui.h
+		$(CC) $(CFLAGS) $(HFLAGS) -c -o $@ $<
+
+clean 		:
+		make -C parse clean
+		make -C gui clean
+		make -C render clean
+		rm -f $(OBJS)
+		rm -f $(LIB:%.so=$(LPATH)/%.so)
+		rm -f $(EXEC)
