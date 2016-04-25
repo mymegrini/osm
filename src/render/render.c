@@ -18,12 +18,12 @@
 /**
  * Local rendering variables
  */
-static double minlat;
-static double maxlat;
-static double minlon;
-static double maxlon;
-static int MAP_WIDTH;
-static int MAP_HEIGHT;
+static double minlat;       /***< minimum latitude >*/
+static double maxlat;       /***< maximum latitude >*/
+static double minlon;       /***< minimum longitude >*/
+static double maxlon;       /***< maximum longitude >*/
+static int MAP_WIDTH;       /***< SDL map texture width >*/
+static int MAP_HEIGHT;      /***< SDL map texture height >*/
 
 /**
  * Palette
@@ -33,7 +33,9 @@ static uint32_t line = 0xff5f5f2e;
 static uint32_t area = 0x7992532e;
 
 /**
- * Longitude to coordiante conversion
+ * This function perfoms longitude to coordiante conversion
+ * @param lon longitude value
+ * @return Sint16 coordinate value
  */
 static Sint16 posx(double lon){
   
@@ -41,14 +43,21 @@ static Sint16 posx(double lon){
 }
 
 /**
- * Longitude to coordiante conversion
+ * This function perfoms coordiante conversion
+ * @param lat latitude value
+ * @return Sint16 coordinate value
  */
 static Sint16 posy(double lat){
 
   return (Sint16)(MAP_HEIGHT * (maxlat-lat)/(maxlat-minlat));
 }
 
-void
+/**
+ * This function renders a line
+ * @param way an osmWay structure
+ * @return void
+ */
+static void
 renderWay(osmWay* way){
 
   #ifdef __TRACE_RENDER__
@@ -77,7 +86,12 @@ renderWay(osmWay* way){
   return;
 }
 
-void
+/**
+ * This function renders an area
+ * @param way an osmWay structure
+ * @return void
+ */
+static void
 renderArea(osmWay* way){
 
   #ifdef __TRACE_RENDER__
@@ -109,7 +123,12 @@ renderArea(osmWay* way){
   
 }
 
-void
+/**
+ * This function renders an osm structure using simple alpha blending
+ * @param map an osm structure
+ * @return void
+ */
+static void
 renderOsm(osm* map){
 
   #ifdef __TRACE_RENDER__
@@ -134,6 +153,10 @@ renderOsm(osm* map){
   return;
 }
 
+/**
+ * This function closes the splash screen and creates final rendering window
+ * @return int 0 on sucess
+ */
 static int
 resetSDL(){
     
@@ -175,7 +198,12 @@ resetSDL(){
   return 0;
 }
 
-void
+/**
+ * This function renders an osm structure using advanced formatting
+ * @param map an osm structure
+ * @return void
+ */
+static void
 renderFormat(osm* map){
 
     #ifdef __TRACE_RENDER__
