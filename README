@@ -6,5 +6,26 @@ Amani Youssef
 Mohammed Younes Megrini
 
 Setup :
-1- use command 'source setup.sh'
-2- launch the 'osmaps' program
+1- use script './setup' or install dependancies and use 'make'
+2- launch using './osmaps' for dynamic library linking
+
+Usage :
+./osmaps [OPTIONS]... FILE
+
+Available options:
+-b --bounds
+    parse the OSM tree and list all its 'bounds' nodes
+-e, --enhanced
+    switch to improved rendering (beta)
+-i, --id id\n\
+    parse the OSM tree and print the node corresponding to 'id'
+-n, --nodes\n\
+    parse the OSM tree and list all its 'node' nodes
+-r, --relations\n\
+    parse the OSM tree and list all its 'relation' nodes
+-w, --ways\n\
+    parse the OSM tree and list all its 'way' nodes
+-t, --text  (equivalent to '-bnrw')
+    parse the OSM tree and list all its nodes
+--help
+    show this help and exit.
