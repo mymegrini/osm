@@ -4,7 +4,9 @@
 #include <math.h>
 #include "parse.h"
 #include "free.h"
+#include "print.h"
 #include "render.h"
+#include "format.h"
 
 #ifdef DEBUG
 #define __TRACE_RENDER__
@@ -22,6 +24,13 @@ static double minlon;
 static double maxlon;
 static int MAP_WIDTH;
 static int MAP_HEIGHT;
+
+/**
+ * Palette
+ */
+const static uint32_t background = 0xceeaffff;
+static uint32_t line = 0x795f5f2e;
+static uint32_t area = 0x7992532e;
 
 /**
  * Longitude to coordiante conversion
@@ -49,11 +58,11 @@ renderWay(osmWay* way){
   int node;
   if(way->nodec > 0)
     for(node = 0; node<way->nodec-1; node++) {
-      thickLineColor(renderer,
-		     posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
-		     posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
-		     2 * MS_FACTOR,
-		     line);
+      aalineColor(renderer,
+		  posx(way->nodev[node]->lon), posy(way->nodev[node]->lat),
+		  posx(way->nodev[node+1]->lon), posy(way->nodev[node+1]->lat),
+		  //MS_FACTOR,
+		  line);
     
       #ifdef __TRACE_RENDER__
       fprintf(stderr, "(%d,%d)(%d,%d) ",
@@ -94,7 +103,7 @@ renderArea(osmWay* way){
   #endif
 
   filledPolygonColor(renderer, vx, vy, way->nodec-1, area);
-  //aapolygonColor(renderer, vx, vy, way->nodec-1, area);  
+  aapolygonColor(renderer, vx, vy, way->nodec-1, area);  
   free(vy);
   free(vx);
   
@@ -125,6 +134,44 @@ renderOsm(osm* map){
   return;
 }
 
+void
+renderFormat(osm* map){
+
+    #ifdef __TRACE_RENDER__
+    fprintf(stderr, "renderFormat(map)\n");
+    #endif
+    
+    int way;
+    
+    //clear screen
+    uint8_t* c = (uint8_t*) &background;
+    SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+
+    //allocate queue
+    queue = malloc(sizeof(osmFigure*)*(map->wayc-1));
+
+    //filling rendering queue
+    for(way=0; way<map->wayc; way++)
+	formatWay(map->wayv[way]);
+
+    //rendering queue
+    for(way=0; way<size; way++){
+	if(queue[way]->format->width){
+	    line = queue[way]->format->color;
+	    renderWay(queue[way]->way);
+	} else {
+	    line = area = queue[way]->format->color;
+	    renderArea(queue[way]->way);
+	}
+    }
+
+    //emptying queue
+    freeQueue();
+  
+    return ;
+}
 static int
 resetSDL(){
     
@@ -158,6 +205,11 @@ resetSDL(){
       return 1;
   }
 
+  //clear screen
+  uint8_t* c = (uint8_t*) &background;
+  SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
+  SDL_RenderClear(renderer);
+  
   return 0;
 }
 
@@ -179,7 +231,7 @@ renderDoc(const char* docname, uint32_t flags){
   maxlat = map->bounds->maxlat;
   minlon = map->bounds->minlon;
   maxlon = map->bounds->maxlon;
- 
+  
   //Determine window width and height
   double ratio = cos(M_PI*(minlat+maxlat)/360);
   if ((maxlat-minlat)>(maxlon-minlon)) {
@@ -223,7 +275,9 @@ renderDoc(const char* docname, uint32_t flags){
   SDL_RenderSetViewport(renderer, NULL);  
   
   //render osm tree
-  renderOsm(map);
+  if (flags | F_EXT)
+      renderFormat(map);
+  else renderOsm(map);
 
   //free osm structure
   freeOsm(map);
@@ -232,7 +286,7 @@ renderDoc(const char* docname, uint32_t flags){
   SDL_SetRenderTarget(renderer, NULL);
   SDL_RenderSetViewport(renderer, NULL);
 
-  //copy map to window
+  //copy map to window while downscaling by MS_FACTOR
   SDL_RenderCopy(renderer, maptexture, NULL, NULL);  
 
   //present Rendered map

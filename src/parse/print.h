@@ -9,6 +9,7 @@
 #define F_RELATIONS 8  /***< print 'relation' nodes */
 #define F_TEXT 15      /***< print all nodes in text form */
 #define F_ID 16        /***< print 'id' node */
+#define F_EXT 32       /***< trigger extension rendering */
 
 /**
  * @brief This function prints attribute values for a 'tag' node
