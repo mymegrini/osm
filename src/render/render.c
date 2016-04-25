@@ -134,47 +134,6 @@ renderOsm(osm* map){
   return;
 }
 
-void
-renderFormat(osm* map){
-
-    #ifdef __TRACE_RENDER__
-    fprintf(stderr, "renderFormat(map)\n");
-    #endif
-    
-    int way;
-    
-    //clear screen
-    uint8_t* c = (uint8_t*) &background;
-    SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
-    SDL_RenderClear(renderer);
-    SDL_RenderPresent(renderer);
-    
-    //allocate queue
-    queue = malloc(sizeof(osmFigure*)*(map->wayc-1));
-
-    //filling rendering queue
-    for(way=0; way<map->wayc; way++)
-	formatWay(map->wayv[way]);
-
-    //sort queue
-    sortQueue();
-    
-    //rendering queue
-    for(way=0; way<size; way++){
-	if(queue[way]->format->width){
-	    line = queue[way]->format->color;
-	    renderWay(queue[way]->way);
-	} else {
-	    line = area = queue[way]->format->color;
-	    renderArea(queue[way]->way);
-	}
-    }
-
-    //emptying queue
-    freeQueue();
-  
-    return ;
-}
 static int
 resetSDL(){
     
@@ -190,7 +149,7 @@ resetSDL(){
   window = SDL_CreateWindow("osmaps",
 			    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			    WINDOW_WIDTH, WINDOW_HEIGHT,
-			    SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+			    SDL_WINDOW_SHOWN );
   
   if( window == NULL ) {
       printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -216,6 +175,75 @@ resetSDL(){
   return 0;
 }
 
+void
+renderFormat(osm* map){
+
+    #ifdef __TRACE_RENDER__
+    fprintf(stderr, "renderFormat(map)\n");
+    #endif
+    
+    int way;
+        
+    //allocate queue
+    queue = malloc(sizeof(osmFigure*)*(map->wayc-1));
+
+    //filling rendering queue
+    for(way=0; way<map->wayc; way++)
+	formatWay(map->wayv[way]);
+    
+    //sort queue
+    sortQueue();
+    
+    //prepare for rendering
+    //reset SDL
+    if(resetSDL()) {
+	
+	freeOsm(map);
+	exit(1);
+    }
+    
+    //Create map texture and set it as rendering target
+    MAP_WIDTH = WINDOW_WIDTH * MS_FACTOR;
+    MAP_HEIGHT = WINDOW_HEIGHT * MS_FACTOR;
+    
+    //SDL Hints
+    if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2") == SDL_FALSE)
+	puts( "Failed to set rendering scale quality.");
+    
+    maptexture = SDL_CreateTexture(renderer,
+				   SDL_GetWindowPixelFormat(window), 
+				   SDL_TEXTUREACCESS_TARGET,
+				   MAP_WIDTH,
+				   MAP_HEIGHT);
+    
+    SDL_SetRenderTarget(renderer, maptexture);
+    SDL_RenderSetViewport(renderer, NULL);
+    
+    //clear screen
+    uint8_t* c = (uint8_t*) &background;
+    SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
+    SDL_RenderClear(renderer);
+    SDL_RenderPresent(renderer);
+    
+    //rendering queue
+    for(way=0; way<size; way++){
+	if(queue[way]->format->width){
+	    line = queue[way]->format->color;
+	    renderWay(queue[way]->way);
+	} else {
+	    area = queue[way]->format->color;
+	    line = area;
+	    renderArea(queue[way]->way);
+	}
+    }
+    
+
+    //emptying queue
+    freeQueue();
+  
+    return ;
+}
+
 int
 renderDoc(const char* docname, uint32_t flags){
 
@@ -237,7 +265,7 @@ renderDoc(const char* docname, uint32_t flags){
   
   //Determine window width and height
   double ratio = cos(M_PI*(minlat+maxlat)/360);
-  if ((maxlat-minlat)<(maxlon-minlon)) {
+  if ((maxlat-minlat)>(maxlon-minlon)) {
     WINDOW_WIDTH = WINDOW_SIZE;
     WINDOW_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)
 			  /(ratio * (maxlon-minlon)));
@@ -252,36 +280,41 @@ renderDoc(const char* docname, uint32_t flags){
 	  WINDOW_WIDTH, WINDOW_HEIGHT,
 	  (maxlon-minlon), (maxlat-minlat));
   #endif
-
-  //reset SDL
-  if(resetSDL()) {
-
-      freeOsm(map);
-      return 1;
-  }
-
-  //Create map texture and set it as rendering target
-  MAP_WIDTH = WINDOW_WIDTH * MS_FACTOR;
-  MAP_HEIGHT = WINDOW_HEIGHT * MS_FACTOR;
   
-  //SDL Hints
-  if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2") == SDL_FALSE)
-      puts( "Failed to set rendering scale quality.");
-    
-  maptexture = SDL_CreateTexture(renderer,
-				 SDL_GetWindowPixelFormat(window), 
-				 SDL_TEXTUREACCESS_TARGET,
-				 MAP_WIDTH,
-				 MAP_HEIGHT);
-
-  SDL_SetRenderTarget(renderer, maptexture);
-  SDL_RenderSetViewport(renderer, NULL);  
-  
-  //render osm tree
-  if (flags && F_EXT)
+  if (flags && F_EXT) {
       renderFormat(map);
-  else renderOsm(map);
+      
+  } else {
+  
+      //reset SDL
+      if(resetSDL()) {
+	  
+	  freeOsm(map);
+	  return 1;
+      }
+      
+      //Create map texture and set it as rendering target
+      MAP_WIDTH = WINDOW_WIDTH * MS_FACTOR;
+      MAP_HEIGHT = WINDOW_HEIGHT * MS_FACTOR;
+      
+      //SDL Hints
+      if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2") == SDL_FALSE)
+	  puts( "Failed to set rendering scale quality.");
+      
+      maptexture = SDL_CreateTexture(renderer,
+				     SDL_GetWindowPixelFormat(window), 
+				     SDL_TEXTUREACCESS_TARGET,
+				     MAP_WIDTH,
+				     MAP_HEIGHT);
+      
+      SDL_SetRenderTarget(renderer, maptexture);
+      SDL_RenderSetViewport(renderer, NULL);  
+      
+      //render osm tree
+      renderOsm(map);
 
+  }
+  
   //free osm structure
   freeOsm(map);
 

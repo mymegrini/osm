@@ -1,133 +1,97 @@
 #include "format.h"
 
 
-/**
- * Rendering Palette
- */
+typedef struct {
+    const char* v;
+    osmFormat format;
+}osmIndex;
 
-osmFormat palette[] =
-    {   //prio width 0xAABBGGRR 
-	{ 0  , 0 , 0xffeeffff },  //0 background
-	{ -1 , 0 , 0x88D39355 },  //1 water
-	{ 1  , 1 , 0xff5096ea },  //2 line
-	{ 2  , 0 , 0x798e8558 },  //3 building
-	{ -1 , 1 , 0x88D39355 },  //4 water line	
-	{ 2  , 1 , 0x798e8558 },  //5 building line	
-	{ 1  , 0 , 0x7951e651 },  //6 grass	
-	{ 1  , 1 , 0x7951e651 },  //7 grass line
-	{ 1  , 0 , 0x7930e630 },  //8 woods
-	{ 1  , 1 , 0x7930e630 },  //8 woods line
-	{ 1  , 1 , 0x7930e630 },  //9 woods line
-	{ 1  , 1 , 0x7930e630 },  //10 woods line
-	{ 1  , 1 , 0x7930e630 },  //11 woods line
-	{ 1  , 1 , 0x7930e630 },  //12 woods line
-	{ 1  , 1 , 0x7930e630 },  //13 woods line
-	{ 1  , 1 , 0x7930e630 },  //14 woods line
-	{ 1  , 1 , 0x7930e630 },  //15 woods line
-	{ 1  , 1 , 0x7930e630 },  //16 woods line	
-	{ 0 , 0 , 0 }
-	    };
 
 osmFigure** queue = NULL;
 uint32_t size = 0;
 
 /**
- * This function formats a highway type way
+ * Rendering Palette indexes per value
+ */
+osmIndex highwayPalette[] = {
+    {"service"     , { 12  , 8 , 0x77393b22 } },
+    {"residential" , { 13  , 7 , 0x88393b22 } },
+    {"unclassified", { 14  , 6 , 0x99393b22 } },
+    {"tertiary"    , { 15  , 5 , 0xaa393b22 } },
+    {"secondary"   , { 16  , 4 , 0xcc393b22 } },
+    {"primary"     , { 17  , 3 , 0xdd393b22 } },
+    {"trunk"       , { 18  , 2 , 0xee393b22 } },
+    {"motorway"    , { 19  , 1 , 0xff393b22 } },
+    {NULL, { 0  , 0 , 0 }}
+};
+osmIndex buildingPalette[] = {
+    {""     , { 20  , 0 , 0x798e8558 } },
+    {NULL, { 0  , 0 , 0 }}
+};
+osmIndex waterwayPalette[] = {
+    {"river"     , { 1 , 4 , 0xaaD39355 } },
+    {"stream"    , { 2 , 1 , 0xffD39355 } },
+    {"riverbank" , { 1 , 0 , 0xaaD39355 } },
+    {NULL , { 0  , 0 , 0 }}
+};
+osmIndex naturalPalette[] = {
+    {"wood"     , { 20  , 0 , 0xaa33571e } },
+    {"tree_row" , { 20  , 2 , 0xaa33571e } },
+    {"scrub"    , { 20  , 0 , 0xaa6cb341 } },
+    {"heath"    , { 20  , 0 , 0xaa6ce6ff } },
+    {"grassland", { 20  , 0 , 0xaa6ff6ac } },
+    {"fell"     , { 20  , 0 , 0xaa4cc6df } },
+    {"bare_rock", { 20  , 0 , 0xaa6b82a8 } },
+    {"scree"    , { 20  , 0 , 0xaa6b82a8 } },
+    {"shingle"  , { 20  , 0 , 0xaa6b82a8 } },
+    {"sand"     , { 20  , 0 , 0xaa52bcf1 } },
+    {"mud"      , { 20  , 0 , 0xaa5cb9ff } },
+    {"water"    , { 1   , 0 , 0xaaD39355 } },
+    {"wetland"  , { 20  , 0 , 0xaae7edca } },
+    {"glacier"  , { 3   , 0 , 0xaac9d97b } },
+    {"beach"    , { 20  , 0 , 0xaa54d2f3 } },
+    {"coastline", { 20  , 0 , 0xffD39355 } },
+    {NULL, { 0  , 0 , 0 }}
+};
+osmIndex landusePalette[] = {
+    {"forest"           , { 20  , 0 , 0xaa33571e } },
+    {"grass"            , { 20  , 0 , 0xaa6ff6ac } },
+    {"meadow"           , { 20  , 0 , 0xaa6ff6ac } },
+    {"recreation-ground", { 20  , 0 , 0xaa6ff6ac } },
+    {"village_green"    , { 20  , 0 , 0xaa6ff6ac } },
+    {"vinyard"          , { 20  , 0 , 0xaa6ff6ac } },
+    {NULL, { 0  , 0 , 0 }}
+};
+osmIndex leisurePalette[] = {
+    {"garden"     , { 20  , 0 , 0xaa6ff6ac }},
+    {"park"       , { 20  , 0 , 0xaa6ff6ac }},
+    {"stadium"    , { 20  , 0 , 0xaa66ff9c }},
+    {NULL, { 0  , 0 , 0 }}
+};
+osmIndex placePalette[] = {
+    {"island"     , { 9  , 0 , 0xffeeffff } },
+    {NULL, { 0  , 0 , 0 }}
+};
+
+/**
+ * This function determines a way's format using a palette index
  */
 static void
-formatHighway(osmWay* way, int t){
+formatPalette(osmWay* way, int t, osmIndex* index){
 
-    //char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
-    
-    fig->format = palette+2;
-
-    queue[size++] = fig;
-    return;
-}
-
-static void
-formatBuilding(osmWay* w, int t){
-
-    //char* type = way->tagv[t]->v;
-    
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = w;	
-
-    if(w->nodec>2 && w->nodev[0]->id == w->nodev[w->nodec-1]->id)
-	fig->format = palette+3;
-    else
-	fig->format = palette+5;
-
-    queue[size++] = fig;
-    
-    return;
-}
-
-static void
-formatWaterway(osmWay* w, int t){
-
-    //char* type = way->tagv[t]->v;
-    
-    osmFigure* fig = malloc(sizeof(osmFigure));
-
-    fig->way = w;	
-
-    if(w->nodec>2 && w->nodev[0]->id == w->nodev[w->nodec-1]->id)
-	fig->format = palette+1;
-    else
-	fig->format = palette+4;
-
-    queue[size++] = fig;
-    
-    return;
-}
-
-static void
-formatNatural(osmWay* way, int t){
-
+    int pal = 0;
     char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
 
-    if (!strcmp(type, "water"))
-	fig->format = palette+6;
-    else if (!strcmp(type, "wood"))
-	fig->format = palette+6;
-
-    queue[size++] = fig;
+    while(index[pal].v != NULL)
+	if(!strcmp(index[pal].v, "") || !strcmp(type, index[pal].v)){
+	    osmFigure* fig = malloc(sizeof(osmFigure));    
+	    fig->way = way;    
+	    fig->format = &(index[pal].format);
+	    queue[size++] = fig;
+	    break;
+	} else pal++;
     return;
 }
-
-static void
-formatLanduse(osmWay* way, int t){
-
-    char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
-
-    if (!strcmp(type, "grass"))
-	fig->format = palette+1;
-
-    queue[size++] = fig;
-    return;
-}
-
-static void
-formatPlace(osmWay* way, int t){
-
-    char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
-
-    if (!strcmp(type, "island"))
-	fig->format = palette;
-
-    queue[size++] = fig;
-    return;
-}
-
 
 void
 formatWay(osmWay* way){
@@ -138,17 +102,20 @@ formatWay(osmWay* way){
     if (way->tagc) {
 	for(t = 0; t<way->tagc; t++){
 	    if (!strcmp(way->tagv[t]->k, "building"))
-		formatBuilding(way, t);
-	    if (!strcmp(way->tagv[t]->k, "highway"))
-		formatHighway(way, t);
-	    if (!strcmp(way->tagv[t]->k, "waterway"))
-		formatWaterway(way, t);
-	    if (!strcmp(way->tagv[t]->k, "natural"))
-		formatNatural(way, t);
-	    if (!strcmp(way->tagv[t]->k, "place"))
-		formatPlace(way, t);
-	    if (!strcmp(way->tagv[t]->k, "landuse"))
-		formatLanduse(way, t);
+		formatPalette(way, t, buildingPalette);
+	    else if (!strcmp(way->tagv[t]->k, "highway"))
+		formatPalette(way, t, highwayPalette);
+	    else if (!strcmp(way->tagv[t]->k, "waterway"))
+		formatPalette(way, t, waterwayPalette);
+	    else if (!strcmp(way->tagv[t]->k, "natural"))
+		formatPalette(way, t, naturalPalette);
+	    else if (!strcmp(way->tagv[t]->k, "place"))
+		formatPalette(way, t, placePalette);
+	    else  if (!strcmp(way->tagv[t]->k, "landuse"))
+		formatPalette(way, t, landusePalette);
+	    else  if (!strcmp(way->tagv[t]->k, "leisure"))
+		formatPalette(way, t, leisurePalette);
+	    
 	}
     }
     
@@ -162,7 +129,7 @@ static int _cmpPriority(const void* p1, const void* p2){
 
     osmFigure* f2 = *(osmFigure* const*)p2;
     osmFigure* f1 = *(osmFigure* const*)p1;
-    return f1->format->priority - f2->format->priority;
+    return (f1->format->priority) - (f2->format->priority);
 }
 
 /**
