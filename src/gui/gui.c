@@ -5,8 +5,9 @@
 
 /**
  * This function takes care of initializing variables
+ * @return void
  */
-void
+static void
 initParameters(){
 
     //initialize width and height for splash screen
@@ -17,8 +18,9 @@ initParameters(){
 
 /**
  * This function initializes SDL and creates a renderer
+ * @return void
  */
-void
+static void
 initSDL(){
     
     //Initialize SDL
@@ -52,8 +54,9 @@ initSDL(){
 
 /**
  * This function handles SDL events
+ * @return void
  */
-int
+static int
 handleEvents(){
     
     SDL_Event evt;
@@ -81,8 +84,9 @@ handleEvents(){
 
 /**
  * This function creates the splash window
+ * @return void
  */
-void
+static void
 renderLogo(){
 
     SDL_Surface* logo = SDL_LoadBMP( LOGO_BMP );
@@ -100,9 +104,6 @@ renderLogo(){
     SDL_Delay(1000);
 }
 
-/**
- * This function launches graphical interface
- */
 void
 launchGUI(char* docname, int flags){
 
