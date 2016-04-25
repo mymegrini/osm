@@ -19,11 +19,6 @@ typedef struct {
 /**
  * Rendering Palette
  */
-extern osmFormat palette[];
-
-/**
- * Rendering queue
- */
 extern osmFigure** queue;
 extern uint32_t size;
 

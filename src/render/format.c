@@ -4,13 +4,29 @@
 /**
  * Rendering Palette
  */
+
 osmFormat palette[] =
-    {
-	{ -1 , 0 , 0xceeaffff },  //background
-	{ 0  , 0 , 0x8888ffff },  //water
-	{ 1  , 1 , 0x795f5fff },  //line
-	{ 2  , 0 , 0x799253ff },  //building
-    };
+    {   //prio width 0xAABBGGRR 
+	{ 0  , 0 , 0xffeeffff },  //0 background
+	{ -1 , 0 , 0x88D39355 },  //1 water
+	{ 1  , 1 , 0xff5096ea },  //2 line
+	{ 2  , 0 , 0x798e8558 },  //3 building
+	{ -1 , 1 , 0x88D39355 },  //4 water line	
+	{ 2  , 1 , 0x798e8558 },  //5 building line	
+	{ 1  , 0 , 0x7951e651 },  //6 grass	
+	{ 1  , 1 , 0x7951e651 },  //7 grass line
+	{ 1  , 0 , 0x7930e630 },  //8 woods
+	{ 1  , 1 , 0x7930e630 },  //8 woods line
+	{ 1  , 1 , 0x7930e630 },  //9 woods line
+	{ 1  , 1 , 0x7930e630 },  //10 woods line
+	{ 1  , 1 , 0x7930e630 },  //11 woods line
+	{ 1  , 1 , 0x7930e630 },  //12 woods line
+	{ 1  , 1 , 0x7930e630 },  //13 woods line
+	{ 1  , 1 , 0x7930e630 },  //14 woods line
+	{ 1  , 1 , 0x7930e630 },  //15 woods line
+	{ 1  , 1 , 0x7930e630 },  //16 woods line	
+	{ 0 , 0 , 0 }
+	    };
 
 osmFigure** queue = NULL;
 uint32_t size = 0;
@@ -32,28 +48,39 @@ formatHighway(osmWay* way, int t){
 }
 
 static void
-formatBuilding(osmWay* way, int t){
+formatBuilding(osmWay* w, int t){
 
     //char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
     
-    fig->format = palette+3;
+    osmFigure* fig = malloc(sizeof(osmFigure));
+    fig->way = w;	
+
+    if(w->nodec>2 && w->nodev[0]->id == w->nodev[w->nodec-1]->id)
+	fig->format = palette+3;
+    else
+	fig->format = palette+5;
 
     queue[size++] = fig;
+    
     return;
 }
 
 static void
-formatWaterway(osmWay* way, int t){
+formatWaterway(osmWay* w, int t){
 
     //char* type = way->tagv[t]->v;
-    osmFigure* fig = malloc(sizeof(osmFigure));
-    fig->way = way;
     
-    fig->format = palette+1;
+    osmFigure* fig = malloc(sizeof(osmFigure));
+
+    fig->way = w;	
+
+    if(w->nodec>2 && w->nodev[0]->id == w->nodev[w->nodec-1]->id)
+	fig->format = palette+1;
+    else
+	fig->format = palette+4;
 
     queue[size++] = fig;
+    
     return;
 }
 
@@ -65,16 +92,48 @@ formatNatural(osmWay* way, int t){
     fig->way = way;
 
     if (!strcmp(type, "water"))
+	fig->format = palette+6;
+    else if (!strcmp(type, "wood"))
+	fig->format = palette+6;
+
+    queue[size++] = fig;
+    return;
+}
+
+static void
+formatLanduse(osmWay* way, int t){
+
+    char* type = way->tagv[t]->v;
+    osmFigure* fig = malloc(sizeof(osmFigure));
+    fig->way = way;
+
+    if (!strcmp(type, "grass"))
 	fig->format = palette+1;
 
     queue[size++] = fig;
     return;
 }
 
+static void
+formatPlace(osmWay* way, int t){
+
+    char* type = way->tagv[t]->v;
+    osmFigure* fig = malloc(sizeof(osmFigure));
+    fig->way = way;
+
+    if (!strcmp(type, "island"))
+	fig->format = palette;
+
+    queue[size++] = fig;
+    return;
+}
+
+
 void
 formatWay(osmWay* way){
     
     int t;
+    
     
     if (way->tagc) {
 	for(t = 0; t<way->tagc; t++){
@@ -86,6 +145,10 @@ formatWay(osmWay* way){
 		formatWaterway(way, t);
 	    if (!strcmp(way->tagv[t]->k, "natural"))
 		formatNatural(way, t);
+	    if (!strcmp(way->tagv[t]->k, "place"))
+		formatPlace(way, t);
+	    if (!strcmp(way->tagv[t]->k, "landuse"))
+		formatLanduse(way, t);
 	}
     }
     
@@ -121,7 +184,7 @@ freeQueue(){
     int i;
     
     for(i=0; i<size; i++)
-	free(queue+i);
+	free(queue[i]);
 
     free(queue);
     queue = NULL;

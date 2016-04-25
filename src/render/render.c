@@ -12,7 +12,7 @@
 #define __TRACE_RENDER__
 #endif
 
-#define WINDOW_SIZE 640
+#define WINDOW_SIZE 960
 #define MS_FACTOR 2
 
 /**
@@ -28,8 +28,8 @@ static int MAP_HEIGHT;
 /**
  * Palette
  */
-const static uint32_t background = 0xceeaffff;
-static uint32_t line = 0x795f5f2e;
+const static uint32_t background = 0xffeeffff;
+static uint32_t line = 0xff5f5f2e;
 static uint32_t area = 0x7992532e;
 
 /**
@@ -148,7 +148,7 @@ renderFormat(osm* map){
     SDL_SetRenderDrawColor(renderer, c[0], c[1], c[2], c[3]);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
-
+    
     //allocate queue
     queue = malloc(sizeof(osmFigure*)*(map->wayc-1));
 
@@ -156,6 +156,9 @@ renderFormat(osm* map){
     for(way=0; way<map->wayc; way++)
 	formatWay(map->wayv[way]);
 
+    //sort queue
+    sortQueue();
+    
     //rendering queue
     for(way=0; way<size; way++){
 	if(queue[way]->format->width){
@@ -234,7 +237,7 @@ renderDoc(const char* docname, uint32_t flags){
   
   //Determine window width and height
   double ratio = cos(M_PI*(minlat+maxlat)/360);
-  if ((maxlat-minlat)>(maxlon-minlon)) {
+  if ((maxlat-minlat)<(maxlon-minlon)) {
     WINDOW_WIDTH = WINDOW_SIZE;
     WINDOW_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)
 			  /(ratio * (maxlon-minlon)));
@@ -275,7 +278,7 @@ renderDoc(const char* docname, uint32_t flags){
   SDL_RenderSetViewport(renderer, NULL);  
   
   //render osm tree
-  if (flags | F_EXT)
+  if (flags && F_EXT)
       renderFormat(map);
   else renderOsm(map);
 
