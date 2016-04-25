@@ -36,7 +36,7 @@ typedef struct {
  * A structure to hold a 'way' subtree
  */
 typedef struct {
-  int32_t id;                /***< id number >*/
+  int32_t id;                 /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
   osmNode** nodev;            /***< nodes vector >*/
   uint32_t tagc;              /***< tags cardinal >*/
@@ -48,9 +48,9 @@ typedef struct {
  */
 typedef struct osmRelation osmRelation;
 struct osmRelation {
-  int32_t id;                /***< id number >*/
+  int32_t id;                 /***< id number >*/
   uint32_t nodec;             /***< nodes cardinal >*/
-  osmNode** nodev;             /***< nodes vector >*/
+  osmNode** nodev;            /***< nodes vector >*/
   uint32_t wayc;              /***< ways cardinal >*/
   osmWay** wayv;              /***< ways vector >*/
   uint32_t relationc;         /***< relations cardinal >*/

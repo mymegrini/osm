@@ -351,7 +351,7 @@ parseDoc(const char *docname, osm* map) {
 
   if (doc == NULL ) {
     fprintf(stderr,"Document not parsed successfully. \n");
-    return;
+    exit(1);
   }
 
   root = xmlDocGetRootElement(doc);

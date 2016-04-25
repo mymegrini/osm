@@ -7,28 +7,32 @@
 #define LOGO_BMP "data/logo480.bmp"
 
 /**
- * Screen dimension constants
+ * Global rendering variables
  */
-int SCREEN_WIDTH;
-int SCREEN_HEIGHT;
-
-/**
- * Palette
- */
-const static uint32_t background = 0xceeaffff;
-const static uint32_t line = 0x795f5f2e;
-const static uint32_t area = 0x7992532e;
+int WINDOW_WIDTH;                /***< SDL window width >*/
+int WINDOW_HEIGHT;               /***< SDL window height >*/
 
 /**
  * The window we'll be rendering to
  */
-SDL_Window* window = NULL;
+SDL_Window* window = NULL;       /***< SDL window >*/
 
 /**
- *SDL Renderer
+ * SDL Renderer
  */
-SDL_Renderer* renderer = NULL;
+SDL_Renderer* renderer = NULL;   /***< SDL renderer >*/
 
+/**
+ * Map texture
+ */
+SDL_Texture* maptexture = NULL;  /***< target rendering texture >*/
+
+/**
+ * This function takes an osm document and renders it to screen
+ * @param docname path to the xml file
+ * @param flags customization value
+ * @return int 0 on success
+ */
 int
 renderDoc(const char* docname, uint32_t flags);
 

@@ -38,6 +38,7 @@ main(int argc, char **argv) {
   static struct option long_options[] = {
     {"help", no_argument, NULL, 'h'},
     {"bounds", no_argument, NULL, 'b'},
+    {"extension", no_argument, NULL, 'e'},
     {"id", required_argument, NULL, 'i'},
     {"nodes", no_argument, NULL, 'n'},
     {"ways", no_argument, NULL, 'w'},
@@ -58,6 +59,8 @@ an OSM tree and renders it.\n\
 Available options:\n\
 \t-b, --bounds\n\
 \t\tparse the OSM tree and list all its 'bounds' nodes\n\
+\t-e, --extension\n\
+\t\tswitch to improved rendering (beta)\n\
 \t-i, --id id\n\
 \t\tparse the OSM tree and print the node corresponding to 'id'\n\
 \t-n, --nodes\n\
@@ -76,6 +79,9 @@ Available options:\n\
       break;
     case 'b':
       flags |= F_BOUNDS;
+      break;
+    case 'e':
+      flags |= F_EXT;
       break;
     case 'n':
       flags |= F_NODES;
