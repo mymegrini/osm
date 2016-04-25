@@ -1,6 +1,9 @@
 #include "format.h"
 
 
+/**
+ * This structure contains a tag value and its associated format
+ */
 typedef struct {
     const char* v;
     osmFormat format;
@@ -10,10 +13,8 @@ typedef struct {
 osmFigure** queue = NULL;
 uint32_t size = 0;
 
-/**
- * Rendering Palette indexes per value
- */
 osmIndex highwayPalette[] = {
+    {"cycleway"    , { 11  , 1 , 0xff6b82a8 } },
     {"service"     , { 12  , 8 , 0x77393b22 } },
     {"residential" , { 13  , 7 , 0x88393b22 } },
     {"unclassified", { 14  , 6 , 0x99393b22 } },
@@ -23,17 +24,17 @@ osmIndex highwayPalette[] = {
     {"trunk"       , { 18  , 2 , 0xee393b22 } },
     {"motorway"    , { 19  , 1 , 0xff393b22 } },
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for highway tags >*/
 osmIndex buildingPalette[] = {
     {""     , { 20  , 0 , 0x798e8558 } },
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for building tags >*/
 osmIndex waterwayPalette[] = {
     {"river"     , { 1 , 4 , 0xaaD39355 } },
     {"stream"    , { 2 , 1 , 0xffD39355 } },
     {"riverbank" , { 1 , 0 , 0xaaD39355 } },
     {NULL , { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for waterway tags >*/
 osmIndex naturalPalette[] = {
     {"wood"     , { 20  , 0 , 0xaa33571e } },
     {"tree_row" , { 20  , 2 , 0xaa33571e } },
@@ -52,7 +53,7 @@ osmIndex naturalPalette[] = {
     {"beach"    , { 20  , 0 , 0xaa54d2f3 } },
     {"coastline", { 20  , 0 , 0xffD39355 } },
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for natural tags >*/
 osmIndex landusePalette[] = {
     {"forest"           , { 20  , 0 , 0xaa33571e } },
     {"grass"            , { 20  , 0 , 0xaa6ff6ac } },
@@ -61,20 +62,24 @@ osmIndex landusePalette[] = {
     {"village_green"    , { 20  , 0 , 0xaa6ff6ac } },
     {"vinyard"          , { 20  , 0 , 0xaa6ff6ac } },
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for landuse tags >*/
 osmIndex leisurePalette[] = {
     {"garden"     , { 20  , 0 , 0xaa6ff6ac }},
     {"park"       , { 20  , 0 , 0xaa6ff6ac }},
     {"stadium"    , { 20  , 0 , 0xaa66ff9c }},
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for leisure tags >*/
 osmIndex placePalette[] = {
     {"island"     , { 9  , 0 , 0xffeeffff } },
     {NULL, { 0  , 0 , 0 }}
-};
+};                           /***< rendering pallete for place tags >*/
 
 /**
- * This function determines a way's format using a palette index
+ * This function stores a way's format from the index in the queue
+ * @param way an osmWay element from the map
+ * @param t relevant tag index
+ * @param index a palette format index
+ * @return void
  */
 static void
 formatPalette(osmWay* way, int t, osmIndex* index){
@@ -93,6 +98,11 @@ formatPalette(osmWay* way, int t, osmIndex* index){
     return;
 }
 
+/**
+ * This function find the relavant tag and storess the format in the queue
+ * @param way  an osmWay element from the map
+ * @param void
+ */
 void
 formatWay(osmWay* way){
     
@@ -132,9 +142,6 @@ static int _cmpPriority(const void* p1, const void* p2){
     return (f1->format->priority) - (f2->format->priority);
 }
 
-/**
- * This function sorts the rendering queue
- */
 void
 sortQueue(){
     
@@ -142,9 +149,6 @@ sortQueue(){
     return;
 }
 
-/**
- * This function deallocates a rendering queue
- */
 void
 freeQueue(){
 
