@@ -6,7 +6,7 @@ Amani Youssef
 Mohammed Younes Megrini
 
 Setup :
-1- use script './setup' or install dependancies and use 'make'
+1- use script './setup' or install dependencies and use 'make'
 2- launch using './osmaps' for dynamic library linking
 
 Usage :
