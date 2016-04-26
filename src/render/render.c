@@ -293,7 +293,7 @@ renderDoc(const char* docname, uint32_t flags){
   
   //Determine window width and height
   double ratio = cos(M_PI*(minlat+maxlat)/360);
-  if ((maxlat-minlat)>(maxlon-minlon)) {
+  if ((maxlat-minlat)<(maxlon-minlon)) {
     WINDOW_WIDTH = WINDOW_SIZE;
     WINDOW_HEIGHT = (int)(WINDOW_SIZE * (maxlat-minlat)
 			  /(ratio * (maxlon-minlon)));
